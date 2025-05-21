@@ -51,11 +51,23 @@ return static function (RouteBuilder $routes) {
          * to use (in this case, templates/Pages/home.php)...
          */
         $builder->connect('/', ['controller' => 'Pages', 'action' => 'display', 'home']);
-
+        
+        // debug($_SERVER['REQUEST_URI']);
+        // debug(preg_replace('/^\/([^\/]+)\/?.*$/', '$1', $_SERVER['REQUEST_URI']));
+        require match (preg_replace('/^\/([^\/]+)\/?.*$/', '$1', $_SERVER['REQUEST_URI'])) {
+            
+            'us' => CONFIG . 'routes/user.php',
+            'ad' => CONFIG . 'routes/admin.php',
+            default => CONFIG . 'routes/other.php',
+        };
+        
+        
+        // require CONFIG . 'routes/admin.php';
+        
         /*
          * ...and connect the rest of 'Pages' controller's URLs.
          */
-        $builder->connect('/pages/*', 'Pages::display');
+        // $builder->connect('/pages/*', 'Pages::display');
 
         /*
          * Connect catchall routes for all controllers.
@@ -70,7 +82,7 @@ return static function (RouteBuilder $routes) {
          * You can remove these routes once you've connected the
          * routes you want in your application.
          */
-        $builder->fallbacks();
+        // $builder->fallbacks();
     });
 
     /*
