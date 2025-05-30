@@ -221,3 +221,7 @@ TypeFactory::map('time', StringType::class);
 //Inflector::rules('plural', ['/^(inflect)or$/i' => '\1ables']);
 //Inflector::rules('irregular', ['red' => 'redlings']);
 //Inflector::rules('uninflected', ['dontinflectme']);
+
+define('ADMIN_AUTH_KEY', 'auth.Admin');
+define('USER_AUTH_KEY', 'auth.User');
+define('ERROR_MESSAGES_KEY', 'error.Messages');

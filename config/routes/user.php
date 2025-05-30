@@ -4,13 +4,31 @@
 use Cake\Routing\RouteBuilder;
 
 
-$builder->scope('/user', function (RouteBuilder $builder) {
-    // ユーザ画面用ルーティング
-    $builder->prefix('User', function (RouteBuilder $builder) {
-
-        
-        $builder->fallbacks();
+// ユーザ画面用ルーティング
+$builder->prefix('User', ['path' => '/us/:user_account_id'], static function (RouteBuilder $builder) {
+    // ユーザアカウント
+    $builder->prefix('SelfAccount', ['path' => '/self_account'], static function (RouteBuilder $builder) {
+        // ユーザアカウント情報
+        $builder->get('/detail', ['controller' => 'Detail', 'action' => 'index']);
+        // ユーザアカウント更新
+        $builder->get('/edit', ['controller' => 'Edit', 'action' => 'index']);
+        $builder->get('/edit/input/:tmp_id', ['controller' => 'Edit', 'action' => 'input']);
+        $builder->post('/edit/input/:tmp_id', ['controller' => 'Edit', 'action' => 'inputPost']);
+        $builder->get('/edit/conf/:tmp_id', ['controller' => 'Edit', 'action' => 'conf']);
+        $builder->post('/edit/conf/:tmp_id', ['controller' => 'Edit', 'action' => 'confPost']);
     });
+    // ユーザパスワード
+    $builder->prefix('SelfPassword', ['path' => '/self_account'], static function (RouteBuilder $builder) {
+        // ユーザパスワード更新
+        $builder->get('/edit', ['controller' => 'Edit', 'action' => 'index']);
+        $builder->get('/edit/input/:tmp_id', ['controller' => 'Edit', 'action' => 'input']);
+        $builder->post('/edit/input/:tmp_id', ['controller' => 'Edit', 'action' => 'inputPost']);
+        $builder->get('/edit/conf/:tmp_id', ['controller' => 'Edit', 'action' => 'conf']);
+        $builder->post('/edit/conf/:tmp_id', ['controller' => 'Edit', 'action' => 'confPost']);
+    });
+    
+
+    // $builder->fallbacks();
 });
 
     

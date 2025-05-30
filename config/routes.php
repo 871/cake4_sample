@@ -51,7 +51,7 @@ return static function (RouteBuilder $routes) {
          * to use (in this case, templates/Pages/home.php)...
          */
         $builder->connect('/', ['controller' => 'Pages', 'action' => 'display', 'home']);
-        
+    
         // debug($_SERVER['REQUEST_URI']);
         // debug(preg_replace('/^\/([^\/]+)\/?.*$/', '$1', $_SERVER['REQUEST_URI']));
         require match (preg_replace('/^\/([^\/]+)\/?.*$/', '$1', $_SERVER['REQUEST_URI'])) {
