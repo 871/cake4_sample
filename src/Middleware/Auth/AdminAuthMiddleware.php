@@ -16,9 +16,10 @@ class AdminAuthMiddleware implements MiddlewareInterface
     {
         $authSessionKey = ADMIN_AUTH_KEY  . '.' . (string) $request->getParam('admin_account_id');
         
+        $url = '/ad/login?redirect=' . urlencode($request->getUri()->getPath() . '?' . $request->getUri()->getQuery());
         
         return $request->getSession()->check($authSessionKey)
                 ? $handler->handle($request)
-                : new RedirectResponse('/ad/login');
+                : new RedirectResponse($url);
     }
 }

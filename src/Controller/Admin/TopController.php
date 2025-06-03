@@ -6,12 +6,12 @@ namespace App\Controller\Admin;
 
 use App\Controller\Admin\AdminAppController;
 use Cake\Event\EventInterface;
-use Carbon;
+use Carbon\Carbon;
 use App\Lib\Auth\AdminAuthInterface;
-use App\Action\Admin\ErrorAction as CtlAction;
+use App\Action\Admin\TopAction as CtlAction;
 
 
-class ErrorController extends AdminAppController
+class TopController extends AdminAppController
 {
     /**
      * 
@@ -44,6 +44,6 @@ class ErrorController extends AdminAppController
 
     public function index()
     {
-        $this->render('/Admin/Error/index');
+        $this->render('/Admin/Top/index');
     }
 }

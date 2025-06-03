@@ -29,6 +29,7 @@ class CreateAdminTabels extends AbstractMigration
                 email VARCHAR(255) NOT NULL COMMENT 'メールアドレス',
                 tel VARCHAR(20) DEFAULT NULL COMMENT '電話番号',
                 is_active INT NOT NULL DEFAULT 0 COMMENT 'ログイン有効フラグ',
+                expiration_datetime DATETIME NOT NULL COMMENT 'パスワード有効期限',
                 remarks TEXT COMMENT '備考',
                 
                 created DATETIME DEFAULT NULL  COMMENT '作成日時',
@@ -51,6 +52,7 @@ class CreateAdminTabels extends AbstractMigration
                 email,
                 tel,
                 is_active,
+                expiration_datetime,
                 remarks,
                 created,
                 modified,
@@ -66,6 +68,7 @@ class CreateAdminTabels extends AbstractMigration
                 'xxxx@xxx.xxx',
                 NULL,
                 0,
+                '1970-01-01 00:00:00',
                 '管理者アカウントIDの開始値を明示的に制御するためのダミーデータ',
                 '1970-01-01 00:00:00',
                 '1970-01-01 00:00:00',
@@ -86,15 +89,13 @@ class CreateAdminTabels extends AbstractMigration
                 email VARCHAR(255) NOT NULL COMMENT 'メールアドレス',
                 tel VARCHAR(20) DEFAULT NULL COMMENT '電話番号',
                 is_active INT NOT NULL DEFAULT 0 COMMENT 'ログイン有効フラグ',
+                expiration_datetime DATETIME NOT NULL COMMENT 'パスワード有効期限',
                 remarks TEXT COMMENT '備考',
                 
                 created DATETIME DEFAULT NULL  COMMENT '作成日時',
-                modified DATETIME DEFAULT NULL  COMMENT '更新日時',
                 created_account_id BIGINT DEFAULT NULL  COMMENT '作成アカウントID',
-                modified_account_id BIGINT DEFAULT NULL  COMMENT '更新アカウントID',
                 created_ip VARCHAR(100) DEFAULT NULL COMMENT '作成IP',
-                modified_ip VARCHAR(100) DEFAULT NULL COMMENT '更新IP',
-                INDEX user_account_histories_idx01(user_account_id, created)
+                INDEX user_account_histories_idx01(admin_account_id, created)
             ) COMMENT='管理者アカウント履歴';
      
         SQL);

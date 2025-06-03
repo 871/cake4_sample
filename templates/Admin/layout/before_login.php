@@ -8,7 +8,7 @@
     <?= $this->Html->charset() ?>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>
-        <?= $cakeDescription ?>:
+        システムタイトル(管理者ページ):
         <?= $this->fetch('title') ?>
     </title>
     <?= $this->Html->meta('icon') ?>
@@ -24,7 +24,7 @@
 <body>
     <nav class="top-nav">
         <div class="top-nav-title">
-            <a href="<?= $this->Url->build('/') ?>">システムタイトル</a>
+            <a href="<?= $this->Url->build('/ad/') ?>">システムタイトル(管理者ページ)</a>
         </div>
         <div class="top-nav-links">
         </div>

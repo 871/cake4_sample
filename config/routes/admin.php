@@ -1,42 +1,72 @@
 <?php
 
-
 use Cake\Routing\RouteBuilder;
-
 
 // 管理画面用ルーティング
 $builder->prefix('Admin', ['path' => '/ad'], static function (RouteBuilder $builder) {
+    // 管理者ログイン
+    $builder->prefix('Auth', ['path' => ''], static function (RouteBuilder $builder) {
 
-    $builder->get('/', ['controller' => 'Login', 'action' => 'index']);
-    $builder->post('/', ['controller' => 'Login', 'action' => 'indexPost']);
-    
-    $builder->get('/error/:message_key', ['controller' => 'Auth', 'action' => 'index']);
-    
+        $builder->get('/', ['controller' => 'Login', 'action' => 'index']);
+        $builder->get('/login', ['controller' => 'Login', 'action' => 'login']);
+        $builder->post('/login', ['controller' => 'Login', 'action' => 'loginPost']);
+    });
+
     $builder->scope('/:admin_account_id', function (RouteBuilder $builder) {
-        
+
         $builder->registerMiddleware('adminAuth', new App\Middleware\Auth\AdminAuthMiddleware())->applyMiddleware('adminAuth');
-        
-        $builder->get('/logout/', ['controller' => 'Top', 'action' => 'index']);
+
+        $builder->get('/', ['controller' => 'Top', 'action' => 'index']);
+        $builder->get('/error/:message_key', ['controller' => 'Error', 'action' => 'index']);
+        // 管理者ログアウト
+        $builder->prefix('Auth', ['path' => ''], static function (RouteBuilder $builder) {
+            
+            $builder->get('/logout', ['controller' => 'Logout', 'action' => 'index']);
+            $builder->post('/logout', ['controller' => 'Logout', 'action' => 'index']);
+        });
+        // ログイン管理者情報
+        $builder->prefix('SelfInfo', ['path' => 'self_info'], static function (RouteBuilder $builder) {
+            // 詳細
+            $builder->get('/detail', ['controller' => 'Detail', 'action' => 'index']);
+            // アカウント情報
+            $builder->prefix('AccountInfo', ['path' => 'account_info'], static function (RouteBuilder $builder) {
+                // 更新
+                $builder->get('/edit', ['controller' => 'Edit', 'action' => 'index']);
+                $builder->get('/edit/input/:tmp_id', ['controller' => 'Edit', 'action' => 'input']);
+                $builder->post('/edit/input/:tmp_id', ['controller' => 'Edit', 'action' => 'inputPost']);
+                $builder->get('/edit/conf/:tmp_id', ['controller' => 'Edit', 'action' => 'conf']);
+                $builder->post('/edit/conf/:tmp_id', ['controller' => 'Edit', 'action' => 'confPost']);
+            });
+            // パスワード
+            $builder->prefix('Password', ['path' => 'password'], static function (RouteBuilder $builder) {
+                // 更新
+                $builder->get('/edit', ['controller' => 'Edit', 'action' => 'index']);
+                $builder->get('/edit/input/:tmp_id', ['controller' => 'Edit', 'action' => 'input']);
+                $builder->post('/edit/input/:tmp_id', ['controller' => 'Edit', 'action' => 'inputPost']);
+                $builder->get('/edit/conf/:tmp_id', ['controller' => 'Edit', 'action' => 'conf']);
+                $builder->post('/edit/conf/:tmp_id', ['controller' => 'Edit', 'action' => 'confPost']);
+            });
+        });
         // ユーザアカウント管理
         $builder->prefix('UserAccounts', ['path' => '/user_accounts'], static function (RouteBuilder $builder) {
-            // ユーザアカウント検索
+            // 検索
             $builder->get('/init', ['controller' => 'Search', 'action' => 'init']);
             $builder->get('/', ['controller' => 'Search', 'action' => 'index']);
-            // ユーザアカウント詳細
+            // 詳細
             $builder->get('/detail/:user_account_id', ['controller' => 'Detail', 'action' => 'index']);
-            // ユーザアカウント作成
+            // 作成
             $builder->get('/create', ['controller' => 'Create', 'action' => 'index']);
             $builder->get('/create/input/:tmp_id', ['controller' => 'Create', 'action' => 'input']);
             $builder->post('/create/input/:tmp_id', ['controller' => 'Create', 'action' => 'inputPost']);
             $builder->get('/create/conf/:tmp_id', ['controller' => 'Create', 'action' => 'conf']);
             $builder->post('/create/conf/:tmp_id', ['controller' => 'Create', 'action' => 'confPost']);
-            // ユーザアカウント更新
+            // 更新
             $builder->get('/edit/:user_account_id', ['controller' => 'Edit', 'action' => 'index']);
             $builder->get('/edit/input/:tmp_id', ['controller' => 'Edit', 'action' => 'input']);
             $builder->post('/edit/input/:tmp_id', ['controller' => 'Edit', 'action' => 'inputPost']);
             $builder->get('/edit/conf/:tmp_id', ['controller' => 'Edit', 'action' => 'conf']);
             $builder->post('/edit/conf/:tmp_id', ['controller' => 'Edit', 'action' => 'confPost']);
-            // ユーザアカウント一括処理
+            // 一括処理
             $builder->prefix('Bulk', ['path' => '/bulk'], static function (RouteBuilder $builder) {
                 // 一括登録
                 $builder->get('/create', ['controller' => 'Create', 'action' => 'index']);
@@ -51,7 +81,7 @@ $builder->prefix('Admin', ['path' => '/ad'], static function (RouteBuilder $buil
                 $builder->get('/edit/conf/:tmp_id', ['controller' => 'Edit', 'action' => 'conf']);
                 $builder->post('/edit/conf/:tmp_id', ['controller' => 'Edit', 'action' => 'confPost']);
             });
-            // ユーザアカウントCSV処理 
+            // CSV処理 
             $builder->prefix('Csv', ['path' => '/csv'], static function (RouteBuilder $builder) {
                 // インポート
                 $builder->get('/import', ['controller' => 'Import', 'action' => 'index']);

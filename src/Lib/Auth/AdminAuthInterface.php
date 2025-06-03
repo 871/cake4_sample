@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Lib\Auth;
 
+use Carbon\Carbon;
 
 /**
     CREATE TABLE admin_accounts (
@@ -26,7 +27,7 @@ namespace App\Lib\Auth;
         UNIQUE KEY user_accounts_idx02 (email)
     ) COMMENT='管理者アカウント';
  */
-interface AdminAuth
+interface AdminAuthInterface
 {
     public function getId() : int;
     
@@ -42,9 +43,9 @@ interface AdminAuth
     
     public function getRemarks() : string;
 
-    public function getCreated() : \Carbon;
+    public function getCreated() : ?Carbon;
     
-    public function getModified() : \Carbon;
+    public function getModified() : ?Carbon;
     
     public function getCreatedAccountId() : int;
     

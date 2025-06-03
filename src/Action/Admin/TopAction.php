@@ -6,7 +6,8 @@ namespace App\Action\Admin;
 use App\Action\Admin\Common\AdminActionInterface;
 use App\Action\Admin\Common\AdminActionBaseTrait;
 
-class ErrorAction implements AdminActionInterface
+
+class TopAction implements AdminActionInterface
 {
     use AdminActionBaseTrait;
     

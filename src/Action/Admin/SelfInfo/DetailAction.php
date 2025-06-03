@@ -1,14 +1,16 @@
 <?php
 declare(strict_types=1);
 
-namespace App\Action\Admin;
+namespace App\Action\Admin\SelfInfo;
 
 use App\Action\Admin\Common\AdminActionInterface;
 use App\Action\Admin\Common\AdminActionBaseTrait;
 
-class ErrorAction implements AdminActionInterface
+
+class DetailAction implements AdminActionInterface
 {
     use AdminActionBaseTrait;
     
-    // Memo: 処理なし
+    
+    
 }

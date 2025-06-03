@@ -6,7 +6,7 @@ namespace App\Action\Admin\Common;
 
 use Carbon\Carbon;
 use Cake\Http\ServerRequest;
-use App\Lib\Auth\AdminAuth;
+use App\Lib\Auth\AdminAuthInterface;
 use App\Action\Admin\Common\AdminActionInterface;
 
 
@@ -26,9 +26,9 @@ trait AdminActionBaseTrait
     
     /**
      * 
-     * @var AdminAuth
+     * @var AdminAuthInterface
      */
-    private AdminAuth $adminAuth;
+    private AdminAuthInterface $adminAuth;
     
     /**
      * 
@@ -80,12 +80,12 @@ trait AdminActionBaseTrait
     
     /**
      * 
-     * @param AdminAuth $adminAuth
+     * @param AdminAuthInterface $adminAuth
      * @return $this
      */
-    public function setAdminAuth(AdminAuth $adminAuth) : static 
+    public function setAdminAuth(AdminAuthInterface $adminAuth) : static 
     {
-        $this->$adminAuth = $adminAuth;
+        $this->adminAuth = $adminAuth;
         
         return $this;
     }

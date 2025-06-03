@@ -29,7 +29,7 @@ class CreateUserTabels extends AbstractMigration
                 email VARCHAR(255) NOT NULL COMMENT 'メールアドレス',
                 tel VARCHAR(20) DEFAULT NULL COMMENT '電話番号',
                 is_active INT NOT NULL DEFAULT 0 COMMENT 'ログイン有効フラグ',
-                expiration_datetime DATETIME NOT NULL COMMENT 'アカウント有効期限',
+                expiration_datetime DATETIME NOT NULL COMMENT 'パスワード有効期限',
                 is_tmp_password INT NOT NULL DEFAULT 0 COMMENT '仮PWフラグ',
                 remarks TEXT COMMENT '備考',
                 
@@ -97,11 +97,8 @@ class CreateUserTabels extends AbstractMigration
                 remarks TEXT COMMENT '備考',
                 
                 created DATETIME DEFAULT NULL  COMMENT '作成日時',
-                modified DATETIME DEFAULT NULL  COMMENT '更新日時',
                 created_account_id BIGINT DEFAULT NULL  COMMENT '作成アカウントID',
-                modified_account_id BIGINT DEFAULT NULL  COMMENT '更新アカウントID',
                 created_ip VARCHAR(100) DEFAULT NULL COMMENT '作成IP',
-                modified_ip VARCHAR(100) DEFAULT NULL COMMENT '更新IP',
                 INDEX user_account_histories_idx01(user_account_id, created)
             ) COMMENT='ユーザーアカウント履歴';
      

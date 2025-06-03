@@ -1,17 +1,16 @@
 <?php
 declare(strict_types=1);
 
-
-namespace App\Controller\Admin;
+namespace App\Controller\Admin\Auth;
 
 use App\Controller\Admin\AdminAppController;
 use Cake\Event\EventInterface;
-use Carbon;
+use Carbon\Carbon;
 use App\Lib\Auth\AdminAuthInterface;
-use App\Action\Admin\ErrorAction as CtlAction;
+use App\Action\Admin\Auth\LogoutAction as CtlAction;
 
 
-class ErrorController extends AdminAppController
+class LogoutController extends AdminAppController
 {
     /**
      * 
@@ -44,6 +43,19 @@ class ErrorController extends AdminAppController
 
     public function index()
     {
-        $this->render('/Admin/Error/index');
+        try {
+            $this->ctlAction
+                ->deleteAdminAuth();
+
+            $this->Flash->info(__('ログアウトしました。'));
+
+            return $this->redirect([
+                'controller' => 'Login',
+                'action' => 'index',
+            ]);
+        } catch (Exception $ex) {
+            
+            return $this->getSystemErrorResponse($ex);
+        }
     }
 }

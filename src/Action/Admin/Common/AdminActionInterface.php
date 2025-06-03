@@ -7,7 +7,7 @@ namespace App\Action\Admin\Common;
 
 use Carbon\Carbon;
 use Cake\Http\ServerRequest;
-use App\Lib\Auth\AdminAuth;
+use App\Lib\Auth\AdminAuthInterface;
 
 interface AdminActionInterface
 {
@@ -33,10 +33,10 @@ interface AdminActionInterface
     
     /**
      * 
-     * @param AdminAuth $adminAuth
+     * @param AdminAuthInterface $adminAuth
      * @return $this
      */
-    public function setAdminAuth(AdminAuth $adminAuth) : static ;
+    public function setAdminAuth(AdminAuthInterface $adminAuth) : static ;
     
     /**
      * 
