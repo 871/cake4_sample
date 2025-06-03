@@ -5,10 +5,10 @@ namespace App\Action\Admin\Auth;
 
 use App\Action\Admin\Common\AdminActionInterface;
 use App\Action\Admin\Common\AdminActionBaseTrait;
-use App\Lib\Auth\AdminAuthInterface;
+use App\Lib\Auth\Admin\AuthInterface as AdminAuthInterface;
 use App\Action\Admin\Common\AdminClassSession as ClassSession;
 use App\Exception\AuthException;
-use App\Lib\Auth\AdminLoginAuthenticator;
+use App\Lib\Auth\Admin\LoginAuthenticator as AdminLoginAuthenticator;
 
 class LoginAction implements AdminActionInterface
 {

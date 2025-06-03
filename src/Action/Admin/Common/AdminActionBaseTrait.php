@@ -6,7 +6,7 @@ namespace App\Action\Admin\Common;
 
 use Carbon\Carbon;
 use Cake\Http\ServerRequest;
-use App\Lib\Auth\AdminAuthInterface;
+use App\Lib\Auth\Admin\AuthInterface as AdminAuthInterface;
 use App\Action\Admin\Common\AdminActionInterface;
 
 

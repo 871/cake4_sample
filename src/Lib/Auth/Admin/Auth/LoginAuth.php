@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace App\Lib\Auth;
+namespace App\Lib\Auth\Admin\Auth;
 
 use Carbon\Carbon;
-use App\Lib\Auth\AdminAuthInterface;
+use App\Lib\Auth\Admin\AuthInterface as AdminAuthInterface;
 
 
-class AdminLoginAuth implements AdminAuthInterface
+class LoginAuth implements AdminAuthInterface
 {
     /**
      * 

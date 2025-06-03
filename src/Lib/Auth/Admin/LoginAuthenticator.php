@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace App\Lib\Auth;
+namespace App\Lib\Auth\Admin;
 
 use Carbon\Carbon;
-use App\Lib\Auth\AdminAuthInterface;
+use App\Lib\Auth\Admin\AuthInterface as AdminAuthInterface;
 use App\Exception\AuthException;
 use Cake\Auth\DefaultPasswordHasher;
 use Cake\Http\ServerRequest;
@@ -14,14 +14,14 @@ use App\Model\Table\Login\LoginAdminFailuresLogsTable;
 use App\Model\Table\Login\LoginAdminSuccessLogsTable;
 use App\Model\Table\Login\LoginErrorMastersTable;
 use App\Lib\Util\UUID;
-use App\Lib\Auth\AdminLoginAuth;
+use App\Lib\Auth\Admin\Auth\LoginAuth as AdminLoginAuth;
 
 
 /**
  * 
  * 管理者用ログイン判定クラス
  */
-class AdminLoginAuthenticator
+class LoginAuthenticator
 {
     const LIMIT_LOGIN_FAILURES_COUNT = 5;
     

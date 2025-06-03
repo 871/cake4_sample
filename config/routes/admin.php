@@ -17,7 +17,8 @@ $builder->prefix('Admin', ['path' => '/ad'], static function (RouteBuilder $buil
         $builder->registerMiddleware('adminAuth', new App\Middleware\Auth\AdminAuthMiddleware())->applyMiddleware('adminAuth');
 
         $builder->get('/', ['controller' => 'Top', 'action' => 'index']);
-        $builder->get('/error/:message_key', ['controller' => 'Error', 'action' => 'index']);
+        $builder->get('/error', ['controller' => 'Error', 'action' => 'index']);
+        $builder->get('/error/:message_id', ['controller' => 'Error', 'action' => 'index']);
         // 管理者ログアウト
         $builder->prefix('Auth', ['path' => ''], static function (RouteBuilder $builder) {
             
@@ -25,11 +26,11 @@ $builder->prefix('Admin', ['path' => '/ad'], static function (RouteBuilder $buil
             $builder->post('/logout', ['controller' => 'Logout', 'action' => 'index']);
         });
         // ログイン管理者情報
-        $builder->prefix('SelfInfo', ['path' => 'self_info'], static function (RouteBuilder $builder) {
+        $builder->prefix('SelfInfo', ['path' => '/self_info'], static function (RouteBuilder $builder) {
             // 詳細
             $builder->get('/detail', ['controller' => 'Detail', 'action' => 'index']);
             // アカウント情報
-            $builder->prefix('AccountInfo', ['path' => 'account_info'], static function (RouteBuilder $builder) {
+            $builder->prefix('AccountInfo', ['path' => '/account_info'], static function (RouteBuilder $builder) {
                 // 更新
                 $builder->get('/edit', ['controller' => 'Edit', 'action' => 'index']);
                 $builder->get('/edit/input/:tmp_id', ['controller' => 'Edit', 'action' => 'input']);
@@ -38,7 +39,7 @@ $builder->prefix('Admin', ['path' => '/ad'], static function (RouteBuilder $buil
                 $builder->post('/edit/conf/:tmp_id', ['controller' => 'Edit', 'action' => 'confPost']);
             });
             // パスワード
-            $builder->prefix('Password', ['path' => 'password'], static function (RouteBuilder $builder) {
+            $builder->prefix('Password', ['path' => '/password'], static function (RouteBuilder $builder) {
                 // 更新
                 $builder->get('/edit', ['controller' => 'Edit', 'action' => 'index']);
                 $builder->get('/edit/input/:tmp_id', ['controller' => 'Edit', 'action' => 'input']);
@@ -95,6 +96,7 @@ $builder->prefix('Admin', ['path' => '/ad'], static function (RouteBuilder $buil
             });
         });
     });
+    /**/
     
 
 

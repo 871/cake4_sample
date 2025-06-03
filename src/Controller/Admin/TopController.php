@@ -1,13 +1,12 @@
 <?php
 declare(strict_types=1);
 
-
 namespace App\Controller\Admin;
 
 use App\Controller\Admin\AdminAppController;
 use Cake\Event\EventInterface;
 use Carbon\Carbon;
-use App\Lib\Auth\AdminAuthInterface;
+use App\Lib\Auth\Admin\AuthInterface as AdminAuthInterface;
 use App\Action\Admin\TopAction as CtlAction;
 
 

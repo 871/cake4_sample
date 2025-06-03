@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Lib\Auth;
+namespace App\Lib\Auth\Admin;
 
 use Carbon\Carbon;
 
@@ -27,7 +27,7 @@ use Carbon\Carbon;
         UNIQUE KEY user_accounts_idx02 (email)
     ) COMMENT='管理者アカウント';
  */
-interface AdminAuthInterface
+interface AuthInterface
 {
     public function getId() : int;
     

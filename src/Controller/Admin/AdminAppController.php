@@ -7,25 +7,23 @@ use App\Controller\AppController;
 use Cake\Event\EventInterface;
 use Exception;
 use Cake\Http\Response;
-use App\Lib\Auth\AdminAuthInterface;
+use App\Lib\Auth\Admin\AuthInterface as AdminAuthInterface;
 
 class AdminAppController extends AppController
 {
-    
-    
     public function initialize(): void
     {
         parent::initialize();
         
     }
-    
+
     public function beforeFilter(EventInterface $event)
     {
         parent::beforeFilter($event);
         
         $this->viewBuilder()->setLayout('after_login');
     }
-    
+
     protected function getInstanceForAdminLoginAuth() : AdminAuthInterface
     {
         $key = ADMIN_AUTH_KEY . '.' . (string) $this->request->getParam('admin_account_id');

@@ -6,8 +6,8 @@ namespace App\Controller\Admin;
 
 use App\Controller\Admin\AdminAppController;
 use Cake\Event\EventInterface;
-use Carbon;
-use App\Lib\Auth\AdminAuthInterface;
+use Carbon\Carbon;
+use App\Lib\Auth\Admin\AuthInterface as AdminAuthInterface;
 use App\Action\Admin\ErrorAction as CtlAction;
 
 

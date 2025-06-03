@@ -1,5 +1,5 @@
 <?php
-    use App\Lib\Auth\AdminAuthInterface;
+    use App\Lib\Auth\Admin\AuthInterface as AdminAuthInterface;
     
     $admin_account_id = $this->getRequest()->getParam('admin_account_id');
     /** @var AdminAuthInterface */
