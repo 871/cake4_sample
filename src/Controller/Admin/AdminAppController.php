@@ -24,13 +24,6 @@ class AdminAppController extends AppController
         $this->viewBuilder()->setLayout('after_login');
     }
 
-    protected function getInstanceForAdminLoginAuth() : AdminAuthInterface
-    {
-        $key = ADMIN_AUTH_KEY . '.' . (string) $this->request->getParam('admin_account_id');
-        
-        return $this->request->getSession()->read($key);
-    }
-
     protected function getSystemErrorResponse(Exception $ex) : Response
     {
         Log::error(

@@ -15,10 +15,17 @@ class LoginAuth implements AdminAuthInterface
      * @var array
      */
     private array $admin_account;
+    
+    /**
+     * 
+     * @var Carbon
+     */
+    private Carbon $loginDatetime;
 
-    public function __construct(array $admin_account)
+    public function __construct(array $admin_account, Carbon $loginDatetime)
     {
        $this->admin_account = $admin_account;
+       $this->loginDatetime = $loginDatetime;
     }
 
     public function getId(): int
@@ -88,5 +95,10 @@ class LoginAuth implements AdminAuthInterface
     public function getModifiedIp(): string
     {   
        return (string) $this->admin_account['modified_ip'];
+    }
+
+    public function getLoginDatetime(): string
+    {
+        return $this->loginDatetime;
     }
 }

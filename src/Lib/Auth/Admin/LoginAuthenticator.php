@@ -72,6 +72,12 @@ class LoginAuthenticator
      * @var array
      */
     private array $admin_account;
+    
+    /**
+     * 
+     * @var AdminAuthInterface
+     */
+    private AdminAuthInterface $adminAuth;
 
     /**
      * 
@@ -135,6 +141,7 @@ class LoginAuthenticator
                 ->checkPassword()
                 ->checkExpirationDatetime()
                 ->saveLoginSuccessLog()
+                ->createAdminLoginAuth()
                 ;
         } catch (AuthException $ex) {
 
@@ -146,14 +153,14 @@ class LoginAuthenticator
         
         return $this;
     }
-
+    
     /**
      * 
      * @return AdminAuthInterface
      */
     public function getResult() : AdminAuthInterface
     {
-        return new AdminLoginAuth($this->admin_account);
+        return $this->adminAuth;
     }
 
     /**
@@ -313,6 +320,21 @@ class LoginAuthenticator
                 );
         }
         
+        return $this;
+    }
+    
+    /**
+     * 
+     * @return self
+     */
+    private function createAdminLoginAuth() : self
+    {
+        $this->adminAuth = new AdminLoginAuth($this->admin_account, $this->currentDatetime);
+        
+        $authSessionKey = ADMIN_AUTH_KEY . '.' . (string) $this->adminAuth->getId();
+
+        $this->serverRequest->getSession()->write($authSessionKey, $this->adminAuth);
+
         return $this;
     }
 }

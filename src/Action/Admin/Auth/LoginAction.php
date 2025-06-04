@@ -125,9 +125,6 @@ class LoginAction implements AdminActionInterface
                 ->execute()
                 ->getResult()
                 ;
-            $authSessionKey = ADMIN_AUTH_KEY . '.' . (string) $this->adminAuth->getId();
-            
-            $this->serverRequest->getSession()->write($authSessionKey, $this->adminAuth);
         } catch (AuthException $ex) {
             // Memo: 例外のスローを明示
             throw $ex;

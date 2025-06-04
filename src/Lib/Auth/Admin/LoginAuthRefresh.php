@@ -7,17 +7,14 @@ namespace App\Lib\Auth\Admin;
 use Carbon\Carbon;
 use App\Lib\Auth\Admin\AuthInterface as AdminAuthInterface;
 use Exception;
-use Cake\Auth\DefaultPasswordHasher;
 use Cake\Http\ServerRequest;
 use App\Model\Table\Admin\AdminAccountsTable;
-use App\Model\Table\Login\LoginErrorMastersTable;
-use App\Lib\Util\UUID;
 use App\Lib\Auth\Admin\Auth\LoginAuth as AdminLoginAuth;
 
 
 /**
  * 
- * 管理者用ログイン判定クラス
+ * 管理者用ログイン情報、最新化クラス
  */
 class LoginAuthRefresh
 {
@@ -45,6 +42,12 @@ class LoginAuthRefresh
      * @var array
      */
     private array $admin_account;
+    
+    /**
+     * 
+     * @var AdminAuthInterface
+     */
+    private AdminAuthInterface $adminAuth;
 
     /**
      * 
@@ -75,7 +78,7 @@ class LoginAuthRefresh
     {   
         return $this
             ->loadAdminAccount()
-            
+            ->createAdminLoginAuth()
             ;
     }
 
@@ -95,6 +98,21 @@ class LoginAuthRefresh
                 'adminAccountsTable data not fund'
                 . '[id: ' . (string) $this->serverRequest->getParam('admin_account_id') . ']'
             );
+
+        return $this;
+    }
+
+    /**
+     * 
+     * @return self
+     */
+    private function createAdminLoginAuth() : self
+    {
+        $this->adminAuth = new AdminLoginAuth($this->admin_account, $this->currentDatetime);
+        
+        $authSessionKey = ADMIN_AUTH_KEY . '.' . (string) $this->adminAuth->getId();
+
+        $this->serverRequest->getSession()->write($authSessionKey, $this->adminAuth);
 
         return $this;
     }

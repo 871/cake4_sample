@@ -33,8 +33,7 @@ class LoginController extends AdminAppController
 
         $this->ctlAction = CtlAction::getInstance()
                 ->setCurrentDatetime($this->currentDatetime)
-                ->setRequest($this->getRequest())
-                ;
+                ->setRequest($this->getRequest());
         if (
             !$this->ctlAction->checkInput() 
             && !in_array($this->request->getParam('action'), ['index',], true)

@@ -55,4 +55,5 @@ interface AuthInterface
     
     public function getModifiedIp() : string;
     
+    public function getLoginDatetime() : string;
 }

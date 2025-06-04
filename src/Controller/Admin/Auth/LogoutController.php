@@ -8,7 +8,7 @@ use Cake\Event\EventInterface;
 use Carbon\Carbon;
 use App\Lib\Auth\Admin\AuthInterface as AdminAuthInterface;
 use App\Action\Admin\Auth\LogoutAction as CtlAction;
-
+use App\Lib\Auth\Admin\LoginAuthReference;
 
 class LogoutController extends AdminAppController
 {
@@ -33,12 +33,13 @@ class LogoutController extends AdminAppController
         parent::beforeFilter($event);
 
         $this->currentDatetime = new Carbon();
-        $this->adminAuth = $this->getInstanceForAdminLoginAuth();
+        $this->adminAuth = LoginAuthReference::getInstance($this->currentDatetime, $this->getRequest())
+                ->execute()
+                ->getResult();
         $this->ctlAction = CtlAction::getInstance()
                 ->setCurrentDatetime($this->currentDatetime)
                 ->setAdminAuth($this->adminAuth)
-                ->setRequest($this->getRequest())
-                ;
+                ->setRequest($this->getRequest());
     }
 
     public function index()
