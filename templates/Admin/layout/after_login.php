@@ -31,11 +31,21 @@
 <body>
     <nav class="top-nav">
         <div class="top-nav-title">
-            <a href="<?= $this->Url->build('/ad/') ?>">システムタイトル(管理者ページ)</a>
+            <a href="<?= $this->Url->build([
+                'admin_account_id' => $admin_account_id,
+                'prefix' => 'Admin',
+                'controller' => 'Top',
+                'action' => 'index',
+            ]) ?>">システムタイトル(管理者ページ)</a>
         </div>
         <div class="top-nav-links">
             <a 
-                href="#"
+                href="<?= $this->Url->build([
+                    'admin_account_id' => $admin_account_id,
+                    'prefix' => 'Admin/SelfInfo',
+                    'controller' => 'Detail',
+                    'action' => 'index',
+                ]) ?>"
             ><?= h($adminAuth->getName()) ?></a>
             <a 
                 href="<?= $this->Url->build([

@@ -24,6 +24,12 @@ class DetailController extends AdminAppController
      * @var AdminAuthInterface
      */
     private AdminAuthInterface $adminAuth;
+    
+    /**
+     * 
+     * @var CtlAction
+     */
+    private CtlAction $ctlAction;
 
     /**
      * 
@@ -46,7 +52,9 @@ class DetailController extends AdminAppController
     public function index()
     {
         try {
-
+            $this->set([
+                'adminAccount' => $this->ctlAction->findAdminAccount(),
+            ]);
 
             return $this->render('/Admin/SelfInfo/Detail/index');                    
         } catch (Exception $ex) {
