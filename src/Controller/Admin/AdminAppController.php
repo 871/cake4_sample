@@ -27,10 +27,10 @@ class AdminAppController extends AppController
     protected function getSystemErrorResponse(Exception $ex) : Response
     {
         Log::error(
-                $ex->getMessage()
-                . '[File: ' . $ex->getFile() . ']' 
-                . '[Line: ' . $ex->getLine() . ']' 
-            );
+            $ex->getMessage()
+            . '[File: ' . $ex->getFile() . ']' 
+            . '[Line: ' . $ex->getLine() . ']' 
+        );
             
         $message_id = uniqid();
         $admin_account_id = (string) $this->request->getParam('admin_account_id');

@@ -27,12 +27,12 @@ class AdminClassSession
      * @param ServerRequest $serverRequest
      * @return self
      */
-    public static function getInstance(string $className, ServerRequest $serverRequest) : self
+    public static function getInstance(string $className, ServerRequest $serverRequest, ?string $tmp_id = null) : self
     {
         $session_key = join('.', array_filter([
-            $serverRequest->getParam('admin_account_id', 'other'),
+            $serverRequest->getParam('admin_account_id', 'ad_other'),
             Inflector::camelize($className),
-            $serverRequest->getParam('tmp_id', null),
+            $serverRequest->getParam('tmp_id', $tmp_id),
         ]));
         
         static $insList = [];
