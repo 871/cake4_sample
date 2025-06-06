@@ -66,10 +66,10 @@ class EditController extends AdminAppController
             $tmp_id = uniqid();
             
             $this->ctlAction
-                ->resetErrorMessages()
+                ->resetErrors()
                 ->initializeInput($tmp_id)
                 ;
-            
+
             return $this->redirect([
                 'action' => 'input',
                 'admin_account_id' => $this->request->getParam('admin_account_id'),
@@ -87,7 +87,8 @@ class EditController extends AdminAppController
         try {
             $this->set([
                 'input' => $this->ctlAction->getInput(),
-                'errorMessages' => $this->ctlAction->getErrorMessages(),
+                'messages' => $this->ctlAction->getErrorMessages(),
+                'errors' => $this->ctlAction->getErrorClasses(),
             ]);
             
             $this->render('/Admin/SelfInfo/AccountInfo/Edit/input');
@@ -101,9 +102,9 @@ class EditController extends AdminAppController
     {
         try {
             $this->ctlAction
-                ->resetErrorMessages()
+                ->resetErrors()
                 ->updateInput()
-                ->runValidation()
+                ->runValidate()
                 ;
 
             return $this->redirect([
@@ -113,8 +114,7 @@ class EditController extends AdminAppController
                 '?' => $this->request->getQuery(),
             ]);
         } catch (ValidateException $ex) {
-            
-            
+
             return $this->redirect([
                 'action' => 'input',
                 'admin_account_id' => $this->request->getParam('admin_account_id'),
@@ -133,6 +133,8 @@ class EditController extends AdminAppController
             $this->set([
                 'input' => $this->ctlAction->getInput(),
             ]);
+            
+            $this->render('/Admin/SelfInfo/AccountInfo/Edit/conf');
         } catch (Exception $ex) {
             
             return $this->getSystemErrorResponse($ex);
@@ -143,9 +145,7 @@ class EditController extends AdminAppController
     {
         try {
             $this->ctlAction
-                ->resetErrorMessage()
-                ->updateInput()
-                ->runValidation()
+                ->runValidate()
                 ->save()
                 ->deleteInput()
                 ->authRefresh();
@@ -155,7 +155,7 @@ class EditController extends AdminAppController
             return $this->redirect([
                 'prefix' => 'Admin/SelfInfo',
                 'controller' => 'Detail',
-                'action' => 'input',
+                'action' => 'index',
                 'admin_account_id' => $this->request->getParam('admin_account_id'),
                 '?' => $this->request->getQuery(),
             ]);

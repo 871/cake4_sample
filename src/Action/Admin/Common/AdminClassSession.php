@@ -30,7 +30,8 @@ class AdminClassSession
     public static function getInstance(string $className, ServerRequest $serverRequest, ?string $tmp_id = null) : self
     {
         $session_key = join('.', array_filter([
-            $serverRequest->getParam('admin_account_id', 'ad_other'),
+            'admin_input',
+            (string) $serverRequest->getParam('admin_account_id', 'ad_other'),
             Inflector::camelize($className),
             $serverRequest->getParam('tmp_id', $tmp_id),
         ]));
