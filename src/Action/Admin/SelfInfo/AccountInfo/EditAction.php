@@ -16,6 +16,8 @@ use Cake\Validation\Validator;
 use App\Lib\Util\UUID;
 use Cake\Utility\Hash;
 use Cake\Auth\DefaultPasswordHasher;
+use Cake\ORM\Query;
+use Cake\Database\Expression\QueryExpression;
 
 class EditAction implements AdminActionInterface
 {
@@ -52,19 +54,24 @@ class EditAction implements AdminActionInterface
     public function initializeInput(string $tmp_id) : self
     {
         $data = $this->findAdminAccount();
+        
+        $initData = [
+            'id' => $data['id'],
+            'name' => $data['name'],
+            'username' => $data['username'],
+            'email' => $data['email'],
+            'tel' => $data['tel'],
+            'modified' => $data['modified']?->format('Y-m-d H:i:s'),
+            'show_created' => $data['created']?->format('Y/m/d H:i:s'),
+            'show_modified' => $data['modified']?->format('Y/m/d H:i:s'),
+            'conf_password' => '',
+        ];
 
         ClassSession::getInstance(self::class, $this->serverRequest, $tmp_id)
-            ->write([
-                'id' => $data['id'],
-                'name' => $data['name'],
-                'username' => $data['username'],
-                'email' => $data['email'],
-                'tel' => $data['tel'],
-                'modified' => $data['modified']?->format('Y-m-d H:i:s'),
-                'show_created' => $data['created']?->format('Y/m/d H:i:s'),
-                'show_modified' => $data['modified']?->format('Y/m/d H:i:s'),
-                'conf_password' => '',
-            ]);
+            ->write($initData);
+        
+        ClassSession::getInstance(self::class . '.init', $this->serverRequest, $tmp_id)
+            ->write($initData);
 
         return $this;
     }
@@ -240,6 +247,19 @@ class EditAction implements AdminActionInterface
     private function createValidator() : Validator
     {
         return (new Validator())
+            ->add('id', [
+                'is_not_edit' => [
+                    'rule' => function($value, $context) {
+
+                        $init = ClassSession::getInstance(self::class . '.init', $this->serverRequest)->read();
+                        $input = $context['data'];
+                        unset($input['conf_password']);
+
+                        return array_diff_assoc($input, $init) !== [];
+                    },
+                    'message' => __('入力内容が変更されていません。'),
+                ],
+            ])
             ->add('modified', [
                 'other_edited' => [
                     'rule' => function($value, $context) {

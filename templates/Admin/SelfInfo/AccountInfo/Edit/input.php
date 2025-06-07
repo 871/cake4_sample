@@ -3,14 +3,19 @@
 // debug($messages);
 
 ?>
-<h2>アカウント情報更新</h2>
-<?= $this->Flash->render() ?>
 <div class="row">
     <?= $this->element('left_menu') ?>
     <div class="column-responsive column-80">
         <div class="row">
             <div class="column">
-                <?= $this->element('breadcrumbs', ['show' => 'self_info_account_info']) ?>
+                <?= $this->element('top_menu', ['show' => 'self_info_detail-account_info_edit']) ?>
+            </div>
+        </div>
+        <h2>アカウント情報更新</h2>
+        <?= $this->Flash->render() ?>
+        <div class="row">
+            <div class="column">
+                <?= $this->element('breadcrumbs', ['show' => 'self_info_detail-account_info_edit']) ?>
             </div>
         </div>
     <?php if ($messages) { ?>
