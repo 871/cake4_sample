@@ -8,14 +8,14 @@
     <div class="column-responsive column-80">
         <div class="row">
             <div class="column">
-                <?= $this->element('top_menu', ['show' => 'self_info_detail-account_info_edit']) ?>
+                <?= $this->element('top_menu', ['show' => 'self_info_detail-password_edit']) ?>
             </div>
         </div>
-        <h2>アカウント情報更新</h2>
+        <h2>パスワード情報更新</h2>
         <?= $this->Flash->render() ?>
         <div class="row">
             <div class="column">
-                <?= $this->element('breadcrumbs', ['show' => 'self_info_detail-account_info_edit']) ?>
+                <?= $this->element('breadcrumbs', ['show' => 'self_info_detail-password_edit']) ?>
             </div>
         </div>
     <?php if ($messages) { ?>
@@ -38,53 +38,47 @@
                         <dd>
                             <?= h($input['username'] ?? '---') ?>
                         </dd>
-                        <dt>
-                            表示名
-                            <span style="color: #ef5753;">※</span>
-                        </dt>
+                        <dt>パスワードの有効期限</dt>
                         <dd>
-                            <input 
-                                type="text" 
-                                name="name" 
-                                value="<?= h($input['name']) ?>" 
-                                class="<?= h($errors['name'] ?? '') ?>" 
-                                placeholder="表示名"
-                            >
+                            <?= h($input['show_expiration_datetime'] ?? '----/--/-- --:--:--') ?>
                         </dd>
                         <dt>
-                            メールアドレス
-                            <span style="color: #ef5753;">※</span>
-                        </dt>
-                        <dd>
-                            <input 
-                                type="text" 
-                                name="email" 
-                                value="<?= h($input['email']) ?>" 
-                                class="<?= h($errors['email'] ?? '') ?>" 
-                                placeholder="メールアドレス"
-                            >
-                        </dd>
-                        <dt>電話番号</dt>
-                        <dd>
-                            <input 
-                                type="text" 
-                                name="tel" 
-                                value="<?= h($input['tel']) ?>" 
-                                class="<?= h($errors['tel'] ?? '') ?>"
-                                placeholder="電話番号"
-                            >
-                        </dd>
-                        <dt>
-                            確認パスワード
+                            新パスワード
                             <span style="color: #ef5753;">※</span>
                         </dt>
                         <dd>
                             <input 
                                 type="password" 
-                                name="conf_password" 
+                                name="new_password" 
                                 value="" 
-                                class="<?= h($errors['conf_password'] ?? '') ?>"
-                                placeholder="確認パスワード"
+                                class="<?= h($errors['new_password'] ?? '') ?>" 
+                                placeholder="新パスワード"
+                            >
+                        </dd>
+                        <dt>
+                            新パスワード(確認)
+                            <span style="color: #ef5753;">※</span>
+                        </dt>
+                        <dd>
+                            <input 
+                                type="password" 
+                                name="new_password_conf" 
+                                value="" 
+                                class="<?= h($errors['new_password_conf'] ?? '') ?>" 
+                                placeholder="新パスワード(確認)"
+                            >
+                        </dd>
+                        <dt>
+                            現在のパスワード
+                            <span style="color: #ef5753;">※</span>
+                        </dt>
+                        <dd>
+                            <input 
+                                type="password" 
+                                name="old_password" 
+                                value="" 
+                                class="<?= h($errors['old_password'] ?? '') ?>"
+                                placeholder="現在のパスワード"
                             >
                         </dd>
                         <dt>作成日時</dt>

@@ -16,7 +16,7 @@ class LogoutAction implements AdminActionInterface
         $authSessionKey = ADMIN_AUTH_KEY . '.' . (string) $this->adminAuth->getId();
         
         $this->serverRequest->getSession()->delete($authSessionKey);
-        $this->serverRequest->getSession()->delete((string) $this->adminAuth->getId());
+        $this->serverRequest->getSession()->delete('admin_input.' . (string) $this->adminAuth->getId());
         
         return $this;
     }

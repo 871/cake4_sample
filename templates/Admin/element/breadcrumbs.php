@@ -28,4 +28,13 @@
     &nbsp; >> &nbsp; <b>アカウント情報更新</b>
 <?php } ?>
 
-    
+<?php if ($show === 'self_info_detail-password_edit') { ?>
+    <a href="<?= $topPageUrl ?>">TOP</a>
+    &nbsp; >> &nbsp; <a href="<?= $this->Url->build([
+        'admin_account_id' => $admin_account_id,
+        'prefix' => 'Admin/SelfInfo',
+        'controller' => 'Detail',
+        'action' => 'index',
+    ]) ?>">ログイン管理者情報</a>
+    &nbsp; >> &nbsp; <b>パスワード情報更新</b>
+<?php } ?>

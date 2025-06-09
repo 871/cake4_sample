@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace App\Action\Admin\SelfInfo\AccountInfo;
+namespace App\Action\Admin\SelfInfo\Password;
 
 use App\Action\Admin\Common\AdminActionInterface;
 use App\Action\Admin\Common\AdminActionBaseTrait;
@@ -16,6 +16,9 @@ use Cake\Validation\Validator;
 use App\Lib\Util\UUID;
 use Cake\Utility\Hash;
 use Cake\Auth\DefaultPasswordHasher;
+use App\Lib\Util\Password;
+use Carbon\Carbon;
+
 
 class EditAction implements AdminActionInterface
 {
@@ -55,14 +58,15 @@ class EditAction implements AdminActionInterface
         
         $initData = [
             'id' => $data['id'],
-            'name' => $data['name'],
             'username' => $data['username'],
-            'email' => $data['email'],
-            'tel' => $data['tel'],
+            'new_password' => '',
+            'new_password_conf' => '',
+            'old_password' => '',
+            'expiration_datetime' => $data['expiration_datetime']?->format('Y-m-d H:i:s'),
             'modified' => $data['modified']?->format('Y-m-d H:i:s'),
+            'show_expiration_datetime' => $data['expiration_datetime']?->format('Y/m/d H:i:s'),
             'show_created' => $data['created']?->format('Y/m/d H:i:s'),
             'show_modified' => $data['modified']?->format('Y/m/d H:i:s'),
-            'conf_password' => '',
         ];
 
         ClassSession::getInstance(self::class, $this->serverRequest, $tmp_id)
@@ -101,10 +105,9 @@ class EditAction implements AdminActionInterface
         $classSession = ClassSession::getInstance(self::class, $this->serverRequest);
         
         $classSession->write(array_merge($classSession->read(), [
-            'name' => $this->serverRequest->getData('name'),
-            'email' => $this->serverRequest->getData('email'),
-            'tel' => $this->serverRequest->getData('tel'),
-            'conf_password' => $this->serverRequest->getData('conf_password'),
+            'new_password' => $this->serverRequest->getData('new_password'),
+            'new_password_conf' => $this->serverRequest->getData('new_password_conf'),
+            'old_password' => $this->serverRequest->getData('old_password'),
         ]));
         
         return $this;
@@ -244,20 +247,8 @@ class EditAction implements AdminActionInterface
      */
     private function createValidator() : Validator
     {
+        
         return (new Validator())
-            ->add('id', [
-                'is_not_edit' => [
-                    'rule' => function($value, $context) {
-
-                        $init = ClassSession::getInstance(self::class . '.init', $this->serverRequest)->read();
-                        $input = $context['data'];
-                        unset($input['conf_password']);
-
-                        return array_diff_assoc($input, $init) !== [];
-                    },
-                    'message' => __('入力内容が変更されていません。'),
-                ],
-            ])
             ->add('modified', [
                 'other_edited' => [
                     'rule' => function($value, $context) {
@@ -267,30 +258,56 @@ class EditAction implements AdminActionInterface
                             'modified' => $value,
                         ]);
                     },
-                    'message' => __('別プロセスで{0}が更新されました。', __('アカウント情報')),
+                    'message' => __('別プロセスで{0}が更新されました。', __('パスワード')),
                 ],
             ])
-            ->notEmptyString('name', __('{0}を入力してください。', __('表示名')))
-            ->maxLength('name', 50, __('{0}は{1}文字以内で入力してください。', __('表示名'), 50))
-            ->notEmptyString('email', __('{0}を入力してください。', __('メールアドレス')))
-            ->maxLength('email', 50, __('{0}は{1}文字以内で入力してください。', __('メールアドレス'), 50))
-            ->email('email', false, __('{0}のフォーマットが不正です。', __('メールアドレス')))
-            ->add('email', [
-                'unique' => [
+            ->notEmptyString('new_password', __('{0}を入力してください。', __('新パスワード')))
+            ->add('new_password', [
+                'format' => [
+                    'rule' => function($value) {
+                        
+                        return Password::check($value);
+                    },
+                    'message' => Password::errorMsg(__('新パスワード')),
+                ],
+            ])
+            ->add('new_password', [
+                'change' => [
+                    'rule' => function($value) {
+                        
+                        $list = $this->adminAccountHistoriesTable
+                            ->find()
+                            ->select([
+                                'password',
+                            ])
+                            ->distinct()
+                            ->where([
+                                'admin_account_id' => $this->adminAuth->getId(),
+                                'created >=' => $this->currentDatetime->clone()->subMonths(6),
+                            ])
+                            ->all()
+                            ->filter(function($row) use ($value) {
+                                
+                                return (new DefaultPasswordHasher())->check($value, $row->toArray()['password']);
+                            })
+                            ->toArray();
+                        
+                        return $list === [];
+                    },
+                    'message' => __('過去半年以内に利用されたパスワードは使用できません。'),
+                ],
+            ])
+            ->notEmptyString('new_password_conf', __('{0}を入力してください。', __('新パスワード(確認)')))
+            ->add('new_password_conf', [
+                'input_conf' => [
                     'rule' => function($value, $context) {
                         
-                        return !$this->adminAccountsTable->exists([
-                            'email' => $value,
-                            'id !=' => $context['data']['id'],
-                        ]);
+                        return $value === $context['data']['new_password_conf'];
                     },
-                    'message' => __('入力された{0}は登録済みです。', __('メールアドレス')),
+                    'message' => __('入力された{0}が異なります。', __('新パスワード(確認)')),
                 ],
-            ])              
-            // ->notEmptyString('tel', __('{0}を入力してください。', '電話番号'))
-            ->maxLength('tel', 20, __('{0}は{1}文字以内で入力してください。', __('電話番号'), 20))
-            ->notEmptyString('conf_password', __('{0}を入力してください。', __('確認パスワード')))
-            ->add('conf_password', [
+            ])
+            ->add('old_password', [
                 'password_match' => [
                     'rule' => function($value, $context) {
                 
@@ -307,7 +324,7 @@ class EditAction implements AdminActionInterface
 
                         return (new DefaultPasswordHasher())->check($value, $data['password']);
                     },
-                    'message' => __('{0}が違います。', __('確認パスワード')),
+                    'message' => __('{0}が違います。', __('旧パスワード')),
                 ],
             ]);
     }
@@ -348,14 +365,21 @@ class EditAction implements AdminActionInterface
         $input = $this->getInput();
         
         $this->adminAccountsTable->patchEntity($this->adminAccount, [
-            'name' => $input['name'], 
-            'email' => $input['email'], 
-            'tel' => $input['tel'],
+            'password' => (new DefaultPasswordHasher())->hash($input['new_password']),
+            'expiration_datetime' => (function() use ($input) {
+                
+                $old = Carbon::parse($input['expiration_datetime']);
+                $new = $this->currentDatetime->clone()->addMonths(3);
+                
+                return $old->gt($new) // > 
+                    ? $old->toDateTimeString()
+                    : $new->toDateTimeString();
+            })(),
             'modified' => $this->currentDatetime->toDateTimeString(),
             'modified_account_id' => $this->adminAuth->getId(),
             'modified_ip' => $this->serverRequest->clientIp(),
         ]);
-        
+
         if (!$this->adminAccountsTable->save($this->adminAccount, [
             'checkExisting' => false,
         ])) {
@@ -377,26 +401,26 @@ class EditAction implements AdminActionInterface
     private function createAdminAccountHistories() : self
     {
         $data = $this->adminAccount->toArray();
-        
+
         $adminAccountHistory = $this->adminAccountHistoriesTable->newEntity(array_merge($data, [
             'id' => UUID::uuid7(),
             'admin_account_id' => $data['id'],
-            'remarks' => 'ログイン管理者情報、アカウント情報更新機能から更新',
+            'remarks' => 'ログイン管理者情報、パスワード更新機能から更新',
             'created' => $data['modified'],
             'created_account_id' => $data['modified_account_id'],
             'created_ip' => $data['modified_ip'],
         ]));
-        
+
         if (!$this->adminAccountHistoriesTable->save($adminAccountHistory, [
             'checkExisting' => false,
         ])) {
-            
+
             throw new Exception(
                 'adminAccountHistoriesTable save Error'
                 . '[' . print_r($adminAccountHistory, true) . ']'
             );
         }
-        
+
         return $this;
     }
 }

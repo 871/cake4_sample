@@ -9,14 +9,14 @@
     <div class="column-responsive column-80">
         <div class="row">
             <div class="column">
-                <?= $this->element('top_menu', ['show' => 'self_info_detail-account_info_edit']) ?>
+                <?= $this->element('top_menu', ['show' => 'self_info_detail-password_edit']) ?>
             </div>
         </div>
         <h2>アカウント情報更新</h2>
         <?= $this->Flash->render() ?>
         <div class="row">
             <div class="column">
-                <?= $this->element('breadcrumbs', ['show' => 'self_info_detail-account_info_edit']) ?>
+                <?= $this->element('breadcrumbs', ['show' => 'self_info_detail-password_edit']) ?>
             </div>
         </div>
         <div class="row">
@@ -32,26 +32,26 @@
                         <dd>
                             <?= h($input['username'] ? : '---') ?>
                         </dd>
+                        <dt>パスワードの有効期限</dt>
+                        <dd>
+                            <?= h($input['show_expiration_datetime'] ?? '----/--/-- --:--:--') ?>
+                        </dd>
                         <dt>
-                            表示名
+                            新パスワード
                             <span style="color: #ef5753;">※</span>
                         </dt>
                         <dd>
-                            <?= h($input['name'] ? : '---') ?>
+                            (非表示)
                         </dd>
                         <dt>
-                            メールアドレス
+                            新パスワード(確認)
                             <span style="color: #ef5753;">※</span>
                         </dt>
                         <dd>
-                            <?= h($input['email'] ? : '---') ?>
-                        </dd>
-                        <dt>電話番号</dt>
-                        <dd>
-                            <?= h($input['tel'] ? : '---') ?>
+                            (非表示)
                         </dd>
                         <dt>
-                            確認パスワード
+                            現在のパスワード
                             <span style="color: #ef5753;">※</span>
                         </dt>
                         <dd>
