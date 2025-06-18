@@ -63,17 +63,17 @@ class EditController extends AdminAppController
     public function index()
     {
         try {
-            $tmp_id = uniqid();
+            $input_id = uniqid();
             
             $this->ctlAction
                 ->resetErrors()
-                ->initializeInput($tmp_id)
+                ->initializeInput($input_id)
                 ;
 
             return $this->redirect([
                 'action' => 'input',
                 'admin_account_id' => $this->request->getParam('admin_account_id'),
-                'tmp_id' => $tmp_id,
+                'input_id' => $input_id,
                 '?' => $this->request->getQuery(),
             ]);
         } catch (Exception $ex) {
@@ -110,7 +110,7 @@ class EditController extends AdminAppController
             return $this->redirect([
                 'action' => 'conf',
                 'admin_account_id' => $this->request->getParam('admin_account_id'),
-                'tmp_id' => $this->request->getParam('tmp_id'),
+                'input_id' => $this->request->getParam('input_id'),
                 '?' => $this->request->getQuery(),
             ]);
         } catch (ValidateException $ex) {
@@ -118,7 +118,7 @@ class EditController extends AdminAppController
             return $this->redirect([
                 'action' => 'input',
                 'admin_account_id' => $this->request->getParam('admin_account_id'),
-                'tmp_id' => $this->request->getParam('tmp_id'),
+                'input_id' => $this->request->getParam('input_id'),
                 '?' => $this->request->getQuery(),
             ]);
         } catch (Exception $ex) {
@@ -164,7 +164,7 @@ class EditController extends AdminAppController
             return $this->redirect([
                 'action' => 'input',
                 'admin_account_id' => $this->request->getParam('admin_account_id'),
-                'tmp_id' => $this->request->getParam('tmp_id'),
+                'input_id' => $this->request->getParam('input_id'),
                 '?' => $this->request->getQuery(),
             ]);
         } catch (Exception $ex) {

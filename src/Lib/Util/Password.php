@@ -29,7 +29,7 @@ class Password
      * @param string $password
      * @return bool
      */
-    public static function check(string $password) : bool
+    public static function checkFormat(string $password) : bool
     {
         return mb_strlen($password) >= 8
             && preg_match('/[0-9]/', $password)
@@ -44,7 +44,7 @@ class Password
      * @param string|null $label
      * @return string
      */
-    public static function errorMsg(?string $label = null) : string
+    public static function formatErrorMsg(?string $label = null) : string
     {
         return __('{0}は8文字以上、大文字英字、小文字英字、数字、記号[!#$%&-@;:.~*?]を含む文字列で設定してください。', $label ?? __('パスワード'));
     }

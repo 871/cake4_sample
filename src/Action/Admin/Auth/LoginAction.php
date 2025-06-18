@@ -6,7 +6,8 @@ namespace App\Action\Admin\Auth;
 use App\Action\Admin\Common\AdminActionInterface;
 use App\Action\Admin\Common\AdminActionBaseTrait;
 use App\Lib\Auth\Admin\AuthInterface as AdminAuthInterface;
-use App\Action\Admin\Common\AdminClassSession as ClassSession;
+use App\Action\Admin\Common\AdminInput;
+use App\Action\Admin\Common\AdminError;
 use App\Exception\AuthException;
 use App\Lib\Auth\Admin\LoginAuthenticator as AdminLoginAuthenticator;
 
@@ -20,7 +21,7 @@ class LoginAction implements AdminActionInterface
      */
     public function initializeInput() : self
     {
-        ClassSession::getInstance(self::class, $this->serverRequest)
+        AdminInput::getInstance(self::class, $this->serverRequest)
             ->write([
                 'username' => '',
                 'password' => '',
@@ -35,7 +36,7 @@ class LoginAction implements AdminActionInterface
      */
     public function updateInput() : self
     {
-        ClassSession::getInstance(self::class, $this->serverRequest)
+        AdminInput::getInstance(self::class, $this->serverRequest)
             ->write([
                 'username' => $this->serverRequest->getData('username'),
                 'password' => $this->serverRequest->getData('password'),
@@ -50,7 +51,7 @@ class LoginAction implements AdminActionInterface
      */
     public function checkInput() : bool
     {
-        return ClassSession::getInstance(self::class, $this->serverRequest)->check();
+        return AdminInput::getInstance(self::class, $this->serverRequest)->check();
     }
 
     /**
@@ -59,7 +60,7 @@ class LoginAction implements AdminActionInterface
      */
     public function getInput() : array
     {
-        return ClassSession::getInstance(self::class, $this->serverRequest)->read();
+        return AdminInput::getInstance(self::class, $this->serverRequest)->read();
     }
     
     /**
@@ -68,7 +69,7 @@ class LoginAction implements AdminActionInterface
      */
     public function deleteInput() : self
     {
-        ClassSession::getInstance(self::class, $this->serverRequest)->delete();
+        AdminInput::getInstance(self::class, $this->serverRequest)->delete();
         
         return $this;
     }
@@ -79,7 +80,7 @@ class LoginAction implements AdminActionInterface
      */
     public function resetAuthErrorMessage() : self
     {
-        ClassSession::getInstance(self::class . '.authErrorMessage', $this->serverRequest)
+        AdminError::getInstance(self::class, $this->serverRequest)
             ->delete();
         
         return $this;
@@ -92,7 +93,7 @@ class LoginAction implements AdminActionInterface
      */
     public function setAuthErrorMessage(string $message) : self
     {
-        ClassSession::getInstance(self::class . '.authErrorMessage', $this->serverRequest)
+        AdminError::getInstance(self::class, $this->serverRequest)
             ->write($message);
         
         return $this;
@@ -104,7 +105,7 @@ class LoginAction implements AdminActionInterface
      */
     public function getAuthErrorMessage() : string
     {
-        return (string) ClassSession::getInstance(self::class . '.authErrorMessage', $this->serverRequest)
+        return (string) AdminError::getInstance(self::class, $this->serverRequest)
             ->read();
     }
 

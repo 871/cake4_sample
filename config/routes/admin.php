@@ -33,19 +33,19 @@ $builder->prefix('Admin', ['path' => '/ad'], static function (RouteBuilder $buil
             $builder->prefix('AccountInfo', ['path' => '/account_info'], static function (RouteBuilder $builder) {
                 // 更新
                 $builder->get('/edit', ['controller' => 'Edit', 'action' => 'index']);
-                $builder->get('/edit/input/:tmp_id', ['controller' => 'Edit', 'action' => 'input']);
-                $builder->post('/edit/input/:tmp_id', ['controller' => 'Edit', 'action' => 'inputPost']);
-                $builder->get('/edit/conf/:tmp_id', ['controller' => 'Edit', 'action' => 'conf']);
-                $builder->post('/edit/conf/:tmp_id', ['controller' => 'Edit', 'action' => 'confPost']);
+                $builder->get('/edit/input/:input_id', ['controller' => 'Edit', 'action' => 'input']);
+                $builder->post('/edit/input/:input_id', ['controller' => 'Edit', 'action' => 'inputPost']);
+                $builder->get('/edit/conf/:input_id', ['controller' => 'Edit', 'action' => 'conf']);
+                $builder->post('/edit/conf/:input_id', ['controller' => 'Edit', 'action' => 'confPost']);
             });
             // パスワード
             $builder->prefix('Password', ['path' => '/password'], static function (RouteBuilder $builder) {
                 // 更新
                 $builder->get('/edit', ['controller' => 'Edit', 'action' => 'index']);
-                $builder->get('/edit/input/:tmp_id', ['controller' => 'Edit', 'action' => 'input']);
-                $builder->post('/edit/input/:tmp_id', ['controller' => 'Edit', 'action' => 'inputPost']);
-                $builder->get('/edit/conf/:tmp_id', ['controller' => 'Edit', 'action' => 'conf']);
-                $builder->post('/edit/conf/:tmp_id', ['controller' => 'Edit', 'action' => 'confPost']);
+                $builder->get('/edit/input/:input_id', ['controller' => 'Edit', 'action' => 'input']);
+                $builder->post('/edit/input/:input_id', ['controller' => 'Edit', 'action' => 'inputPost']);
+                $builder->get('/edit/conf/:input_id', ['controller' => 'Edit', 'action' => 'conf']);
+                $builder->post('/edit/conf/:input_id', ['controller' => 'Edit', 'action' => 'confPost']);
             });
         });
         // ユーザアカウント管理
@@ -57,40 +57,40 @@ $builder->prefix('Admin', ['path' => '/ad'], static function (RouteBuilder $buil
             $builder->get('/detail/:user_account_id', ['controller' => 'Detail', 'action' => 'index']);
             // 作成
             $builder->get('/create', ['controller' => 'Create', 'action' => 'index']);
-            $builder->get('/create/input/:tmp_id', ['controller' => 'Create', 'action' => 'input']);
-            $builder->post('/create/input/:tmp_id', ['controller' => 'Create', 'action' => 'inputPost']);
-            $builder->get('/create/conf/:tmp_id', ['controller' => 'Create', 'action' => 'conf']);
-            $builder->post('/create/conf/:tmp_id', ['controller' => 'Create', 'action' => 'confPost']);
+            $builder->get('/create/input/:input_id', ['controller' => 'Create', 'action' => 'input']);
+            $builder->post('/create/input/:input_id', ['controller' => 'Create', 'action' => 'inputPost']);
+            $builder->get('/create/conf/:input_id', ['controller' => 'Create', 'action' => 'conf']);
+            $builder->post('/create/conf/:input_id', ['controller' => 'Create', 'action' => 'confPost']);
             // 更新
             $builder->get('/edit/:user_account_id', ['controller' => 'Edit', 'action' => 'index']);
-            $builder->get('/edit/input/:tmp_id', ['controller' => 'Edit', 'action' => 'input']);
-            $builder->post('/edit/input/:tmp_id', ['controller' => 'Edit', 'action' => 'inputPost']);
-            $builder->get('/edit/conf/:tmp_id', ['controller' => 'Edit', 'action' => 'conf']);
-            $builder->post('/edit/conf/:tmp_id', ['controller' => 'Edit', 'action' => 'confPost']);
+            $builder->get('/edit/input/:input_id', ['controller' => 'Edit', 'action' => 'input']);
+            $builder->post('/edit/input/:input_id', ['controller' => 'Edit', 'action' => 'inputPost']);
+            $builder->get('/edit/conf/:input_id', ['controller' => 'Edit', 'action' => 'conf']);
+            $builder->post('/edit/conf/:input_id', ['controller' => 'Edit', 'action' => 'confPost']);
             // 一括処理
             $builder->prefix('Bulk', ['path' => '/bulk'], static function (RouteBuilder $builder) {
                 // 一括登録
                 $builder->get('/create', ['controller' => 'Create', 'action' => 'index']);
-                $builder->get('/create/input/:tmp_id', ['controller' => 'Create', 'action' => 'input']);
-                $builder->post('/create/input/:tmp_id', ['controller' => 'Create', 'action' => 'inputPost']);
-                $builder->get('/create/conf/:tmp_id', ['controller' => 'Create', 'action' => 'conf']);
-                $builder->post('/create/conf/:tmp_id', ['controller' => 'Create', 'action' => 'confPost']);
+                $builder->get('/create/input/:input_id', ['controller' => 'Create', 'action' => 'input']);
+                $builder->post('/create/input/:input_id', ['controller' => 'Create', 'action' => 'inputPost']);
+                $builder->get('/create/conf/:input_id', ['controller' => 'Create', 'action' => 'conf']);
+                $builder->post('/create/conf/:input_id', ['controller' => 'Create', 'action' => 'confPost']);
                 // 一括更新
                 $builder->post('/edit', ['controller' => 'Edit', 'action' => 'index']);
-                $builder->get('/edit/input/:tmp_id', ['controller' => 'Edit', 'action' => 'input']);
-                $builder->post('/edit/input/:tmp_id', ['controller' => 'Edit', 'action' => 'inputPost']);
-                $builder->get('/edit/conf/:tmp_id', ['controller' => 'Edit', 'action' => 'conf']);
-                $builder->post('/edit/conf/:tmp_id', ['controller' => 'Edit', 'action' => 'confPost']);
+                $builder->get('/edit/input/:input_id', ['controller' => 'Edit', 'action' => 'input']);
+                $builder->post('/edit/input/:input_id', ['controller' => 'Edit', 'action' => 'inputPost']);
+                $builder->get('/edit/conf/:input_id', ['controller' => 'Edit', 'action' => 'conf']);
+                $builder->post('/edit/conf/:input_id', ['controller' => 'Edit', 'action' => 'confPost']);
             });
             // CSV処理 
             $builder->prefix('Csv', ['path' => '/csv'], static function (RouteBuilder $builder) {
                 // インポート
                 $builder->get('/import', ['controller' => 'Import', 'action' => 'index']);
-                $builder->get('/import/input/:tmp_id', ['controller' => 'Import', 'action' => 'input']);
-                $builder->post('/import/input/:tmp_id', ['controller' => 'Import', 'action' => 'inputPost']);
-                $builder->get('/import/conf/:tmp_id', ['controller' => 'Create', 'action' => 'conf']);
-                $builder->post('/import/conf/:tmp_id', ['controller' => 'Create', 'action' => 'confPost']);
-                $builder->get('/import/comp/:tmp_id', ['controller' => 'Create', 'action' => 'comp']);
+                $builder->get('/import/input/:input_id', ['controller' => 'Import', 'action' => 'input']);
+                $builder->post('/import/input/:input_id', ['controller' => 'Import', 'action' => 'inputPost']);
+                $builder->get('/import/conf/:input_id', ['controller' => 'Create', 'action' => 'conf']);
+                $builder->post('/import/conf/:input_id', ['controller' => 'Create', 'action' => 'confPost']);
+                $builder->get('/import/comp/:input_id', ['controller' => 'Create', 'action' => 'comp']);
                 // エクスポート
                 $builder->post('/export', ['controller' => 'Export', 'action' => 'index']);
             });

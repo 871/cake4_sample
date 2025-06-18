@@ -10,7 +10,9 @@ use App\Model\Entity\Admin\AdminAccount;
 use App\Model\Table\Admin\AdminAccountHistoriesTable;
 use Exception;
 use App\Exception\ValidateException;
-use App\Action\Admin\Common\AdminClassSession as ClassSession;
+use App\Action\Admin\Common\AdminInput;
+use App\Action\Admin\Common\AdminInitInput;
+use App\Action\Admin\Common\AdminError;
 use App\Lib\Auth\Admin\LoginAuthRefresh;
 use Cake\Validation\Validator;
 use App\Lib\Util\UUID;
@@ -52,7 +54,7 @@ class EditAction implements AdminActionInterface
      * 
      * @return self
      */
-    public function initializeInput(string $tmp_id) : self
+    public function initializeInput(string $input_id) : self
     {
         $data = $this->findAdminAccount();
         
@@ -69,10 +71,10 @@ class EditAction implements AdminActionInterface
             'show_modified' => $data['modified']?->format('Y/m/d H:i:s'),
         ];
 
-        ClassSession::getInstance(self::class, $this->serverRequest, $tmp_id)
+        AdminInput::getInstance(self::class, $this->serverRequest, $input_id)
             ->write($initData);
         
-        ClassSession::getInstance(self::class . '.init', $this->serverRequest, $tmp_id)
+        AdminInitInput::getInstance(self::class, $this->serverRequest, $input_id)
             ->write($initData);
 
         return $this;
@@ -102,7 +104,7 @@ class EditAction implements AdminActionInterface
      */
     public function updateInput() : self
     {
-        $classSession = ClassSession::getInstance(self::class, $this->serverRequest);
+        $classSession = AdminInput::getInstance(self::class, $this->serverRequest);
         
         $classSession->write(array_merge($classSession->read(), [
             'new_password' => $this->serverRequest->getData('new_password'),
@@ -119,8 +121,8 @@ class EditAction implements AdminActionInterface
      */
     public function checkInput() : bool
     {
-        return $this->serverRequest->getParam('tmp_id')
-            && ClassSession::getInstance(self::class, $this->serverRequest)->check();
+        return $this->serverRequest->getParam('input_id')
+            && AdminInput::getInstance(self::class, $this->serverRequest)->check();
     }
 
     /**
@@ -129,7 +131,7 @@ class EditAction implements AdminActionInterface
      */
     public function getInput() : array
     {
-        return ClassSession::getInstance(self::class, $this->serverRequest)->read();
+        return AdminInput::getInstance(self::class, $this->serverRequest)->read();
     }
     
     /**
@@ -138,7 +140,7 @@ class EditAction implements AdminActionInterface
      */
     public function deleteInput() : self
     {
-        ClassSession::getInstance(self::class, $this->serverRequest)->delete();
+        AdminInput::getInstance(self::class, $this->serverRequest)->delete();
 
         return $this;
     }
@@ -149,7 +151,7 @@ class EditAction implements AdminActionInterface
      */
     public function resetErrors() : self
     {
-        ClassSession::getInstance(self::class . '.errors', $this->serverRequest)
+        AdminError::getInstance(self::class, $this->serverRequest)
             ->delete();
 
         return $this;
@@ -161,7 +163,7 @@ class EditAction implements AdminActionInterface
      */
     public function getErrorMessages() : array
     {
-        $errors = (array) ClassSession::getInstance(self::class . '.errors', $this->serverRequest)
+        $errors = (array) AdminError::getInstance(self::class, $this->serverRequest)
             ->read();
         
         return Hash::flatten($errors);
@@ -173,7 +175,7 @@ class EditAction implements AdminActionInterface
      */
     public function getErrorClasses() : array
     {
-        $errors = (array) ClassSession::getInstance(self::class . '.errors', $this->serverRequest)
+        $errors = (array) AdminError::getInstance(self::class, $this->serverRequest)
             ->read();
         
         return array_map(function() {
@@ -194,7 +196,7 @@ class EditAction implements AdminActionInterface
         
         if ($errors !== []) {
             
-            ClassSession::getInstance(self::class . '.errors', $this->serverRequest)
+            AdminError::getInstance(self::class, $this->serverRequest)
                 ->write($errors);
             
             throw new ValidateException();
@@ -266,9 +268,9 @@ class EditAction implements AdminActionInterface
                 'format' => [
                     'rule' => function($value) {
                         
-                        return Password::check($value);
+                        return Password::checkFormat($value);
                     },
-                    'message' => Password::errorMsg(__('新パスワード')),
+                    'message' => Password::formatErrorMsg(__('新パスワード')),
                 ],
             ])
             ->add('new_password', [
@@ -324,7 +326,7 @@ class EditAction implements AdminActionInterface
 
                         return (new DefaultPasswordHasher())->check($value, $data['password']);
                     },
-                    'message' => __('{0}が違います。', __('旧パスワード')),
+                    'message' => __('{0}が違います。', __('現在のパスワード')),
                 ],
             ]);
     }

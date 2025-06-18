@@ -63,17 +63,17 @@ class EditController extends AdminAppController
     public function index()
     {
         try {
-            $tmp_id = uniqid();
+            $input_id = uniqid();
             
             $this->ctlAction
                 ->resetErrors()
-                ->initializeInput($tmp_id)
+                ->initializeInput($input_id)
                 ;
 
             return $this->redirect([
                 'action' => 'input',
                 'admin_account_id' => $this->request->getParam('admin_account_id'),
-                'tmp_id' => $tmp_id,
+                'input_id' => $input_id,
                 '?' => $this->request->getQuery(),
             ]);
         } catch (Exception $ex) {
@@ -102,23 +102,27 @@ class EditController extends AdminAppController
     {
         try {
             $this->ctlAction
+                ->lockInput()
                 ->resetErrors()
                 ->updateInput()
                 ->runValidate()
+                ->unlockInput()
                 ;
 
             return $this->redirect([
                 'action' => 'conf',
                 'admin_account_id' => $this->request->getParam('admin_account_id'),
-                'tmp_id' => $this->request->getParam('tmp_id'),
+                'input_id' => $this->request->getParam('input_id'),
                 '?' => $this->request->getQuery(),
             ]);
         } catch (ValidateException $ex) {
+            
+            $this->ctlAction->unlockInput();
 
             return $this->redirect([
                 'action' => 'input',
                 'admin_account_id' => $this->request->getParam('admin_account_id'),
-                'tmp_id' => $this->request->getParam('tmp_id'),
+                'input_id' => $this->request->getParam('input_id'),
                 '?' => $this->request->getQuery(),
             ]);
         } catch (Exception $ex) {
@@ -145,11 +149,13 @@ class EditController extends AdminAppController
     {
         try {
             $this->ctlAction
+                ->lockInput()
                 ->runValidate()
                 ->save()
                 ->deleteInput()
-                ->authRefresh();
-            
+                ->authRefresh()
+                ->unlockInput();
+
             $this->Flash->success(__('アカウント情報を更新しました。'));
 
             return $this->redirect([
@@ -161,14 +167,16 @@ class EditController extends AdminAppController
             ]);
         } catch (ValidateException $ex) {
 
+            $this->ctlAction->unlockInput();
+
             return $this->redirect([
                 'action' => 'input',
                 'admin_account_id' => $this->request->getParam('admin_account_id'),
-                'tmp_id' => $this->request->getParam('tmp_id'),
+                'input_id' => $this->request->getParam('input_id'),
                 '?' => $this->request->getQuery(),
             ]);
         } catch (Exception $ex) {
-            
+
             return $this->getSystemErrorResponse($ex);
         }
     }

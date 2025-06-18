@@ -41,27 +41,20 @@ class SearchController extends AdminAppController
         parent::beforeFilter($event);
 
         $this->currentDatetime = new Carbon();
-        $this->adminAuth = AdminAuth::createInstance($this->getRequest());
-
-        $this->categoryAction = CategoryAction::getInstance()
-            ->setCurrentDatetime($this->currentDatetime)
-            ->setAdminAuth($this->adminAuth)
-            ->setRequest($this->getRequest())
-            ;
-
+        $this->adminAuth = LoginAuthReference::getInstance($this->currentDatetime, $this->getRequest())
+                ->execute()
+                ->getResult();
         $this->ctlAction = CtlAction::getInstance()
-            ->setCurrentDatetime($this->currentDatetime)
-            ->setAdminAuth($this->adminAuth)
-            ->setRequest($this->getRequest())
-            ;
-        
+                ->setCurrentDatetime($this->currentDatetime)
+                ->setAdminAuth($this->adminAuth)
+                ->setRequest($this->getRequest());        
     }
     
     public function init()
     {
         try {
             
-            
+            $this->paginate();
             
             
         } catch (\Exception $e) {

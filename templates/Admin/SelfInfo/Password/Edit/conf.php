@@ -2,7 +2,7 @@
 
 
     $admin_account_id = $this->getRequest()->getParam('admin_account_id');
-    $tmp_id = $this->getRequest()->getParam('tmp_id');
+    $input_id = $this->getRequest()->getParam('input_id');
 ?>
 <div class="row">
     <?= $this->element('left_menu') ?>
@@ -69,7 +69,7 @@
                     <input type="submit" value="更新">
                     <a href="<?= $this->Url->build([
                         'admin_account_id' => $admin_account_id,
-                        'tmp_id' => $tmp_id,
+                        'input_id' => $input_id,
                         'action' => 'input',
                         '?' => $this->getRequest()->getQuery(),
                     ]) ?>" class="button">戻る</a>
