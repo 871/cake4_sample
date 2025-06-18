@@ -10,13 +10,13 @@ use App\Model\Entity\Admin\AdminAccount;
 use App\Model\Table\Admin\AdminAccountHistoriesTable;
 use Exception;
 use App\Exception\ValidateException;
+use App\Action\Admin\Common\AdminActionInputTrait;
 use App\Action\Admin\Common\AdminInput;
 use App\Action\Admin\Common\AdminInitInput;
 use App\Action\Admin\Common\AdminError;
 use App\Lib\Auth\Admin\LoginAuthRefresh;
 use Cake\Validation\Validator;
 use App\Lib\Util\UUID;
-use Cake\Utility\Hash;
 use Cake\Auth\DefaultPasswordHasher;
 use App\Lib\Util\Password;
 use Carbon\Carbon;
@@ -24,7 +24,8 @@ use Carbon\Carbon;
 
 class EditAction implements AdminActionInterface
 {
-    use AdminActionBaseTrait;
+    use AdminActionBaseTrait,
+        AdminActionInputTrait;
     
     /**
      * 
@@ -117,75 +118,6 @@ class EditAction implements AdminActionInterface
     
     /**
      * 
-     * @return bool
-     */
-    public function checkInput() : bool
-    {
-        return $this->serverRequest->getParam('input_id')
-            && AdminInput::getInstance(self::class, $this->serverRequest)->check();
-    }
-
-    /**
-     * 
-     * @return array
-     */
-    public function getInput() : array
-    {
-        return AdminInput::getInstance(self::class, $this->serverRequest)->read();
-    }
-    
-    /**
-     * 
-     * @return self
-     */
-    public function deleteInput() : self
-    {
-        AdminInput::getInstance(self::class, $this->serverRequest)->delete();
-
-        return $this;
-    }
-    
-    /**
-     * 
-     * @return self
-     */
-    public function resetErrors() : self
-    {
-        AdminError::getInstance(self::class, $this->serverRequest)
-            ->delete();
-
-        return $this;
-    }
-
-    /**
-     * 
-     * @return array
-     */
-    public function getErrorMessages() : array
-    {
-        $errors = (array) AdminError::getInstance(self::class, $this->serverRequest)
-            ->read();
-        
-        return Hash::flatten($errors);
-    }
-
-    /**
-     * 
-     * @return array
-     */
-    public function getErrorClasses() : array
-    {
-        $errors = (array) AdminError::getInstance(self::class, $this->serverRequest)
-            ->read();
-        
-        return array_map(function() {
-            
-            return 'message error';
-        }, $errors);
-    }
-    
-    /**
-     * 
      * @return self
      */
     public function runValidate() : self
@@ -249,7 +181,6 @@ class EditAction implements AdminActionInterface
      */
     private function createValidator() : Validator
     {
-        
         return (new Validator())
             ->add('modified', [
                 'other_edited' => [

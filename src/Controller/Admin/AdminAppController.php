@@ -31,7 +31,7 @@ class AdminAppController extends AppController
             . '[File: ' . $ex->getFile() . ']' 
             . '[Line: ' . $ex->getLine() . ']' 
         );
-            
+
         $message_id = uniqid();
         $admin_account_id = (string) $this->request->getParam('admin_account_id');
         $this->request->getSession()->write(ERROR_MESSAGES_KEY . '.' . $admin_account_id . '.' . $message_id, $ex->getMessage());
