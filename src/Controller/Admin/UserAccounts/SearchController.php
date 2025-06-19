@@ -10,6 +10,8 @@ use App\Lib\Auth\Admin\AuthInterface as AdminAuthInterface;
 use App\Action\Admin\UserAccounts\SearchAction as CtlAction;
 use App\Lib\Auth\Admin\LoginAuthReference;
 use Exception;
+use App\Exception\ValidateException;
+use Cake\Http\Exception\NotFoundException;
 
 
 class SearchController extends AdminAppController
@@ -57,24 +59,46 @@ class SearchController extends AdminAppController
             ]);
         } catch (Exception $ex) {
             
-            $this->getSystemErrorResponse($ex);
+            return $this->getSystemErrorResponse($ex);
         }
     }
 
     public function index()
     {
         try {
-            $query = $this->ctlAction->getSearchQuery();
-            $settings = $this->ctlAction->getPaginateSetting();
-            
             $this->set([
-                'results' => $this->paginate($query, $settings),
+                'messages' => [],
+                'errors' => [],
+                'results' => $this->ctlAction
+                    ->runValidate()
+                    ->setCtl($this)
+                    ->execute()
+                    ->getResults(),
+            ]);
+            
+            return $this->render('/Admin/UserAccounts/search');
+        } catch (ValidateException $ex) {
+
+            $this->set([
+                'messages' => $this->ctlAction->getErrorMessages(),
+                'errors' => $this->ctlAction->getErrorClasses(),
+                'results' => [],
             ]);
 
-            return $this->render('/Admin/UserAccounts/search');       
-        } catch (Exception $ex) {
+            return $this->render('/Admin/UserAccounts/search');
+        } catch (NotFoundException $ex) {
             
-            $this->getSystemErrorResponse($ex);
+            $this->Flash->error(__('指定されたページが存在しません。'));
+            
+            return $this->redirect([
+                'admin_account_id' => $this->request->getParam('admin_account_id'),
+                '?' => [
+                    'page' => 1,
+                ] + (array) $this->request->getQuery(),
+            ]);
+        } catch (Exception $ex) {
+
+            return $this->getSystemErrorResponse($ex);
         }
     }
 }
