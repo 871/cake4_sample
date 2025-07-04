@@ -7,7 +7,7 @@ use App\Controller\AppController;
 use Cake\Event\EventInterface;
 use Exception;
 use Cake\Http\Response;
-use App\Lib\Auth\Admin\AuthInterface as AdminAuthInterface;
+use Cake\Log\Log;
 
 class AdminAppController extends AppController
 {
@@ -36,6 +36,12 @@ class AdminAppController extends AppController
         $admin_account_id = (string) $this->request->getParam('admin_account_id');
         $this->request->getSession()->write(ERROR_MESSAGES_KEY . '.' . $admin_account_id . '.' . $message_id, $ex->getMessage());
 
-        return $this->redirect('/error/' . $admin_account_id . '/' . $message_id);
+        return $this->redirect([
+            'prefix' => 'Admin',
+            'controller' => 'Error',
+            'action' => 'index',
+            'admin_account_id' => $admin_account_id,
+            'message_id' => $message_id,
+        ]);
     }
 }

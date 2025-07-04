@@ -13,7 +13,7 @@ class SafeCast
      */
     public static function toString(mixed $val) : string
     {
-        if (is_string($val) || is_int($val) || is_float($val) || $val === null) {
+        if (is_string($val) || is_int($val) || is_float($val)) {
             
             return (string) $val;
         }
@@ -21,6 +21,48 @@ class SafeCast
         if (is_object($val) && method_exists($val, '__toString')) {
 
             return (string) $val;
+        }
+
+        self::throwException($val);
+    }
+    
+    /**
+     *
+     * 
+     * @param mixed $val
+     * @return int
+     */
+    public static function toInt(mixed $val) : int
+    {
+        if (is_int($val)) {
+            
+            return $val;
+        }
+
+        if (is_float($val)) {
+            
+            return (int) $val;
+        }
+
+        if (is_string($val) && preg_match('/^-?\d+$/', $val)) {
+            
+            return (int) $val;
+        }
+
+        self::throwException($val);
+    }
+
+    /**
+     *
+     * 
+     * @param mixed $val
+     * @return array
+     */
+    public static function toArray(mixed $val) : array
+    {
+        if (is_array($val)) {
+            
+            return $val;
         }
 
         self::throwException($val);

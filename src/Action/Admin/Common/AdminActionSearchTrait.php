@@ -8,8 +8,8 @@ namespace App\Action\Admin\Common;
 use Cake\ORM\Query;
 use Cake\Controller\Controller;
 use Cake\Utility\Hash;
-use Cake\Validation\Validation;
-
+use Cake\Validation\Validator;
+use App\Exception\ValidateException;
 
 trait AdminActionSearchTrait
 {
@@ -103,7 +103,7 @@ trait AdminActionSearchTrait
      */
     public function getErrorMessages() : array
     {   
-        return Hash::flatten($this->errors);
+        return array_unique(Hash::flatten($this->errors));
     }
 
     /**
@@ -112,19 +112,22 @@ trait AdminActionSearchTrait
      */
     public function getErrorClasses() : array
     {
-        return array_map(function() {
+        return Hash::expand(array_column(array_map(function($path) {
             
-            return 'message error';
-        }, $this->errors);
+            return [
+                'path' => preg_replace('/\.[^\.]+$/', '', $path),
+                'val' => 'message error',
+            ];
+        }, array_keys(Hash::flatten($this->errors))), 'val', 'path'));
     }
     
     /**
      * 
-     * @return Validation
+     * @return Validator
      */
-    private function createValidator() : Validation
+    private function createValidator() : Validator
     {
-        return new Validation();
+        return new Validator();
     }
     
     /**
