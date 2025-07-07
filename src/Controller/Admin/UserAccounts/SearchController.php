@@ -10,7 +10,6 @@ use App\Lib\Auth\Admin\AuthInterface as AdminAuthInterface;
 use App\Action\Admin\UserAccounts\SearchAction as CtlAction;
 use App\Lib\Auth\Admin\LoginAuthReference;
 use Exception;
-use App\Exception\ValidateException;
 use Cake\Http\Exception\NotFoundException;
 
 
@@ -66,30 +65,22 @@ class SearchController extends AdminAppController
     public function index()
     {
         try {
-            $this->set([
-                'messages' => [],
-                'errors' => [],
-                'results' => $this->ctlAction
-                    ->runValidate()
-                    ->setCtl($this)
-                    ->execute()
-                    ->getResults(),
-            ]);
-            
-            return $this->render('/Admin/UserAccounts/search');
-        } catch (ValidateException $ex) {
+            $this->ctlAction->runValidate();
+
+            $query = $this->ctlAction->getSearchQuery();
+            $settings = $this->ctlAction->getPaginateSetting();
 
             $this->set([
                 'messages' => $this->ctlAction->getErrorMessages(),
                 'errors' => $this->ctlAction->getErrorClasses(),
-                'results' => [],
+                'rows' => $this->paginate($query, $settings),
             ]);
 
             return $this->render('/Admin/UserAccounts/search');
         } catch (NotFoundException $ex) {
-            
+
             $this->Flash->error(__('指定されたページが存在しません。'));
-            
+
             return $this->redirect([
                 'admin_account_id' => $this->request->getParam('admin_account_id'),
                 '?' => [

@@ -6,21 +6,13 @@ namespace App\Action\Admin\Common;
 
 
 use Cake\ORM\Query;
-use Cake\Controller\Controller;
 use Cake\Utility\Hash;
 use Cake\Validation\Validator;
-use App\Exception\ValidateException;
 
 trait AdminActionSearchTrait
 {
     use AdminActionBaseTrait;
-    
-    /**
-     * 
-     * @var Controller
-     */
-    private Controller $ctl;
-    
+
     /**
      * 
      * @var array
@@ -51,52 +43,10 @@ trait AdminActionSearchTrait
         $this->errors = $this
             ->createValidator()
             ->validate($this->serverRequest->getQuery());
-        
-        if ($this->errors !== []) {
-    
-            throw new ValidateException();
-        }
-        
-        return $this;
-    }
-    
-    /**
-     * 
-     * @param Controller $ctl
-     * @return self
-     */
-    public function setCtl(Controller $ctl) : self
-    {
-        $this->ctl = $ctl;
-        
+
         return $this;
     }
 
-    /**
-     * 
-     * @return self
-     */
-    public function execute() : self
-    {
-        $query = $this->getSearchQuery();
-        $setting = $this->getPaginateSetting();
-        
-        $this->results = $this->ctl
-            ->paginate($query, $setting)
-            ->toArray();
-        
-        return $this;
-    }
-    
-    /**
-     * 
-     * @return array
-     */
-    public function getResults() : array
-    {
-        return $this->results;
-    }
-    
     /**
      * 
      * @return array
@@ -107,7 +57,25 @@ trait AdminActionSearchTrait
     }
 
     /**
+     * Memo: バリデータの戻り値からCSS用のエラークラス情報を作成
      * 
+     *  Before
+     *  [
+     *      'user_accounts' => [
+     *          'id' => [
+     *              'naturalNumber' => 'ユーザアカウントIDは1000000001-1999999999の整数を入力してください。',
+     *              'greaterThanOrEqual' => 'ユーザアカウントIDは1000000001-1999999999の整数を入力してください。',
+     *              'lessThanOrEqual' => 'ユーザアカウントIDは1000000001-1999999999の整数を入力してください。',
+     *          ],
+     *      ],
+     *  ]
+     *  After
+     *  [
+     *      'user_accounts' => [
+     *          'id' => 'message error'
+     *      ],
+     *  ]
+     *  
      * @return array
      */
     public function getErrorClasses() : array
@@ -120,27 +88,24 @@ trait AdminActionSearchTrait
             ];
         }, array_keys(Hash::flatten($this->errors))), 'val', 'path'));
     }
-    
-    /**
-     * 
-     * @return Validator
-     */
-    private function createValidator() : Validator
-    {
-        return new Validator();
-    }
-    
+
     /**
      * 
      * @return Query
      */
-    private abstract function getSearchQuery() : Query;
+    public function getSearchQuery() : Query
+    {
+        return $this->errors === [] 
+            ? $this->createSearchQuery()
+            : $this->createSearchErrorQuery();
+    }
 
     /**
+     * Controller::paginate()の第2引数に渡すパラメータ
      * 
      * @return array
      */
-    private function getPaginateSetting() : array
+    public function getPaginateSetting() : array
     {
         return [
             'limit' => 50,
@@ -151,4 +116,36 @@ trait AdminActionSearchTrait
             ], 
         ];
     }
+
+    /**
+     * 検索系処理の入力チェック
+     * 
+     * @return Validator
+     */
+    private function createValidator() : Validator
+    {
+        return new Validator();
+    }
+    
+    /**
+     * 正常系処理でController::paginate()の第一引数に渡すクエリインスタンス
+     * 
+     * @return Query
+     */
+    private abstract function createSearchQuery() : Query;
+
+    /**
+     * 入力エラー系の処理でController::paginate()の第一引数に渡すクエリインスタンス
+     * 検索件数0件となるクエリを用意する
+     * 
+     * 例：
+     *  　return $this->userAccountsTable
+     *       ->find()
+     *       ->where([
+     *           '1 != 1'
+     *       ]);
+     * 
+     * @return Query
+     */
+    private abstract function createSearchErrorQuery() : Query;
 }

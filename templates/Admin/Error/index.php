@@ -10,7 +10,7 @@ debug([
 $messages = (function() : array {
     
     $defaultMsg = '予期せぬエラーが発生しました。[ErrorCode: E5001]';
-    $admin_account_id = $this->request->getParam('$admin_account_id');
+    $admin_account_id = $this->request->getParam('admin_account_id');
     $message_id = $this->request->getParam('message_id');
     if ($message_id === null) {
         

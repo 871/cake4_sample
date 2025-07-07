@@ -17,8 +17,8 @@ $builder->prefix('Admin', ['path' => '/ad'], static function (RouteBuilder $buil
         $builder->registerMiddleware('adminAuth', new App\Middleware\Auth\AdminAuthMiddleware())->applyMiddleware('adminAuth');
 
         $builder->get('/', ['controller' => 'Top', 'action' => 'index']);
-        $builder->get('/error', ['controller' => 'Error', 'action' => 'index']);
         $builder->get('/error/:message_id', ['controller' => 'Error', 'action' => 'index']);
+        $builder->get('/error', ['controller' => 'Error', 'action' => 'index']);
         // 管理者ログアウト
         $builder->prefix('Auth', ['path' => ''], static function (RouteBuilder $builder) {
             

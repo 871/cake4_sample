@@ -13,7 +13,7 @@ use Cake\Validation\Validator;
 class SearchAction implements AdminActionInterface
 {
     use AdminActionSearchTrait;
-    
+
     /**
      * 
      * @var UserAccountsTable
@@ -57,7 +57,7 @@ class SearchAction implements AdminActionInterface
      * 
      * @return Query
      */
-    private function getSearchQuery() : Query
+    private function createSearchQuery() : Query
     {
         $params = SafeCast::toArray($this->serverRequest->getQuery('user_accounts', []));
         
@@ -80,7 +80,7 @@ class SearchAction implements AdminActionInterface
                 'modified_ip' => 'UserAccounts.modified_ip',
             ])
             ->where(array_filter([
-                'UserAccounts.id' =>$params['id'] ?? null,
+                'UserAccounts.id' => $params['id'] ?? null,
                 'UserAccounts.name LIKE' => $params['name'] ?? null,
                 'UserAccounts.username LIKE' => $params['username'] ?? null,
                 'UserAccounts.email LIKE' => $params['email'] ?? null,
@@ -96,11 +96,21 @@ class SearchAction implements AdminActionInterface
             ], fn($v) => !in_array($v, [null, '', []], true)));
     }
     
+    
+    private function createSearchErrorQuery() : Query 
+    {
+        return $this->userAccountsTable
+            ->find()
+            ->where([
+                '1 != 1'
+            ]);
+    }
+    
     /**
      * 
      * @return array
      */
-    private function getPaginateSetting() : array
+    public function getPaginateSetting() : array
     {
         return [
             'limit' => 50,

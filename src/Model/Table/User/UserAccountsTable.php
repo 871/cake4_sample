@@ -17,7 +17,7 @@ class UserAccountsTable extends Table
 {
     use TableBaseTrait;
     
-    public const MIN_USER_ACCOUNT_ID = 1000000001;
+    public const MIN_USER_ACCOUNT_ID = 1000000000;
     public const MAX_USER_ACCOUNT_ID = 1999999999;
     
     /**

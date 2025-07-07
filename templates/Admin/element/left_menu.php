@@ -16,5 +16,12 @@
                 'action' => 'index',
             ]) ?>" class="side-nav-item">TOP</a>
             
+            <a href="<?= $this->Url->build([
+                'admin_account_id' => $admin_account_id,
+                'prefix' => 'Admin/UserAccounts',
+                'controller' => 'Search',
+                'action' => 'init',
+            ]) ?>" class="side-nav-item">ユーザ管理</a>
+            
         </div>
     </aside>
