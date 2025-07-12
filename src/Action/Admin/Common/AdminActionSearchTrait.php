@@ -8,6 +8,7 @@ namespace App\Action\Admin\Common;
 use Cake\ORM\Query;
 use Cake\Utility\Hash;
 use Cake\Validation\Validator;
+use App\Model\Table\Admin\AdminAccountsTable;
 
 trait AdminActionSearchTrait
 {
@@ -147,5 +148,12 @@ trait AdminActionSearchTrait
      * 
      * @return Query
      */
-    private abstract function createSearchErrorQuery() : Query;
+    private function createSearchErrorQuery() : Query 
+    {
+        return AdminAccountsTable::getInstance()
+            ->find()
+            ->where([
+                '1 != 1'
+            ]);
+    }
 }

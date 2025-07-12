@@ -33,13 +33,144 @@
                 <form method="get">
                     <table>
                         <tr>
-                            <th>ユーザアカウントID</th>
+                            <th>ユーザアカウントID(完全一致)</th>
                             <td>
                                 <input 
                                     type="text"
                                     name="user_accounts[id]"
                                     value="<?= h($value['id'] ?? '') ?>"
                                     class="<?= h($error['id'] ?? '') ?>"
+                                >
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>ユーザ名(部分一致)</th>
+                            <td>
+                                <input 
+                                    type="text"
+                                    name="user_accounts[name_like]"
+                                    value="<?= h($value['name_like'] ?? '') ?>"
+                                    class="<?= h($error['name_like'] ?? '') ?>"
+                                >
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>アカウント名(部分一致)</th>
+                            <td>
+                                <input 
+                                    type="text"
+                                    name="user_accounts[username_like]"
+                                    value="<?= h($value['username_like'] ?? '') ?>"
+                                    class="<?= h($error['username_like'] ?? '') ?>"
+                                >
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>メールアドレス(部分一致)</th>
+                            <td>
+                                <input 
+                                    type="text"
+                                    name="user_accounts[email_like]"
+                                    value="<?= h($value['email_like'] ?? '') ?>"
+                                    class="<?= h($error['email_like'] ?? '') ?>"
+                                >
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>電話番号(部分一致)</th>
+                            <td>
+                                <input 
+                                    type="text"
+                                    name="user_accounts[tel_like]"
+                                    value="<?= h($value['tel_like'] ?? '') ?>"
+                                    class="<?= h($error['tel_like'] ?? '') ?>"
+                                >
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>ログイン可否</th>
+                            <td>
+                                <label>
+                                    <input type="checkbox" class="all_check is_active">
+                                    全て
+                                </label>
+                            <?php foreach (['0' => 'ログイン不可', '1' => 'ログイン可'] as $val => $lavel) { ?>
+                                <label>
+                                    <input 
+                                        type="checkbox"
+                                        name="user_accounts[is_active][]"
+                                        value="<?= h($val) ?>"
+                                        class="<?= h($error['is_active'] ?? '') ?>"
+                                        <?= in_array((string) $val, $value['is_active'] ?? [], true) ? 'checked' : '' ?>
+                                    > <?= h($lavel) ?>
+                                </label>
+                            <?php } ?>
+                                <script>(function($) {
+                                    
+                                    var elAllCheck = '.all_check.is_active';
+                                    var elCheck = '[name="user_accounts[is_active][]"]';
+                                    
+                                    $(elAllCheck).prop('checked', $(elCheck).length === $(elCheck).filter(':checked').length);
+                                        
+                                    $('body').on('click', elAllCheck, function() {
+                                        
+                                        $(elCheck).prop('checked', $(this).prop('checked'));
+                                    }).on('click', elCheck, function() {
+                                        
+                                        $(elAllCheck).prop('checked', $(elCheck).length === $(elCheck).filter(':checked').length);
+                                    });
+                                     
+                                })(jQuery);</script>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>PW有効期限</th>
+                            <td>
+                                <input 
+                                    type="datetime-local"
+                                    name="user_accounts[expiration_datetime_from]"
+                                    value="<?= h($value['expiration_datetime_from'] ?? '') ?>"
+                                    class="<?= h($error['expiration_datetime_from'] ?? '') ?>"
+                                    step="1"
+                                >
+                                〜
+                                <input 
+                                    type="datetime-local"
+                                    name="user_accounts[expiration_datetime_to]"
+                                    value="<?= h($value['expiration_datetime_to'] ?? '') ?>"
+                                    class="<?= h($error['expiration_datetime_to'] ?? '') ?>"
+                                    step="1"
+                                >
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>更新日時</th>
+                            <td>
+                                <input 
+                                    type="datetime-local"
+                                    name="user_accounts[modified_from]"
+                                    value="<?= h($value['modified_from'] ?? '') ?>"
+                                    class="<?= h($error['modified_from'] ?? '') ?>"
+                                    step="1"
+                                >
+                                〜
+                                <input 
+                                    type="datetime-local"
+                                    name="user_accounts[modified_to]"
+                                    value="<?= h($value['modified_to'] ?? '') ?>"
+                                    class="<?= h($error['modified_to'] ?? '') ?>"
+                                    step="1"
+                                >
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>キーワード</th>
+                            <td>
+                                <input 
+                                    type="text"
+                                    name="user_accounts[keyword]"
+                                    value="<?= h($value['keyword'] ?? '') ?>"
+                                    class="<?= h($error['keyword'] ?? '') ?>"
                                 >
                             </td>
                         </tr>
@@ -64,7 +195,7 @@
                                 ];
                             ?>
                             <th><?= $this->Paginator->sort('id', 'ID', $sort) ?></th>
-                            <th><?= $this->Paginator->sort('nane', 'ユーザ名', $sort) ?></th>
+                            <th><?= $this->Paginator->sort('name', 'ユーザ名', $sort) ?></th>
                             <th><?= $this->Paginator->sort('username', 'アカウント名', $sort) ?></th>
                             <th><?= $this->Paginator->sort('email', 'メールアドレス', $sort) ?></th>
                             <th><?= $this->Paginator->sort('tel', '電話番号', $sort) ?></th>
@@ -78,7 +209,7 @@
                     <?php foreach ($rows as $row) { ?>
                         <tr>
                             <td><?= h($row['id']) ?></td>
-                            <td><?= h($row['nane']) ?></td>
+                            <td><?= h($row['name']) ?></td>
                             <td><?= h($row['username']) ?></td>
                             <td><?= h($row['email']) ?></td>
                             <td><?= h($row['tel']) ?></td>

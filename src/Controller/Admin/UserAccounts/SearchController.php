@@ -66,14 +66,14 @@ class SearchController extends AdminAppController
     {
         try {
             $this->ctlAction->runValidate();
-
-            $query = $this->ctlAction->getSearchQuery();
-            $settings = $this->ctlAction->getPaginateSetting();
-
+            
             $this->set([
+                'rows' => $this->paginate(
+                    $this->ctlAction->getSearchQuery(), 
+                    $this->ctlAction->getPaginateSetting()
+                ),
                 'messages' => $this->ctlAction->getErrorMessages(),
                 'errors' => $this->ctlAction->getErrorClasses(),
-                'rows' => $this->paginate($query, $settings),
             ]);
 
             return $this->render('/Admin/UserAccounts/search');
@@ -88,7 +88,7 @@ class SearchController extends AdminAppController
                 ] + (array) $this->request->getQuery(),
             ]);
         } catch (Exception $ex) {
-
+            // throw $ex;
             return $this->getSystemErrorResponse($ex);
         }
     }

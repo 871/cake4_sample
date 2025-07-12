@@ -9,6 +9,8 @@ use App\Model\Table\User\UserAccountsTable;
 use Cake\ORM\Query;
 use App\Lib\Util\SafeCast;
 use Cake\Validation\Validator;
+use App\Lib\Util\FilterCast;
+
 
 class SearchAction implements AdminActionInterface
 {
@@ -81,10 +83,10 @@ class SearchAction implements AdminActionInterface
             ])
             ->where(array_filter([
                 'UserAccounts.id' => $params['id'] ?? null,
-                'UserAccounts.name LIKE' => $params['name'] ?? null,
-                'UserAccounts.username LIKE' => $params['username'] ?? null,
-                'UserAccounts.email LIKE' => $params['email'] ?? null,
-                'UserAccounts.tel LIKE' => $params['tel'] ?? null,
+                'UserAccounts.name LIKE' => FilterCast::toLikeString($params['name_like'] ?? null),
+                'UserAccounts.username LIKE' => FilterCast::toLikeString($params['username_like'] ?? null),
+                'UserAccounts.email LIKE' => FilterCast::toLikeString($params['email_like'] ?? null),
+                'UserAccounts.tel LIKE' => FilterCast::toLikeString($params['tel_like'] ?? null),
                 'UserAccounts.is_active IN' => $params['is_active'] ?? [],
                 'UserAccounts.expiration_datetime >=' => $params['expiration_datetime_from'] ?? null,
                 'UserAccounts.expiration_datetime <=' => $params['expiration_datetime_to'] ?? null,
@@ -94,16 +96,6 @@ class SearchAction implements AdminActionInterface
                 'UserAccounts.modified >=' => $params['modified_from'] ?? null,
                 'UserAccounts.modified <=' => $params['modified_to'] ?? null,
             ], fn($v) => !in_array($v, [null, '', []], true)));
-    }
-    
-    
-    private function createSearchErrorQuery() : Query 
-    {
-        return $this->userAccountsTable
-            ->find()
-            ->where([
-                '1 != 1'
-            ]);
     }
     
     /**
