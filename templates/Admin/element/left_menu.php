@@ -8,7 +8,7 @@
     
 ?>
     <aside class="column">
-        <div class="side-nav">
+        <div class="side-nav left_menu">
             <a href="<?= $this->Url->build([
                 'admin_account_id' => $admin_account_id,
                 'prefix' => 'Admin',

@@ -1,0 +1,27 @@
+
+.input_from_to {
+    
+    input {
+        width: 40%;
+    }
+}
+
+.multiple_checkbox {
+    
+    label {
+        display: inline;
+        padding-left: 1em;
+    }
+}
+
+.form_buttons {
+    
+    display: flex;
+    justify-content: center; /* 横中央 */
+    align-items: center;     /* 縦中央 */
+    padding: 1em;
+    
+    * {
+        margin: 0 1em;
+    }
+}

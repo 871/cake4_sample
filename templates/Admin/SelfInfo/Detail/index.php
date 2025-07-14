@@ -11,13 +11,13 @@
                 <?= $this->element('top_menu', ['show' => 'self_info_detail']) ?>
             </div>
         </div>
-        <h2>ログイン管理者情報</h2>
-        <?= $this->Flash->render() ?>
         <div class="row">
             <div class="column">
                 <?= $this->element('breadcrumbs', ['show' => 'self_info_detail']) ?>
             </div>
         </div>
+        <h2>ログイン管理者情報</h2>
+        <?= $this->Flash->render() ?>
         <div class="row">
             <div class="column">
                 <h3>アカウント情報</h3>

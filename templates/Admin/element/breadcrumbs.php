@@ -12,6 +12,7 @@
     ]);
     
 ?>
+<div class="breadcrumbs">
 <?php if ($show === 'self_info_detail') { ?>
     <a href="<?= $topPageUrl ?>">TOP</a>
     &nbsp; >> &nbsp; <b>ログイン管理者情報</b>
@@ -38,3 +39,11 @@
     ]) ?>">ログイン管理者情報</a>
     &nbsp; >> &nbsp; <b>パスワード情報更新</b>
 <?php } ?>
+
+<?php if ($show === 'user_accounts-search') { ?>
+    <a href="<?= $topPageUrl ?>">TOP</a>
+    &nbsp; >> &nbsp; <b>ユーザアカウント管理検索</b>
+<?php } ?>
+
+
+</div>

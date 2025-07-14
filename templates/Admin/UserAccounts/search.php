@@ -14,13 +14,13 @@
                 <?= $this->element('top_menu', ['show' => 'user_accounts-search']) ?>
             </div>
         </div>
-        <h2>ユーザアカウント管理</h2>
-        <?= $this->Flash->render() ?>
         <div class="row">
             <div class="column">
                 <?= $this->element('breadcrumbs', ['show' => 'user_accounts-search']) ?>
             </div>
         </div>
+        <h2>ユーザアカウント管理</h2>
+        <?= $this->Flash->render() ?>
     <?php if ($messages) { ?>
         <div class="row ">
             <div class="column message error">
@@ -90,77 +90,143 @@
                         <tr>
                             <th>ログイン可否</th>
                             <td>
-                                <label>
-                                    <input type="checkbox" class="all_check is_active">
-                                    全て
-                                </label>
-                            <?php foreach (['0' => 'ログイン不可', '1' => 'ログイン可'] as $val => $lavel) { ?>
-                                <label>
-                                    <input 
-                                        type="checkbox"
-                                        name="user_accounts[is_active][]"
-                                        value="<?= h($val) ?>"
-                                        class="<?= h($error['is_active'] ?? '') ?>"
-                                        <?= in_array((string) $val, $value['is_active'] ?? [], true) ? 'checked' : '' ?>
-                                    > <?= h($lavel) ?>
-                                </label>
-                            <?php } ?>
-                                <script>(function($) {
-                                    
-                                    var elAllCheck = '.all_check.is_active';
-                                    var elCheck = '[name="user_accounts[is_active][]"]';
-                                    
-                                    $(elAllCheck).prop('checked', $(elCheck).length === $(elCheck).filter(':checked').length);
-                                        
-                                    $('body').on('click', elAllCheck, function() {
-                                        
-                                        $(elCheck).prop('checked', $(this).prop('checked'));
-                                    }).on('click', elCheck, function() {
-                                        
+                                <div class="multiple_checkbox">
+                                    <label>
+                                        <input type="checkbox" class="all_check is_active">
+                                        全て
+                                    </label>
+                                <?php foreach (['0' => 'ログイン不可', '1' => 'ログイン可'] as $val => $lavel) { ?>
+                                    <label>
+                                        <input 
+                                            type="checkbox"
+                                            name="user_accounts[is_active][]"
+                                            value="<?= h($val) ?>"
+                                            class="<?= h($error['is_active'] ?? '') ?>"
+                                            <?= in_array((string) $val, $value['is_active'] ?? [], true) ? 'checked' : '' ?>
+                                        > <?= h($lavel) ?>
+                                    </label>
+                                <?php } ?>
+                                    <script>(function($) {
+
+                                        var elAllCheck = '.all_check.is_active';
+                                        var elCheck = '[name="user_accounts[is_active][]"]';
+
                                         $(elAllCheck).prop('checked', $(elCheck).length === $(elCheck).filter(':checked').length);
-                                    });
-                                     
-                                })(jQuery);</script>
+
+                                        $('body').on('click', elAllCheck, function() {
+
+                                            $(elCheck).prop('checked', $(this).prop('checked'));
+                                        }).on('click', elCheck, function() {
+
+                                            $(elAllCheck).prop('checked', $(elCheck).length === $(elCheck).filter(':checked').length);
+                                        });
+
+                                    })(jQuery);</script>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>仮PW設定</th>
+                            <td>
+                                <div class="multiple_checkbox">
+                                    <label>
+                                        <input type="checkbox" class="all_check is_tmp_password">
+                                        全て
+                                    </label>
+                                <?php foreach (['0' => '正PW', '1' => '仮PW'] as $val => $lavel) { ?>
+                                    <label>
+                                        <input 
+                                            type="checkbox"
+                                            name="user_accounts[is_tmp_password][]"
+                                            value="<?= h($val) ?>"
+                                            class="<?= h($error['is_tmp_password'] ?? '') ?>"
+                                            <?= in_array((string) $val, $value['is_tmp_password'] ?? [], true) ? 'checked' : '' ?>
+                                        > <?= h($lavel) ?>
+                                    </label>
+                                <?php } ?>
+                                    <script>(function($) {
+
+                                        var elAllCheck = '.all_check.is_tmp_password';
+                                        var elCheck = '[name="user_accounts[is_tmp_password][]"]';
+
+                                        $(elAllCheck).prop('checked', $(elCheck).length === $(elCheck).filter(':checked').length);
+
+                                        $('body').on('click', elAllCheck, function() {
+
+                                            $(elCheck).prop('checked', $(this).prop('checked'));
+                                        }).on('click', elCheck, function() {
+
+                                            $(elAllCheck).prop('checked', $(elCheck).length === $(elCheck).filter(':checked').length);
+                                        });
+
+                                    })(jQuery);</script>
+                                </div>
                             </td>
                         </tr>
                         <tr>
                             <th>PW有効期限</th>
                             <td>
-                                <input 
-                                    type="datetime-local"
-                                    name="user_accounts[expiration_datetime_from]"
-                                    value="<?= h($value['expiration_datetime_from'] ?? '') ?>"
-                                    class="<?= h($error['expiration_datetime_from'] ?? '') ?>"
-                                    step="1"
-                                >
-                                〜
-                                <input 
-                                    type="datetime-local"
-                                    name="user_accounts[expiration_datetime_to]"
-                                    value="<?= h($value['expiration_datetime_to'] ?? '') ?>"
-                                    class="<?= h($error['expiration_datetime_to'] ?? '') ?>"
-                                    step="1"
-                                >
+                                <div class="input_from_to">
+                                    <input 
+                                        type="datetime-local"
+                                        name="user_accounts[expiration_datetime_from]"
+                                        value="<?= h($value['expiration_datetime_from'] ?? '') ?>"
+                                        class="<?= h($error['expiration_datetime_from'] ?? '') ?>"
+                                        step="1"
+                                    >
+                                    〜
+                                    <input 
+                                        type="datetime-local"
+                                        name="user_accounts[expiration_datetime_to]"
+                                        value="<?= h($value['expiration_datetime_to'] ?? '') ?>"
+                                        class="<?= h($error['expiration_datetime_to'] ?? '') ?>"
+                                        step="1"
+                                    >
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>作成日時</th>
+                            <td>
+                                <div class="input_from_to">
+                                    <input 
+                                        type="datetime-local"
+                                        name="user_accounts[created_from]"
+                                        value="<?= h($value['created_from'] ?? '') ?>"
+                                        class="<?= h($error['created_from'] ?? '') ?>"
+                                        step="1"
+                                    >
+                                    〜
+                                    <input 
+                                        type="datetime-local"
+                                        name="user_accounts[created_to]"
+                                        value="<?= h($value['created_to'] ?? '') ?>"
+                                        class="<?= h($error['created_to'] ?? '') ?>"
+                                        step="1"
+                                    >
+                                </div>
                             </td>
                         </tr>
                         <tr>
                             <th>更新日時</th>
                             <td>
-                                <input 
-                                    type="datetime-local"
-                                    name="user_accounts[modified_from]"
-                                    value="<?= h($value['modified_from'] ?? '') ?>"
-                                    class="<?= h($error['modified_from'] ?? '') ?>"
-                                    step="1"
-                                >
-                                〜
-                                <input 
-                                    type="datetime-local"
-                                    name="user_accounts[modified_to]"
-                                    value="<?= h($value['modified_to'] ?? '') ?>"
-                                    class="<?= h($error['modified_to'] ?? '') ?>"
-                                    step="1"
-                                >
+                                <div class="input_from_to">
+                                    <input 
+                                        type="datetime-local"
+                                        name="user_accounts[modified_from]"
+                                        value="<?= h($value['modified_from'] ?? '') ?>"
+                                        class="<?= h($error['modified_from'] ?? '') ?>"
+                                        step="1"
+                                    >
+                                    〜
+                                    <input 
+                                        type="datetime-local"
+                                        name="user_accounts[modified_to]"
+                                        value="<?= h($value['modified_to'] ?? '') ?>"
+                                        class="<?= h($error['modified_to'] ?? '') ?>"
+                                        step="1"
+                                    >
+                                </div>
                             </td>
                         </tr>
                         <tr>
@@ -175,7 +241,9 @@
                             </td>
                         </tr>
                     </table>
-                    <input type="submit" value="検索">
+                    <div class="form_buttons">
+                        <input type="submit" class="search_button" value="検索">
+                    </div>
                 </form>
             </div>
         </div>

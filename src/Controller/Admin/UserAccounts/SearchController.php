@@ -57,7 +57,7 @@ class SearchController extends AdminAppController
                 '?' => $this->ctlAction->initSearchQuery(),
             ]);
         } catch (Exception $ex) {
-            
+            // throw $ex;
             return $this->getSystemErrorResponse($ex);
         }
     }

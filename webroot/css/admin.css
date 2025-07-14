@@ -1,0 +1,70 @@
+
+/*
+要素	色コード
+背景	#fafafa
+カード背景	#ffffff
+テキスト	#212121（Almost black）
+プライマリ	#6200ee（パープル）
+セカンダリ	#03dac6（アクア）
+成功	#388e3c
+警告	#fbc02d
+エラー	#d32f2f
+*/
+
+.top-nav {
+    
+    background: #fafafa;
+    min-width: 1480px;
+}
+
+.container {
+    
+    min-width: 1480px;
+}
+
+footer {
+    background: #fafafa;
+    min-width: 1480px;
+}
+
+.left_menu {
+    
+    
+}
+
+.top_menu {
+    
+    a {
+        border: #fafafa solid 2px;
+        background: #03dac6;
+        color: #fafafa;
+        padding: 0.25em 0.5em;
+        margin: -3px;
+    }
+    
+    a:first-child {
+        border-radius: 0.75em 0 0 0.75em;
+        padding-left: 0.75em;
+    }
+    
+    a:last-child {
+        border-radius: 0 0.75em 0.75em 0;
+        padding-right: 0.75em;
+    }
+    
+    a:hover {
+        opacity: 0.75;
+    }
+}
+
+.breadcrumbs {
+    
+    a {
+        
+    }
+    
+    b {
+        
+    }
+}
+

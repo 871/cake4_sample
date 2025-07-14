@@ -28,6 +28,9 @@
     <?= $this->fetch('meta') ?>
     <?= $this->fetch('css') ?>
     <?= $this->fetch('script') ?>
+
+    <link href="/css/form.css" rel="stylesheet">
+    <link href="/css/admin.css" rel="stylesheet">
 </head>
 <body>
     <nav class="top-nav">
@@ -55,7 +58,7 @@
                     'controller' => 'Logout',
                     'action' => 'index',
                 ]) ?>"
-                onclick="confirm('ログアウトしますか？');"
+                onclick="return confirm('ログアウトしますか？');"
             >ログアウト</a>
         </div>
     </nav>
@@ -65,6 +68,7 @@
         </div>
     </main>
     <footer>
+        ©︎hanahubuki.jp
     </footer>
 </body>
 </html>
