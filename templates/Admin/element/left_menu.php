@@ -21,7 +21,7 @@
                 'prefix' => 'Admin/UserAccounts',
                 'controller' => 'Search',
                 'action' => 'init',
-            ]) ?>" class="side-nav-item">ユーザ管理</a>
+            ]) ?>" class="side-nav-item">ユーザアカウント管理</a>
             
         </div>
     </aside>

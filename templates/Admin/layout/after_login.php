@@ -23,17 +23,13 @@
     <link href="https://fonts.googleapis.com/css?family=Raleway:400,700" rel="stylesheet">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 
-    <?= $this->Html->css(['normalize.min', 'milligram.min', 'cake']) ?>
-
-    <?= $this->fetch('meta') ?>
-    <?= $this->fetch('css') ?>
-    <?= $this->fetch('script') ?>
+    <?= $this->Html->css(['normalize.min', 'milligram.min',]) ?>
 
     <link href="/css/form.css" rel="stylesheet">
     <link href="/css/admin.css" rel="stylesheet">
 </head>
 <body>
-    <nav class="top-nav">
+    <header>
         <div class="top-nav-title">
             <a href="<?= $this->Url->build([
                 'admin_account_id' => $admin_account_id,
@@ -61,7 +57,7 @@
                 onclick="return confirm('ログアウトしますか？');"
             >ログアウト</a>
         </div>
-    </nav>
+    </header>
     <main class="main">
         <div class="container">
             <?= $this->fetch('content') ?>

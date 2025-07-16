@@ -42,7 +42,8 @@
 
 <?php if ($show === 'user_accounts-search') { ?>
     <a href="<?= $topPageUrl ?>">TOP</a>
-    &nbsp; >> &nbsp; <b>ユーザアカウント管理検索</b>
+    &nbsp; >> &nbsp; <b>ユーザアカウント管理</b>
+    &nbsp; >> &nbsp; <b>検索</b>
 <?php } ?>
 
 

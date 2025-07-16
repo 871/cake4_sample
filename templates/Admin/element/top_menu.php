@@ -42,13 +42,19 @@
 <?php if (in_array($show, [
     'user_accounts-search', 
 ], true)) { ?>
-    <a href="<?= $topPageUrl ?>">TOP</a>
+    <b>ユーザアカウント管理</b>
     <a href="<?= $this->Url->build([
         'admin_account_id' => $admin_account_id,
         'prefix' => 'Admin/UserAccounts',
         'controller' => 'Search',
         'action' => 'init',
-    ]) ?>">ユーザ管理検索</a>
+    ]) ?>">検索</a>
+    <a href="<?= $this->Url->build([
+        'admin_account_id' => $admin_account_id,
+        'prefix' => 'Admin/UserAccounts',
+        'controller' => 'Create',
+        'action' => 'index',
+    ]) ?>">新規作成</a>
     
 <?php } ?>
 

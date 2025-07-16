@@ -11,60 +11,146 @@
 エラー	#d32f2f
 */
 
-.top-nav {
+body {
+    background: #fff3cd;
     
-    background: #fafafa;
-    min-width: 1480px;
-}
+    header {
+        background: #fafafa;
+        min-width: 1480px;
+        width: 100%;
+        min-height: 10vh;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
 
-.container {
-    
-    min-width: 1480px;
-}
+        .top-nav-title {
+            display: flex;
+            justify-content: flex-start;
+            font-size: 2em;
+            margin: 0.25em 1.25em;
+        }
 
-footer {
-    background: #fafafa;
-    min-width: 1480px;
-}
+        .top-nav-links {
+            display: flex;
+            justify-content: flex-end;
+            margin: 0.25em 1.25em;
 
-.left_menu {
-    
-    
-}
-
-.top_menu {
-    
-    a {
-        border: #fafafa solid 2px;
-        background: #03dac6;
-        color: #fafafa;
-        padding: 0.25em 0.5em;
-        margin: -3px;
+            a {
+                padding-left: 0.5em;
+            }
+        }
     }
-    
-    a:first-child {
-        border-radius: 0.75em 0 0 0.75em;
-        padding-left: 0.75em;
-    }
-    
-    a:last-child {
-        border-radius: 0 0.75em 0.75em 0;
-        padding-right: 0.75em;
-    }
-    
-    a:hover {
-        opacity: 0.75;
-    }
-}
 
-.breadcrumbs {
-    
-    a {
+    main {
+        display: block;
+        min-width: 1480px;
+        width: 100%;
+        min-height: 85vh;
         
+
+        .container {
+
+            min-width: 1480px;
+            max-width: 99%;
+
+            display: flex;
+            justify-content: center; /* 横中央 */
+            align-items: center;     /* 縦中央 */
+            
+            .left_menu {
+                background: #fafafa;
+                display: block;
+                min-width: 200px;
+                margin-top: 0.5em;
+
+                a {
+                    display: block;
+                    padding-left: 0.5em;
+                }
+            }
+
+            .main_menu {
+                background: #fafafa;
+                display: block;
+                min-width: 1200px;
+                min-height: 83vh;
+                margin-top: 0.5em;
+                
+                .top_menu {
+                    margin-top: 0.5em;
+
+                    a {
+                        border: #fafafa solid 2px;
+                        background: #03dac6;
+                        color: #fafafa;
+                        padding: 0.25em 0.5em;
+                        margin: -3px;
+                    }
+                    
+                    b {
+                        border: #fafafa solid 2px;
+                        background: #03dac6;
+                        color: #606c76;
+                        padding: 0.25em 0.5em;
+                        margin: -3px;
+                    }
+
+                    a:first-child,
+                    b:first-child {
+                        border-radius: 0.75em 0 0 0.75em;
+                        padding-left: 0.75em;
+                    }
+
+                    a:last-child,
+                    b:last-child {
+                        border-radius: 0 0.75em 0.75em 0;
+                        padding-right: 0.75em;
+                    }
+
+                    a:hover {
+                        opacity: 0.75;
+                    }
+                }
+
+                .breadcrumbs {
+                    margin-top: 0.5em;
+                    margin-left: 0.5em;
+
+                    a {
+
+                    }
+
+                    b {
+
+                    }
+                }
+                
+                h2 {
+                    margin: 0.25em 0.5em 0 0.5em;
+                }
+            }
+        }
     }
-    
-    b {
-        
+    footer {
+        background: #fafafa;
+        min-width: 1480px;
+        width: 100%;
+        min-height: 5vh;
+        text-align: center;
     }
 }
 
+/* 管理者ログインページ */
+#login_form {
+    display: block;
+    background: #fafafa;
+    padding: 1em;
+    margin: 1em;
+    border: #fafafa solid 2px;
+    border-radius: 20px;
+}
+
+/* 管理者トップページ */
+#admin_top {
+    
+}

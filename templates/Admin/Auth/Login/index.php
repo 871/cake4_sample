@@ -2,6 +2,8 @@
 
 
 ?>
+
+<div id="login_form">
     <h2>管理者ログイン</h2>
 <?= $this->Flash->render() ?>
 <?php if ($authErrorMessage) { ?>
@@ -13,5 +15,8 @@
         <input type="hidden" name="_csrfToken" value="<?= h($this->request->getAttribute('csrfToken')) ?>" />
         <input type="text" name="username" value="<?= h($input['username']) ?>" placeholder="ログインアカウント">
         <input type="password" name="password" value="" placeholder="パスワード">
-        <input type="submit" value="ログイン">
+        <div class="form_buttons">
+            <input type="submit" value="ログイン">
+        </div>
     </form>
+</div>
