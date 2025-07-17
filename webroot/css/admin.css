@@ -80,29 +80,29 @@ body {
                     margin-top: 0.5em;
 
                     a {
-                        border: #fafafa solid 2px;
+                        border: #03dac6 solid 2px;
                         background: #03dac6;
                         color: #fafafa;
                         padding: 0.25em 0.5em;
-                        margin: -3px;
+                        margin: 0px;
                     }
                     
-                    b {
-                        border: #fafafa solid 2px;
-                        background: #03dac6;
-                        color: #606c76;
+                    span {
+                        border: #03dac6 solid 2px;
+                        background: #fafafa;
+                        color: #03dac6;
                         padding: 0.25em 0.5em;
-                        margin: -3px;
+                        margin: 0px;
                     }
 
                     a:first-child,
-                    b:first-child {
+                    span:first-child {
                         border-radius: 0.75em 0 0 0.75em;
                         padding-left: 0.75em;
                     }
 
                     a:last-child,
-                    b:last-child {
+                    span:last-child {
                         border-radius: 0 0.75em 0.75em 0;
                         padding-right: 0.75em;
                     }
@@ -115,18 +115,68 @@ body {
                 .breadcrumbs {
                     margin-top: 0.5em;
                     margin-left: 0.5em;
-
-                    a {
-
-                    }
-
-                    b {
-
-                    }
                 }
                 
                 h2 {
                     margin: 0.25em 0.5em 0 0.5em;
+                }
+                
+                ul.pagination {
+                    
+                    margin: 1em 2em;
+                    
+                    li {
+                        display: inline;
+                    }
+                    
+                    li a {
+                        border: #03dac6 solid 2px;
+                        background: #fafafa;
+                        color: #03dac6;
+                        padding: 0.25em 0.5em;
+                        margin-left: 2px;
+                    }
+                    
+                    li.active a {
+                        border: #03dac6 solid 2px;
+                        background: #03dac6;
+                        color: #fafafa;
+                    }
+                    
+                    li:first-child a {
+                        border-radius: 0.75em 0 0 0.75em;
+                        padding-left: 0.75em;
+                    }
+
+                    li:last-child a{
+                        border-radius: 0 0.75em 0.75em 0;
+                        padding-right: 0.75em;
+                    }
+
+                    li a:hover {
+                        border: #03dac6 solid 2px;
+                        background: #03dac6;
+                        color: #fafafa;
+                        
+                        opacity: 0.75;
+                    }
+                    
+                    
+                }
+                
+                .page_limit {
+                    margin-top: 1em;
+                    margin-left: auto;
+                    margin-right: 2em;
+                    
+                    display: block;
+                    
+                    select {
+                        width: 60px;
+                        text-align: right;
+                        padding: 0.25em;
+                    }
+                    
                 }
             }
         }

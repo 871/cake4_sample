@@ -52,6 +52,8 @@
                         });
                     })(jQuery);</script>
                     <form method="get">
+                        <input type="hidden" name="page" value="1">
+                        <input type="hidden" name="limit" value="<?= h($this->getRequest()->getQuery('limit', 20)) ?>">
                         <table>
                             <tr>
                                 <th style="width: 25%;">ユーザアカウントID(完全一致)</th>
@@ -270,16 +272,49 @@
             </div>
         </div>
         <div class="row">
-            <div class="paginator">
-                <ul class="pagination">
-                    <?= $this->Paginator->first('<< ' . __('first'), $pagenator) ?>
-                    <?= $this->Paginator->prev('< ' . __('previous'), $pagenator) ?>
-                    <?= $this->Paginator->numbers($pagenator) ?>
-                    <?= $this->Paginator->next(__('next') . ' >', $pagenator) ?>
-                    <?= $this->Paginator->last(__('last') . ' >>', $pagenator) ?>
-                </ul>
-                <p><?= $this->Paginator->counter(__('Page {{page}} of {{pages}}, showing {{current}} record(s) out of {{count}} total'), $pagenator) ?></p>
-            </div>
+            <ul class="pagination">
+                <?php
+                    unset($pagenator['url']['?']['page']);
+                ?>
+                <?= join('', [
+                    $this->Paginator->first('<< ' . __('first'), $pagenator),
+                    $this->Paginator->prev('< ' . __('previous'), $pagenator),
+                    $this->Paginator->numbers($pagenator),
+                    $this->Paginator->next(__('next') . ' >', $pagenator),
+                    $this->Paginator->last(__('last') . ' >>', $pagenator),
+                ]) ?>
+            </ul>
+            <span class="page_limit">
+                表示
+                <select onchange="location.href=this.value">
+                <?php 
+                    $limitList = [10, 20, 50, 100, 200];
+                ?>
+                <?php if (!in_array((int) $this->getRequest()->getQuery('limit', 20), $limitList, true)) { 
+                    
+                        $url = $pagenator['url'];
+                        $url['?']['page'] = 1;
+                        $url['?']['limit'] = $this->getRequest()->getQuery('limit', 20);
+                ?>
+                    <option 
+                        value="<?= $this->Url->build($url); ?>"
+                        selected
+                    ><?= $this->getRequest()->getQuery('limit', 20) ?></option>
+                <?php } ?>
+                <?php foreach($limitList as $limit) { 
+                    
+                        $url = $pagenator['url'];
+                        $url['?']['page'] = 1;
+                        $url['?']['limit'] = $limit;
+                ?>
+                    <option 
+                        value="<?= $this->Url->build($url); ?>"
+                        <?= (int) $this->getRequest()->getQuery('limit', 20) === $limit ? 'selected' : '' ?>
+                    ><?= $limit ?></option>
+                <?php } ?>
+                </select>
+                件
+            </span>
         </div>
         <div class="row">
             <div class="column">
@@ -336,17 +371,29 @@
                     <?php } ?>
                     </tbody>
                 </table>
-                <div class="paginator">
-                    <ul class="pagination">
-                        <?= $this->Paginator->first('<< ' . __('first'), $pagenator) ?>
-                        <?= $this->Paginator->prev('< ' . __('previous'), $pagenator) ?>
-                        <?= $this->Paginator->numbers($pagenator) ?>
-                        <?= $this->Paginator->next(__('next') . ' >', $pagenator) ?>
-                        <?= $this->Paginator->last(__('last') . ' >>', $pagenator) ?>
-                    </ul>
-                    <p><?= $this->Paginator->counter(__('Page {{page}} of {{pages}}, showing {{current}} record(s) out of {{count}} total'), $pagenator) ?></p>
-                </div>
             </div>
+        </div>
+        
+        <div class="row">
+            <ul class="pagination">
+                <?= $this->Paginator->first('<< ' . __('first'), $pagenator) ?>
+                <?= $this->Paginator->prev('< ' . __('previous'), $pagenator) ?>
+                <?= $this->Paginator->numbers($pagenator) ?>
+                <?= $this->Paginator->next(__('next') . ' >', $pagenator) ?>
+                <?= $this->Paginator->last(__('last') . ' >>', $pagenator) ?>
+            </ul>
+            <!--
+            <span class="page_limit">
+                表示
+                <select>
+                    <option value="20">20</option>
+                    <option value="20">20</option>
+                    <option value="20">20</option>
+                    <option value="20">20</option>
+                </select>
+                件
+            </span>
+            -->
         </div>
     </div>
 </div>

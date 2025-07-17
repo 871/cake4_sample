@@ -42,7 +42,7 @@
 <?php if (in_array($show, [
     'user_accounts-search', 
 ], true)) { ?>
-    <b>ユーザアカウント管理</b>
+    <span>ユーザアカウント管理</span>
     <a href="<?= $this->Url->build([
         'admin_account_id' => $admin_account_id,
         'prefix' => 'Admin/UserAccounts',
