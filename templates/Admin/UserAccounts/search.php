@@ -278,6 +278,7 @@
                     '?' => $this->getRequest()->getQuery(),
                 ],
             ]) ?>
+            <?= $this->element('page_counter') ?>
             <?= $this->element('page_limit', [
                 'url' => [
                     'admin_account_id' => $admin_account_id,
@@ -286,12 +287,12 @@
             ]) ?>
         </div>
         <div class="row">
-            <div class="column">
-                <table>
+            <div class="page_results">
+                <table style="table-layout: fixed; border-collapse: collapse; background: #fafafa;">
                     <thead>
                         <tr>
                             <?php 
-                                
+
                                 $sort = [
                                     'url' => [
                                         'admin_account_id' => $admin_account_id,
@@ -300,41 +301,71 @@
                                     ],
                                 ];
                             ?>
-                            <th><?= $this->Paginator->sort('id', 'ID', $sort) ?></th>
-                            <th><?= $this->Paginator->sort('name', 'ユーザ名', $sort) ?></th>
-                            <th><?= $this->Paginator->sort('username', 'アカウント名', $sort) ?></th>
-                            <th><?= $this->Paginator->sort('email', 'メールアドレス', $sort) ?></th>
-                            <th><?= $this->Paginator->sort('tel', '電話番号', $sort) ?></th>
-                            <th><?= $this->Paginator->sort('is_active', 'ログイン可否', $sort) ?></th>
-                            <th><?= $this->Paginator->sort('expiration_datetime', 'PW有効期限', $sort) ?></th>
-                            <th><?= $this->Paginator->sort('modified', '更新日時', $sort) ?></th>
-                            <th class="actions"><?= __('Actions') ?></th>
+                            <th style="width: 85px;"><?= $this->Paginator->sort('id', 'ID', $sort) ?></th>
+                            <th style="width: 140px;"><?= $this->Paginator->sort('name', 'ユーザ名', $sort) ?></th>
+                            <th style="width: 140px;"><?= $this->Paginator->sort('username', 'アカウント名', $sort) ?></th>
+                            <th style="width: 140px;"><?= $this->Paginator->sort('email', 'メールアドレス', $sort) ?></th>
+                            <th style="width: 140px;"><?= $this->Paginator->sort('tel', '電話番号', $sort) ?></th>
+                            <th style="width: 95px;"><?= $this->Paginator->sort('is_active', 'ログイン', $sort) ?></th>
+                            <th style="width: 190px;"><?= $this->Paginator->sort('expiration_datetime', 'PW有効期限', $sort) ?></th>
+                            <th style="width: 190px;"><?= $this->Paginator->sort('modified', '更新日時', $sort) ?></th>
+                            <th style="width: 200px;" class="actions"><?= __('Actions') ?></th>
                         </tr>
                     </thead>
                     <tbody>
                     <?php foreach ($rows as $row) { ?>
                         <tr>
-                            <td><?= h($row['id']) ?></td>
-                            <td><?= h($row['name']) ?></td>
-                            <td><?= h($row['username']) ?></td>
-                            <td><?= h($row['email']) ?></td>
-                            <td><?= h($row['tel']) ?></td>
-                            <td><?= $row['is_active'] ? '有効' : '<span style="color: red">無効</span>' ?></td>
-                            <td><?= h($row['expiration_datetime']?->format('Y/m/d H:i:s') ?? '----/--/-- --:--:--') ?></td>
-                            <td><?= h($row['modified']?->format('Y/m/d H:i:s') ?? '----/--/-- --:--:--') ?></td>
+                            <td class="primary_id">
+                                <?= h($row['id']) ?>
+                            </td>
+                            <td class="text">
+                                <input type="text" value="<?= h($row['name']) ?>" readonly>
+                            </td>
+                            <td class="text">
+                                <input type="text" value="<?= h($row['username']) ?>" readonly>
+                            </td>
+                            <td class="text">
+                                <input type="text" value="<?= h($row['email']) ?>" readonly>
+                            </td>
+                            <td class="text">
+                                <input type="text" value="<?= h($row['tel']) ?>" readonly>
+                            </td>
+                            <td class="status">
+                                <?= $row['is_active'] ? '有効' : '<span style="color: red">無効</span>' ?>
+                            </td>
+                            <td class="datetime">
+                                <?= h($row['expiration_datetime']?->format('Y-m-d H:i:s') ?? '') ?>
+                            </td>
+                            <td class="datetime">
+                                <?= h($row['modified']?->format('Y-m-d H:i:s') ?? '') ?>
+                            </td>
                             <td class="actions">
-                                <?= $this->Html->link(__('Detail'), [
-                                    'controller' => 'Detail',
-                                    'action' => 'index', 
-                                    'admin_account_id' => $admin_account_id,
-                                    'user_account_id' => $row['id'],
-                                ]) ?>
-                                <?= $this->Html->link(__('Edit'), [
-                                    'controller' => 'Edit',
-                                    'action' => 'index', 
-                                    'admin_account_id' => $admin_account_id,
-                                    'user_account_id' => $row['id'],
-                                ]) ?>
+                                <a 
+                                    class="btn" 
+                                    href="<?= $this->Url->build([
+                                        'controller' => 'Detail',
+                                        'action' => 'index', 
+                                        'admin_account_id' => $admin_account_id,
+                                        'user_account_id' => $row['id'],
+                                    ]); ?>"
+                                >詳細</a>
+                                <a 
+                                    class="btn" 
+                                    href="<?= $this->Url->build([
+                                        'controller' => 'Edit',
+                                        'action' => 'index', 
+                                        'admin_account_id' => $admin_account_id,
+                                        'user_account_id' => $row['id'],
+                                    ]); ?>"
+                                >更新</a>
+                                <a 
+                                    class="btn" 
+                                    href="#"
+                                >複製</a>
+                                <a 
+                                    class="btn" 
+                                    href="#"
+                                >ログイン</a>
                             </td>
                         </tr>
                     <?php } ?>
@@ -344,6 +375,13 @@
         </div>
         <div class="row">
             <?= $this->element('pagenator', [
+                'url' => [
+                    'admin_account_id' => $admin_account_id,
+                    '?' => $this->getRequest()->getQuery(),
+                ],
+            ]) ?>
+            <?= $this->element('page_counter') ?>
+            <?= $this->element('page_limit', [
                 'url' => [
                     'admin_account_id' => $admin_account_id,
                     '?' => $this->getRequest()->getQuery(),

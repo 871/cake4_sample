@@ -46,15 +46,15 @@
     <a href="<?= $this->Url->build([
         'admin_account_id' => $admin_account_id,
         'prefix' => 'Admin/UserAccounts',
-        'controller' => 'Search',
-        'action' => 'init',
-    ]) ?>">検索</a>
-    <a href="<?= $this->Url->build([
-        'admin_account_id' => $admin_account_id,
-        'prefix' => 'Admin/UserAccounts',
         'controller' => 'Create',
         'action' => 'index',
     ]) ?>">新規作成</a>
+    <a href="<?= $this->Url->build([
+        'admin_account_id' => $admin_account_id,
+        'prefix' => 'Admin/UserAccounts',
+        'controller' => 'Search',
+        'action' => 'init',
+    ]) ?>">検索</a>
     
 <?php } ?>
 

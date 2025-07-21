@@ -10,6 +10,36 @@ use App\Lib\Util\FilterCast;
 class Where
 {
     /**
+     * $keyword
+     *    'xxx yyy zzz'
+     * 
+     * $fields
+     *    [
+     *        'HogeTable.aaa',
+     *        'HogeTable.bbb',
+     *    ]
+     * 
+     * return 
+     *    [
+     *         [
+     *             'HogeTable.aaa LIKE' => '%xxx%'
+     *         ],
+     *         [
+     *             'HogeTable.aaa LIKE' => '%yyy%'
+     *         ],
+     *         [
+     *             'HogeTable.aaa LIKE' => '%zzz%'
+     *         ],
+     *         [
+     *             'HogeTable.bbb LIKE' => '%xxx%'
+     *         ],
+     *         [
+     *             'HogeTable.bbb LIKE' => '%yyy%'
+     *         ],
+     *         [
+     *             'HogeTable.bbb LIKE' => '%zzz%'
+     *         ],
+     *    ]
      * 
      * @param string $keyword
      * @param array $fields
@@ -21,11 +51,14 @@ class Where
         $keywords = array_filter(explode($separator, $keyword), fn($val) => $val !== '');
 
         $results = [];            
-        foreach ($keywords as $value) {
+        
+        foreach ($fields as $field) {
+            
+            foreach ($keywords as $value) {
 
-            foreach ($fields as $field) {
-
-                $results[$field . ' LIKE'] = FilterCast::toLikeString($value);
+                $results[] = [
+                    $field . ' LIKE' => FilterCast::toLikeString($value),
+                ];
             }
         }
 
