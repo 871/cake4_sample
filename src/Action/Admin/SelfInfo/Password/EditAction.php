@@ -4,7 +4,6 @@ declare(strict_types=1);
 namespace App\Action\Admin\SelfInfo\Password;
 
 use App\Action\Admin\Common\AdminActionInterface;
-use App\Action\Admin\Common\AdminActionBaseTrait;
 use App\Model\Table\Admin\AdminAccountsTable;
 use App\Model\Entity\Admin\AdminAccount;
 use App\Model\Table\Admin\AdminAccountHistoriesTable;
@@ -24,8 +23,7 @@ use Carbon\Carbon;
 
 class EditAction implements AdminActionInterface
 {
-    use AdminActionBaseTrait,
-        AdminActionInputTrait;
+    use AdminActionInputTrait;
     
     /**
      * 

@@ -13,6 +13,8 @@ use Cake\Utility\Hash;
 
 trait AdminActionInputTrait
 {
+    use AdminActionBaseTrait;
+        
     /**
      * 
      * @return self

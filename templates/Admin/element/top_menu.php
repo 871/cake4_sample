@@ -17,7 +17,6 @@
     'self_info_detail-account_info_edit',
     'self_info_detail-password_edit',
 ], true)) { ?>
-    <a href="<?= $topPageUrl ?>">TOP</a>
     <a href="<?= $this->Url->build([
         'admin_account_id' => $admin_account_id,
         'prefix' => 'Admin/SelfInfo',

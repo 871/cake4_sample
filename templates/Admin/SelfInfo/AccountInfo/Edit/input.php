@@ -5,7 +5,7 @@
 ?>
 <div class="row">
     <?= $this->element('left_menu') ?>
-    <div class="column-responsive column-80">
+    <div class="main_menu column-responsive column-80">
         <div class="row">
             <div class="column">
                 <?= $this->element('top_menu', ['show' => 'self_info_detail-account_info_edit']) ?>
@@ -17,16 +17,16 @@
             </div>
         </div>
         <h2>アカウント情報更新</h2>
-        <?= $this->Flash->render() ?>
+            <?= $this->Flash->render() ?>
     <?php if ($messages) { ?>
         <div class="row ">
-            <div class="column message error">
+            <div class="input_messages message error">
                 <?= join('<br>', array_map('h', $messages))?>
             </div>
         </div>
     <?php } ?>
         <div class="row">
-            <div class="column">
+            <div class="input_form">
                 <form method="post">
                     <input type="hidden" name="_csrfToken" value="<?= h($this->request->getAttribute('csrfToken')) ?>" />
                     <dl>
@@ -96,7 +96,9 @@
                             <?= h($input['show_modified'] ?? '----/--/-- --:--:--') ?>
                         </dd>
                     </dl>
-                    <input type="submit" value="確認画面へ">
+                    <div class="form_buttons">
+                        <input type="submit" value="確認画面へ">
+                    </div>
                 </form>
             </div>
         </div>

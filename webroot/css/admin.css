@@ -18,7 +18,8 @@ body {
         background: #fafafa;
         min-width: 1480px;
         width: 100%;
-        min-height: 10vh;
+        min-height: 90px;
+        max-height: 90px;
         display: flex;
         align-items: center;
         justify-content: space-between;
@@ -45,9 +46,7 @@ body {
         display: block;
         min-width: 1480px;
         width: 100%;
-        min-height: 85vh;
         
-
         .container {
 
             min-width: 1480px;
@@ -75,6 +74,7 @@ body {
                 min-width: 1200px;
                 min-height: 83vh;
                 margin-top: 0.5em;
+                margin-bottom: 0.5em;
                 
                 .top_menu {
                     margin-top: 0.5em;
@@ -119,6 +119,10 @@ body {
                 
                 h2 {
                     margin: 0.25em 0.5em 0 0.5em;
+                }
+                
+                h3 {
+                    margin: 0.25em 1em 0 1em;
                 }
                 
                 .search_form {
@@ -319,15 +323,49 @@ body {
                             text-align: center;
                         }
                     }
+                } /* .page_results */
+                
+                .detail_result {
+                    margin: 1em 2em;
+                    width: 100%;
+                    
+                } /* .detail_result */
+                
+                .input_messages {
+                    margin: 1em 2em;
+                    width: 100%;
+                    
                 }
-            }
-        }
-    }
+                
+                .input_form {
+                    margin: 1em 2em;
+                    width: 100%;
+                    
+                    
+                    .input_button {
+
+                        background: #03dac6;
+                        border: #03dac6 solid 2px;
+                        border-radius: 1em;
+                    }
+
+                    .input_button:hover {
+                        background: #03dac6;
+                        border: #03dac6 solid 2px;
+                        opacity: 0.8;
+                    }
+                    
+                } /* .input_form */
+                
+            } /* .main_menu */
+        } /* .container */
+    } /* .main */
+    
     footer {
         background: #fafafa;
         min-width: 1480px;
         width: 100%;
-        min-height: 5vh;
+        min-height: 50px;
         text-align: center;
     }
 }
