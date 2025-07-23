@@ -10,24 +10,20 @@
 警告	#fbc02d
 エラー	#d32f2f
 */
-html, body {
-  height: 100%;
-  margin: 0;
-}
 
 body {
     background: #fff3cd;
-    display: flex;
-    flex-direction: column;  /* 縦方向に並べる */
-    height: 100vh;           /* ビューポートの高さを確保 */
-    min-height: 800px;
-  
+    
     header {
         background: #fafafa;
-        flex: 0 0 auto;          /* 固定高さ */
-        color: #fff;
-        padding: 10px;
-        
+        min-width: 1480px;
+        width: 100%;
+        min-height: 90px;
+        max-height: 90px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
         .top-nav-title {
             display: flex;
             justify-content: flex-start;
@@ -47,8 +43,10 @@ body {
     }
 
     main {
-        flex: 1 1 auto;          /* 残り高さを占有 */
-        overflow: visible;          /* コンテンツが多い場合スクロール */
+        display: block;
+        min-width: 1480px;
+        width: 100%;
+        
         .container {
 
             min-width: 1480px;
@@ -361,13 +359,13 @@ body {
                 
             } /* .main_menu */
         } /* .container */
-        
-    }
-
+    } /* .main */
+    
     footer {
-        flex: 0 0 auto;          /* 固定高さ */
         background: #fafafa;
-        padding: 10px;
+        min-width: 1480px;
+        width: 100%;
+        min-height: 50px;
         text-align: center;
     }
 }

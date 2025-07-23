@@ -27,6 +27,164 @@
     }
 }
 
+/* button style */
+input.btn,
+button.btn,
+a.btn {
+    border-radius: 2em;
+    padding: 0.25em 1em;
+}
+
+input.btn:hover,
+button.btn:hover,
+a.btn:hover {
+    opacity: 0.5;
+}
+
+input.btn.white_fill,
+button.btn.white_fill,
+a.btn.white_fill {
+    border: #ffffff solid 2px;
+    color: #000000;
+    background: #ffffff;
+}
+
+input.btn.white_line,
+button.btn.white_line,
+a.btn.white_line {
+    border: #ffffff solid 2px;
+    color: #ffffff;
+    background: #000000;
+}
+
+input.btn.grey_fill,
+button.btn.grey_fill,
+a.btn.grey_fill {
+    border: #999999 solid 2px;
+    color: #ffffff;
+    background: #999999;
+}
+
+input.btn.grey_line,
+button.btn.grey_line,
+a.btn.grey_line {
+    border: #999999 solid 2px;
+    color: #999999;
+    background: #ffffff;
+}
+
+input.btn.black_fill,
+button.btn.black_fill,
+a.btn.black_fill {
+    border: #000000 solid 2px;
+    color: #ffffff;
+    background: #000000;
+}
+
+input.btn.black_line,
+button.btn.black_line,
+a.btn.black_line {
+    border: #000000 solid 2px;
+    color: #000000;
+    background: #ffffff;
+}
+
+input.btn.red_fill,
+button.btn.red_fill,
+a.btn.red_fill {
+    border: #d33c43 solid 2px;
+    color: #ffffff;
+    background: #d33c43;
+}
+
+input.btn.red_line,
+button.btn.red_line,
+a.btn.red_line {
+    border: #d33c43 solid 2px;
+    color: #d33c43;
+    background: #ffffff;
+}
+
+input.btn.blue_fill,
+button.btn.blue_fill,
+a.btn.blue_fill {
+    border: #3498db solid 2px;
+    color: #ffffff;
+    background: #3498db;
+}
+
+input.btn.blue_line,
+button.btn.blue_line,
+a.btn.blue_line {
+    border: #3498db solid 2px;
+    color: #3498db;
+    background: #ffffff;
+}
+
+input.btn.yellow_fill,
+button.btn.yellow_fill,
+a.btn.yellow_fill {
+    border: #f1c40f solid 2px;
+    color: #000000;
+    background: #f1c40f;
+}
+
+input.btn.yellow_line,
+button.btn.yellow_line,
+a.btn.yellow_line {
+    border: #f1c40f solid 2px;
+    color: #f1c40f;
+    background: #000000;
+}
+
+input.btn.green_fill,
+button.btn.green_fill,
+a.btn.green_fill {
+    border: #03dac6 solid 2px;
+    color: #ffffff;
+    background: #03dac6;
+}
+
+input.btn.green_line,
+button.btn.green_line,
+a.btn.green_line {
+    border: #03dac6 solid 2px;
+    color: #03dac6;
+    background: #ffffff;
+}
+
+input.btn.orange_fill,
+button.btn.orange_fill,
+a.btn.orange_fill {
+    border: #e67e22 solid 2px;
+    color: #ffffff;
+    background: #e67e22;
+}
+
+input.btn.orange_line,
+button.btn.orange_line,
+a.btn.orange_line {
+    border: #e67e22 solid 2px;
+    color: #e67e22;
+    background: #ffffff;
+}
+
+input.btn.pink_fill,
+button.btn.pink_fill,
+a.btn.pink_fill {
+    border: #fd79a8 solid 2px;
+    color: #ffffff;
+    background: #fd79a8;
+}
+
+input.btn.pink_line,
+button.btn.pink_line,
+a.btn.pink_line {
+    border: #fd79a8 solid 2px;
+    color: #fd79a8;
+    background: #ffffff;
+}
+
 
 /* Flash messages */
 .message {

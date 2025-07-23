@@ -304,12 +304,12 @@
                             <th style="width: 85px;"><?= $this->Paginator->sort('id', 'ID', $sort) ?></th>
                             <th style="width: 140px;"><?= $this->Paginator->sort('name', 'ユーザ名', $sort) ?></th>
                             <th style="width: 140px;"><?= $this->Paginator->sort('username', 'アカウント名', $sort) ?></th>
-                            <th style="width: 140px;"><?= $this->Paginator->sort('email', 'メールアドレス', $sort) ?></th>
+                            <th style="width: 160px;"><?= $this->Paginator->sort('email', 'メールアドレス', $sort) ?></th>
                             <th style="width: 140px;"><?= $this->Paginator->sort('tel', '電話番号', $sort) ?></th>
                             <th style="width: 95px;"><?= $this->Paginator->sort('is_active', 'ログイン', $sort) ?></th>
                             <th style="width: 190px;"><?= $this->Paginator->sort('expiration_datetime', 'PW有効期限', $sort) ?></th>
                             <th style="width: 190px;"><?= $this->Paginator->sort('modified', '更新日時', $sort) ?></th>
-                            <th style="width: 200px;" class="actions"><?= __('Actions') ?></th>
+                            <th style="width: 350px;" class="actions"><?= __('Actions') ?></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -341,7 +341,7 @@
                             </td>
                             <td class="actions">
                                 <a 
-                                    class="btn" 
+                                    class="btn green_fill" 
                                     href="<?= $this->Url->build([
                                         'controller' => 'Detail',
                                         'action' => 'index', 
@@ -350,7 +350,7 @@
                                     ]); ?>"
                                 >詳細</a>
                                 <a 
-                                    class="btn" 
+                                    class="btn green_fill" 
                                     href="<?= $this->Url->build([
                                         'controller' => 'Edit',
                                         'action' => 'index', 
@@ -359,11 +359,11 @@
                                     ]); ?>"
                                 >更新</a>
                                 <a 
-                                    class="btn" 
+                                    class="btn green_fill" 
                                     href="#"
                                 >複製</a>
                                 <a 
-                                    class="btn" 
+                                    class="btn red_fill" 
                                     href="#"
                                 >ログイン</a>
                             </td>

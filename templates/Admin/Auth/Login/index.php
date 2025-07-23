@@ -16,7 +16,7 @@
         <input type="text" name="username" value="<?= h($input['username']) ?>" placeholder="ログインアカウント">
         <input type="password" name="password" value="" placeholder="パスワード">
         <div class="form_buttons">
-            <input type="submit" value="ログイン">
+            <input class="btn blue_fill" type="submit" value="ログイン">
         </div>
     </form>
 </div>
