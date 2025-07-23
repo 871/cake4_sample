@@ -121,6 +121,7 @@ class SearchAction implements AdminActionInterface
                 'is_active' => 'UserAccounts.is_active',
                 'expiration_datetime' => 'UserAccounts.expiration_datetime',
                 'is_tmp_password' => 'UserAccounts.is_tmp_password',
+                'remarks' => 'LEFT(UserAccounts.remarks, 101)',
                 'created' => 'UserAccounts.created',
                 'modified' => 'UserAccounts.modified',
                 'created_account_id' => 'UserAccounts.created_account_id',
@@ -147,6 +148,7 @@ class SearchAction implements AdminActionInterface
                     'UserAccounts.username',
                     'UserAccounts.email',
                     'UserAccounts.tel',
+                    'UserAccounts.remarks',
                 ]),
             ], fn($v) => !in_array($v, [null, '', []], true)));
     }

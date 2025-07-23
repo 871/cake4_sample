@@ -33,6 +33,7 @@ button.btn,
 a.btn {
     border-radius: 2em;
     padding: 0.25em 1em;
+    line-height: 0;
 }
 
 input.btn:hover,
