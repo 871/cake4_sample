@@ -165,19 +165,6 @@ main .container .search_form input {
     background: #fafafa;
 }
 
-main .container .search_form .search_button {
-
-    background: #03dac6;
-    border: #03dac6 solid 2px;
-    border-radius: 1em;
-}
-
-main .container .search_form .search_button:hover {
-    background: #03dac6;
-    border: #03dac6 solid 2px;
-    opacity: 0.8;
-}
-
 main .container .search_form.close {
 
     display: block;

@@ -1,48 +1,45 @@
 
 /* フォーム部品スタイル */
-.input_from_to {
-    
-    input {
-        width: 40%;
-    }
+.input_from_to input {
+    width: 40%;
 }
 
-.multiple_checkbox {
-    
-    label {
-        display: inline;
-        padding-left: 1em;
-    }
+.multiple_checkbox label {
+    display: inline;
+    padding-left: 1em;
 }
 
 .form_buttons {
-    
-    display: flex;
-    justify-content: center; /* 横中央 */
-    align-items: center;     /* 縦中央 */
+    text-align: center;
     padding: 1em 0 0 0;
-    
-    * {
-        margin: 0 1em;
-    }
 }
 
 /* button style */
-input.btn,
+input[type='button'].btn, 
+input[type='reset'].btn, 
+input[type='submit'].btn,
 button.btn,
 a.btn {
-    border-radius: 2em;
-    padding: 0.25em 1em;
-    line-height: 0;
+    border-radius: 2rem;
+    padding: 0.5rem 1.5rem;
+    line-height: 1.5;
+    font-size: 1.6rem;
+    display: inline-block;
+    height: 3.8rem;
+    font-weight: normal;
 }
 
-input.btn:hover,
+input[type='button'].btn:hover, 
+input[type='reset'].btn:hover, 
+input[type='submit'].btn:hover,
 button.btn:hover,
 a.btn:hover {
     opacity: 0.5;
 }
 
-input.btn.white_fill,
+input[type='button'].btn.white_fill, 
+input[type='reset'].btn.white_fill, 
+input[type='submit'].btn.white_fill,
 button.btn.white_fill,
 a.btn.white_fill {
     border: #ffffff solid 2px;
@@ -50,7 +47,9 @@ a.btn.white_fill {
     background: #ffffff;
 }
 
-input.btn.white_line,
+input[type='button'].btn.white_line, 
+input[type='reset'].btn.white_line, 
+input[type='submit'].btn.white_line,
 button.btn.white_line,
 a.btn.white_line {
     border: #ffffff solid 2px;
@@ -58,7 +57,9 @@ a.btn.white_line {
     background: #000000;
 }
 
-input.btn.grey_fill,
+input[type='button'].btn.grey_fill, 
+input[type='reset'].btn.grey_fill, 
+input[type='submit'].btn.grey_fill,
 button.btn.grey_fill,
 a.btn.grey_fill {
     border: #999999 solid 2px;
@@ -66,7 +67,9 @@ a.btn.grey_fill {
     background: #999999;
 }
 
-input.btn.grey_line,
+input[type='button'].btn.grey_line, 
+input[type='reset'].btn.grey_line, 
+input[type='submit'].btn.grey_line,
 button.btn.grey_line,
 a.btn.grey_line {
     border: #999999 solid 2px;
@@ -74,7 +77,9 @@ a.btn.grey_line {
     background: #ffffff;
 }
 
-input.btn.black_fill,
+input[type='button'].btn.black_fill, 
+input[type='reset'].btn.black_fill, 
+input[type='submit'].btn.black_fill,
 button.btn.black_fill,
 a.btn.black_fill {
     border: #000000 solid 2px;
@@ -82,7 +87,9 @@ a.btn.black_fill {
     background: #000000;
 }
 
-input.btn.black_line,
+input[type='button'].btn.black_line, 
+input[type='reset'].btn.black_line, 
+input[type='submit'].btn.black_line,
 button.btn.black_line,
 a.btn.black_line {
     border: #000000 solid 2px;
@@ -90,7 +97,9 @@ a.btn.black_line {
     background: #ffffff;
 }
 
-input.btn.red_fill,
+input[type='button'].btn.red_fill, 
+input[type='reset'].btn.red_fill, 
+input[type='submit'].btn.red_fill,
 button.btn.red_fill,
 a.btn.red_fill {
     border: #d33c43 solid 2px;
@@ -98,7 +107,9 @@ a.btn.red_fill {
     background: #d33c43;
 }
 
-input.btn.red_line,
+input[type='button'].btn.red_line, 
+input[type='reset'].btn.red_line, 
+input[type='submit'].btn.red_line,
 button.btn.red_line,
 a.btn.red_line {
     border: #d33c43 solid 2px;
@@ -106,7 +117,9 @@ a.btn.red_line {
     background: #ffffff;
 }
 
-input.btn.blue_fill,
+input[type='button'].btn.blue_fill, 
+input[type='reset'].btn.blue_fill, 
+input[type='submit'].btn.blue_fill,
 button.btn.blue_fill,
 a.btn.blue_fill {
     border: #3498db solid 2px;
@@ -114,7 +127,9 @@ a.btn.blue_fill {
     background: #3498db;
 }
 
-input.btn.blue_line,
+input[type='button'].btn.blue_line, 
+input[type='reset'].btn.blue_line, 
+input[type='submit'].btn.blue_line,
 button.btn.blue_line,
 a.btn.blue_line {
     border: #3498db solid 2px;
@@ -122,7 +137,9 @@ a.btn.blue_line {
     background: #ffffff;
 }
 
-input.btn.yellow_fill,
+input[type='button'].btn.yellow_fill, 
+input[type='reset'].btn.yellow_fill, 
+input[type='submit'].btn.yellow_fill,
 button.btn.yellow_fill,
 a.btn.yellow_fill {
     border: #f1c40f solid 2px;
@@ -130,7 +147,9 @@ a.btn.yellow_fill {
     background: #f1c40f;
 }
 
-input.btn.yellow_line,
+input[type='button'].btn.yellow_line, 
+input[type='reset'].btn.yellow_line, 
+input[type='submit'].btn.yellow_line,
 button.btn.yellow_line,
 a.btn.yellow_line {
     border: #f1c40f solid 2px;
@@ -138,7 +157,9 @@ a.btn.yellow_line {
     background: #000000;
 }
 
-input.btn.green_fill,
+input[type='button'].btn.green_fill, 
+input[type='reset'].btn.green_fill, 
+input[type='submit'].btn.green_fill,
 button.btn.green_fill,
 a.btn.green_fill {
     border: #03dac6 solid 2px;
@@ -146,7 +167,9 @@ a.btn.green_fill {
     background: #03dac6;
 }
 
-input.btn.green_line,
+input[type='button'].btn.green_line, 
+input[type='reset'].btn.green_line, 
+input[type='submit'].btn.green_line,
 button.btn.green_line,
 a.btn.green_line {
     border: #03dac6 solid 2px;
@@ -154,7 +177,9 @@ a.btn.green_line {
     background: #ffffff;
 }
 
-input.btn.orange_fill,
+input[type='button'].btn.orange_fill, 
+input[type='reset'].btn.orange_fill, 
+input[type='submit'].btn.orange_fill,
 button.btn.orange_fill,
 a.btn.orange_fill {
     border: #e67e22 solid 2px;
@@ -162,7 +187,9 @@ a.btn.orange_fill {
     background: #e67e22;
 }
 
-input.btn.orange_line,
+input[type='button'].btn.orange_line, 
+input[type='reset'].btn.orange_line, 
+input[type='submit'].btn.orange_line,
 button.btn.orange_line,
 a.btn.orange_line {
     border: #e67e22 solid 2px;
@@ -170,7 +197,9 @@ a.btn.orange_line {
     background: #ffffff;
 }
 
-input.btn.pink_fill,
+input[type='button'].btn.pink_fill, 
+input[type='reset'].btn.pink_fill, 
+input[type='submit'].btn.pink_fill,
 button.btn.pink_fill,
 a.btn.pink_fill {
     border: #fd79a8 solid 2px;
@@ -178,7 +207,9 @@ a.btn.pink_fill {
     background: #fd79a8;
 }
 
-input.btn.pink_line,
+input[type='button'].btn.pink_line, 
+input[type='reset'].btn.pink_line, 
+input[type='submit'].btn.pink_line,
 button.btn.pink_line,
 a.btn.pink_line {
     border: #fd79a8 solid 2px;

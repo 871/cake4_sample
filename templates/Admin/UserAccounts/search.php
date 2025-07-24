@@ -264,7 +264,9 @@
                         </tr>
                     </table>
                     <div class="form_buttons">
-                        <input type="submit" class="search_button" value="検索">
+                        <input type="submit" class="btn green_fill" value="検索">
+                        
+                        <a href="#" class="show_colmun_setting btn green_line">表示項目設定</a>
                     </div>
                 </form>
             </div>
