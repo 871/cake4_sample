@@ -2,7 +2,7 @@
 
     $admin_account_id = $this->getRequest()->getParam('admin_account_id');
 
-    $value = array_filter($this->getRequest()->getQuery('user_accounts', []), fn($v) => (string) $v !== '');
+    $value = array_filter($this->getRequest()->getQuery('user_accounts', []), fn($v) => !in_array($v, ['', []], true));
     $error = $errors['user_accounts'] ?? [];
                         
     $pagenator = [
