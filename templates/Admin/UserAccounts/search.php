@@ -29,8 +29,10 @@
         <?= $this->Flash->render() ?>
     <?php if ($messages) { ?>
         <div class="row ">
-            <div class="column message error">
-                <?= join('<br>', array_map('h', $messages))?>
+            <div class="column">
+                <div class="message error">
+                    <?= join('<br>', array_map('h', $messages))?>
+                </div>
             </div>
         </div>
     <?php } ?>
@@ -267,6 +269,107 @@
                         <input type="submit" class="btn green_fill" value="検索">
                         
                         <a href="#" class="show_colmun_setting btn green_line">表示項目設定</a>
+                        <div class="modal-container colmun_setting">
+                            <div class="modal-body">
+                                <!-- 閉じるボタン -->
+                                <div class="modal-close">×</div>
+                                <!-- モーダル内のコンテンツ -->
+                                <div class="modal-content multiple_checkbox">
+                                    <label>
+                                        <input type="checkbox" class="all_check view_colmun">
+                                        全て
+                                    </label>
+                                    <br>
+                                
+                                </div>
+                            </div>
+                        </div>
+                        <script>(function($) {
+                
+                            var keyShowColmuns = window.location.pathname + '.show_colmun';
+                            var listShowColmuns = sessionStorage.getItem(keyShowColmuns);
+                            
+                            $(function() {
+                                // data-view_switch="ID" data-view_default="1"
+                                // data-view_target="ユーザ名"
+                                
+                                $('[data-view_switch]').each(function () {
+                                    
+                                    $('.colmun_setting .multiple_checkbox')
+                                        .append(
+                                            '<label>'
+                                            + '<input ' 
+                                            + ' type="checkbox" '
+                                            + ' class="view_colmun" ' 
+                                            + ' value="' + $(this).data('view_switch') + '"' 
+                                            + '>'
+                                            + $(this).data('view_switch')
+                                            + '</label><br>'
+                                        );
+                                    
+                                    // 読み込みor初期値設定
+                                    listShowColmuns = Array.isArray(listShowColmuns)
+                                        ? JSON.parse(listShowColmuns)
+                                        : $('[data-view_default="1"]').map(function() {
+                                            
+                                            return $(this).data('view_switch');
+                                        });
+                                    $('[data-view_switch],[data-view_target]').hide();
+                                    $(listShowColmuns).each(function(i, v) {
+                                        
+                                        $('.colmun_setting .multiple_checkbox').find('[value="' + v + '"]').prop('checked', true);
+                                        
+                                        $('[data-view_switch="' + v + '"],[data-view_target="' + v + '"]').show();
+                                    });
+                                });
+                            });
+                            
+                            $('body').on('click', '.show_colmun_setting', function() {
+                                
+                                $('.modal-container.colmun_setting').addClass('active');
+                                return false;
+                            }).on('click', '.colmun_setting .modal-close', function() {
+                                
+                                $('.modal-container.colmun_setting').removeClass('active');
+                                return false;
+                            }).on('click', '.view_colmun.all_check', function() {
+
+                                $('.view_colmun:not(.all_check)').prop('checked', $(this).prop('checked'));
+                                
+                                $('[data-view_switch],[data-view_target]').hide();
+                                var listShowColmuns = $('.colmun_setting .multiple_checkbox').find('.view_colmun:not(.all_check):checked').map(function() {
+                                    
+                                    return $(this).val();
+                                });
+                                $(listShowColmuns).each(function(i, v) {
+                                    
+                                    $('[data-view_switch="' + v + '"],[data-view_target="' + v + '"]').show();
+                                });
+                                
+                                console.dir([keyShowColmuns, JSON.stringify(listShowColmuns)]);
+                                
+                                sessionStorage.setItem(keyShowColmuns, JSON.stringify(listShowColmuns));
+                            }).on('click', '.view_colmun:not(.all_check)', function() {
+
+                                $('.view_colmun.all_check').prop('checked', $('.view_colmun:not(.all_check)').length === $('.view_colmun:not(.all_check)').filter(':checked').length);
+                                
+                                $('[data-view_switch],[data-view_target]').hide();
+                                var listShowColmuns = $('.colmun_setting .multiple_checkbox').find('.view_colmun:not(.all_check):checked').map(function() {
+                                    
+                                    return $(this).val();
+                                });
+                                $(listShowColmuns).each(function(i, v) {
+                                    
+                                    $('[data-view_switch="' + v + '"],[data-view_target="' + v + '"]').show();
+                                });
+                                
+                                console.dir([keyShowColmuns, JSON.stringify(listShowColmuns)]);
+                                
+                                sessionStorage.setItem(keyShowColmuns, JSON.stringify(listShowColmuns));
+                            });
+                            
+
+                        })(jQuery);</script>
                     </div>
                 </form>
             </div>
@@ -307,7 +410,7 @@
                             <th style="width: 160px;" data-view_switch="メールアドレス" data-view_default="1"><?= $this->Paginator->sort('UserAccounts.email', 'メールアドレス', $sort) ?></th>
                             <th style="width: 140px;" data-view_switch="電話番号" data-view_default="0"><?= $this->Paginator->sort('UserAccounts.tel', '電話番号', $sort) ?></th>
                             <th style="width: 95px;" data-view_switch="ログイン" data-view_default="1"><?= $this->Paginator->sort('UserAccounts.is_active', 'ログイン', $sort) ?></th>
-                            <th style="width: 190px;" data-view_switch="PW有効期限" data-view_default="1"><?= $this->Paginator->sort('UserAccounts.expiration_datetime', 'PW有効期限', $sort) ?></th>
+                            <th style="width: 190px;" data-view_switch="PW有効期限" data-view_default="0"><?= $this->Paginator->sort('UserAccounts.expiration_datetime', 'PW有効期限', $sort) ?></th>
                             <th style="width: 95px;" data-view_switch="PW種別" data-view_default="0"><?= $this->Paginator->sort('UserAccounts.is_tmp_password', 'PW種別', $sort) ?></th>
                             <th style="width: 300px;" data-view_switch="備考" data-view_default="0"><?= $this->Paginator->sort('UserAccounts.remarks', '備考', $sort) ?></th>
                             <th style="width: 190px;" data-view_switch="作成日時" data-view_default="0"><?= $this->Paginator->sort('UserAccounts.created', '作成日時', $sort) ?></th>
@@ -415,32 +518,6 @@
                     '?' => $this->getRequest()->getQuery(),
                 ],
             ]) ?>
-        </div>
-        <div class="row">
-            
-            <div class="view_colmun_setting close">
-                <a href="#" class="open_button">表示列設定▽</a>
-                <a href="#" class="close_button">表示列設定▲</a>
-                <div class="multiple_checkbox">
-                    <label>
-                        <input type="checkbox" class="all_check view_colmun">
-                        全て
-                    </label>
-        
-                </div>
-            </div>
-            <script>(function($) {
-    
-                $('body').on('click', '.view_colmun_setting .open_button', function() {
-
-                    $(this).closest('.view_colmun_setting').removeClass('close');
-                    return false;
-                }).on('click', '.view_colmun_setting .close_button', function() {
-
-                    $(this).closest('.view_colmun_setting').addClass('close');
-                    return false;
-                });
-            })(jQuery);</script>
         </div>
     </div>
 </div>
