@@ -269,60 +269,73 @@
                         <input type="submit" class="btn green_fill" value="検索">
                         
                         <a href="#" class="show_colmun_setting btn green_line">表示項目設定</a>
+                        
                         <div class="modal-container colmun_setting">
                             <div class="modal-body">
                                 <!-- 閉じるボタン -->
                                 <div class="modal-close">×</div>
                                 <!-- モーダル内のコンテンツ -->
                                 <div class="modal-content multiple_checkbox">
+                                    <a href="#" class="view_colmun_reset">初期設定</a>
                                     <label>
                                         <input type="checkbox" class="all_check view_colmun">
                                         全て
                                     </label>
-                                    <br>
-                                
                                 </div>
                             </div>
                         </div>
                         <script>(function($) {
                 
-                            var keyShowColmuns = window.location.pathname + '.show_colmun';
-                            var listShowColmuns = sessionStorage.getItem(keyShowColmuns);
+                            var storage = localStorage;
+                            var saveKey = window.location.pathname + '.show_colmun';
                             
                             $(function() {
-                                // data-view_switch="ID" data-view_default="1"
+                                // data-view_switch="ユーザ名" data-view_default="1"
                                 // data-view_target="ユーザ名"
+                                if (storage.getItem(saveKey) === null) {
+                                    // 初期値設定
+                                    storage.setItem(saveKey, JSON.stringify($('[data-view_default="1"]').map(function() {
+                                        return $(this).data('view_switch');
+                                    })));
+                                }
+                                // 初期表示
+                                var listShowColmuns =  Object.values(JSON.parse(storage.getItem(saveKey)));
                                 
+                                console.dir(listShowColmuns);
+                                
+                                $('[data-view_switch],[data-view_target]').hide();
                                 $('[data-view_switch]').each(function () {
+                                    
+                                    var val = $(this).data('view_switch');
                                     
                                     $('.colmun_setting .multiple_checkbox')
                                         .append(
-                                            '<label>'
+                                            '<label style="display:inline-block;">'
                                             + '<input ' 
                                             + ' type="checkbox" '
                                             + ' class="view_colmun" ' 
-                                            + ' value="' + $(this).data('view_switch') + '"' 
-                                            + '>'
-                                            + $(this).data('view_switch')
-                                            + '</label><br>'
+                                            + ' value="' + val + '"' 
+                                            + (listShowColmuns.includes(val) ? ' checked' : '')
+                                            + '>' + $(this).data('view_switch') + '</label>'
                                         );
-                                    
-                                    // 読み込みor初期値設定
-                                    listShowColmuns = Array.isArray(listShowColmuns)
-                                        ? JSON.parse(listShowColmuns)
-                                        : $('[data-view_default="1"]').map(function() {
-                                            
-                                            return $(this).data('view_switch');
-                                        });
-                                    $('[data-view_switch],[data-view_target]').hide();
-                                    $(listShowColmuns).each(function(i, v) {
-                                        
-                                        $('.colmun_setting .multiple_checkbox').find('[value="' + v + '"]').prop('checked', true);
-                                        
-                                        $('[data-view_switch="' + v + '"],[data-view_target="' + v + '"]').show();
-                                    });
+                                
+                                    listShowColmuns.includes(val) 
+                                        && $('[data-view_switch="' + val + '"],[data-view_target="' + val + '"]').show();
                                 });
                             });
+                            
+                            var settingReflection = function() {
+                                
+                                $('[data-view_switch],[data-view_target]').hide();
+                                var listShowColmuns = $('.colmun_setting .multiple_checkbox .view_colmun:checked').map(function() {
+                                    
+                                    var val = $(this).val();
+                                    $('[data-view_switch="' + val + '"],[data-view_target="' + val + '"]').show();
+                                    
+                                    return val;
+                                });
+                                storage.setItem(saveKey, JSON.stringify(listShowColmuns));
+                            };
                             
                             $('body').on('click', '.show_colmun_setting', function() {
                                 
@@ -336,39 +349,25 @@
 
                                 $('.view_colmun:not(.all_check)').prop('checked', $(this).prop('checked'));
                                 
-                                $('[data-view_switch],[data-view_target]').hide();
-                                var listShowColmuns = $('.colmun_setting .multiple_checkbox').find('.view_colmun:not(.all_check):checked').map(function() {
-                                    
-                                    return $(this).val();
-                                });
-                                $(listShowColmuns).each(function(i, v) {
-                                    
-                                    $('[data-view_switch="' + v + '"],[data-view_target="' + v + '"]').show();
-                                });
-                                
-                                console.dir([keyShowColmuns, JSON.stringify(listShowColmuns)]);
-                                
-                                sessionStorage.setItem(keyShowColmuns, JSON.stringify(listShowColmuns));
+                                settingReflection();
                             }).on('click', '.view_colmun:not(.all_check)', function() {
 
                                 $('.view_colmun.all_check').prop('checked', $('.view_colmun:not(.all_check)').length === $('.view_colmun:not(.all_check)').filter(':checked').length);
                                 
-                                $('[data-view_switch],[data-view_target]').hide();
-                                var listShowColmuns = $('.colmun_setting .multiple_checkbox').find('.view_colmun:not(.all_check):checked').map(function() {
-                                    
-                                    return $(this).val();
-                                });
-                                $(listShowColmuns).each(function(i, v) {
-                                    
-                                    $('[data-view_switch="' + v + '"],[data-view_target="' + v + '"]').show();
-                                });
+                                settingReflection();
+                            }).on('click', '.view_colmun_reset', function() {
                                 
-                                console.dir([keyShowColmuns, JSON.stringify(listShowColmuns)]);
+                                $('.view_colmun').prop('checked', false);
+                                $('[data-view_default="1"]').each(function() {
+                                    
+                                    $('.view_colmun[value="' + $(this).data('view_switch') + '"]').prop('checked', true);
+                                });
+                                $('.view_colmun.all_check').prop('checked', $('.view_colmun:not(.all_check)').length === $('.view_colmun:not(.all_check)').filter(':checked').length);
                                 
-                                sessionStorage.setItem(keyShowColmuns, JSON.stringify(listShowColmuns));
+                                settingReflection();
+                                
+                                return false;
                             });
-                            
-
                         })(jQuery);</script>
                     </div>
                 </form>
