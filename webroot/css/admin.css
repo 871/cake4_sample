@@ -146,7 +146,7 @@ main .container .search_form .open_button {
 }
 
 main .container .search_form .close_button {
-    display: block;
+    display: inline-block;
 }
 
 main .container .search_form table {
@@ -173,7 +173,7 @@ main .container .search_form.close {
 }
 
 main .container .search_form.close .open_button {
-    display: block;
+    display: inline-block;
 }
 
 main .container .search_form.close .close_button {

@@ -52,6 +52,12 @@
                         return false;
                     });
                 })(jQuery);</script>
+                / <a href="#" class="show_colmun_setting">表示項目設定</a>
+                <script>(function($) {
+
+                    $('.show_colmun_setting').columnControl('.page_results table', 'user_accounts');
+
+                })(jQuery);</script>
                 <form method="get">
                     <input type="hidden" name="page" value="1">
                     <input type="hidden" name="limit" value="<?= h($this->getRequest()->getQuery('limit', 20)) ?>">
@@ -267,108 +273,6 @@
                     </table>
                     <div class="form_buttons">
                         <input type="submit" class="btn green_fill" value="検索">
-                        
-                        <a href="#" class="show_colmun_setting btn green_line">表示項目設定</a>
-                        
-                        <div class="modal-container colmun_setting">
-                            <div class="modal-body">
-                                <!-- 閉じるボタン -->
-                                <div class="modal-close">×</div>
-                                <!-- モーダル内のコンテンツ -->
-                                <div class="modal-content multiple_checkbox">
-                                    <a href="#" class="view_colmun_reset">初期設定</a>
-                                    <label>
-                                        <input type="checkbox" class="all_check view_colmun">
-                                        全て
-                                    </label>
-                                </div>
-                            </div>
-                        </div>
-                        <script>(function($) {
-                
-                            var storage = localStorage;
-                            var saveKey = window.location.pathname + '.show_colmun';
-                            
-                            $(function() {
-                                // data-view_switch="ユーザ名" data-view_default="1"
-                                // data-view_target="ユーザ名"
-                                if (storage.getItem(saveKey) === null) {
-                                    // 初期値設定
-                                    storage.setItem(saveKey, JSON.stringify($('[data-view_default="1"]').map(function() {
-                                        return $(this).data('view_switch');
-                                    })));
-                                }
-                                // 初期表示
-                                var listShowColmuns =  Object.values(JSON.parse(storage.getItem(saveKey)));
-                                
-                                console.dir(listShowColmuns);
-                                
-                                $('[data-view_switch],[data-view_target]').hide();
-                                $('[data-view_switch]').each(function () {
-                                    
-                                    var val = $(this).data('view_switch');
-                                    
-                                    $('.colmun_setting .multiple_checkbox')
-                                        .append(
-                                            '<label style="display:inline-block;">'
-                                            + '<input ' 
-                                            + ' type="checkbox" '
-                                            + ' class="view_colmun" ' 
-                                            + ' value="' + val + '"' 
-                                            + (listShowColmuns.includes(val) ? ' checked' : '')
-                                            + '>' + $(this).data('view_switch') + '</label>'
-                                        );
-                                
-                                    listShowColmuns.includes(val) 
-                                        && $('[data-view_switch="' + val + '"],[data-view_target="' + val + '"]').show();
-                                });
-                            });
-                            
-                            var settingReflection = function() {
-                                
-                                $('[data-view_switch],[data-view_target]').hide();
-                                var listShowColmuns = $('.colmun_setting .multiple_checkbox .view_colmun:checked').map(function() {
-                                    
-                                    var val = $(this).val();
-                                    $('[data-view_switch="' + val + '"],[data-view_target="' + val + '"]').show();
-                                    
-                                    return val;
-                                });
-                                storage.setItem(saveKey, JSON.stringify(listShowColmuns));
-                            };
-                            
-                            $('body').on('click', '.show_colmun_setting', function() {
-                                
-                                $('.modal-container.colmun_setting').addClass('active');
-                                return false;
-                            }).on('click', '.colmun_setting .modal-close', function() {
-                                
-                                $('.modal-container.colmun_setting').removeClass('active');
-                                return false;
-                            }).on('click', '.view_colmun.all_check', function() {
-
-                                $('.view_colmun:not(.all_check)').prop('checked', $(this).prop('checked'));
-                                
-                                settingReflection();
-                            }).on('click', '.view_colmun:not(.all_check)', function() {
-
-                                $('.view_colmun.all_check').prop('checked', $('.view_colmun:not(.all_check)').length === $('.view_colmun:not(.all_check)').filter(':checked').length);
-                                
-                                settingReflection();
-                            }).on('click', '.view_colmun_reset', function() {
-                                
-                                $('.view_colmun').prop('checked', false);
-                                $('[data-view_default="1"]').each(function() {
-                                    
-                                    $('.view_colmun[value="' + $(this).data('view_switch') + '"]').prop('checked', true);
-                                });
-                                $('.view_colmun.all_check').prop('checked', $('.view_colmun:not(.all_check)').length === $('.view_colmun:not(.all_check)').filter(':checked').length);
-                                
-                                settingReflection();
-                                
-                                return false;
-                            });
-                        })(jQuery);</script>
                     </div>
                 </form>
             </div>
@@ -403,22 +307,22 @@
                                     ],
                                 ];
                             ?>
-                            <th style="width: 85px;" data-view_switch="ID" data-view_default="1"><?= $this->Paginator->sort('UserAccounts.id', 'ID', $sort) ?></th>
-                            <th style="width: 140px;" data-view_switch="ユーザ名" data-view_default="1"><?= $this->Paginator->sort('UserAccounts.name', 'ユーザ名', $sort) ?></th>
-                            <th style="width: 140px;" data-view_switch="アカウント名" data-view_default="1"><?= $this->Paginator->sort('UserAccounts.username', 'アカウント名', $sort) ?></th>
-                            <th style="width: 160px;" data-view_switch="メールアドレス" data-view_default="1"><?= $this->Paginator->sort('UserAccounts.email', 'メールアドレス', $sort) ?></th>
-                            <th style="width: 140px;" data-view_switch="電話番号" data-view_default="0"><?= $this->Paginator->sort('UserAccounts.tel', '電話番号', $sort) ?></th>
-                            <th style="width: 95px;" data-view_switch="ログイン" data-view_default="1"><?= $this->Paginator->sort('UserAccounts.is_active', 'ログイン', $sort) ?></th>
-                            <th style="width: 190px;" data-view_switch="PW有効期限" data-view_default="0"><?= $this->Paginator->sort('UserAccounts.expiration_datetime', 'PW有効期限', $sort) ?></th>
-                            <th style="width: 95px;" data-view_switch="PW種別" data-view_default="0"><?= $this->Paginator->sort('UserAccounts.is_tmp_password', 'PW種別', $sort) ?></th>
-                            <th style="width: 300px;" data-view_switch="備考" data-view_default="0"><?= $this->Paginator->sort('UserAccounts.remarks', '備考', $sort) ?></th>
-                            <th style="width: 190px;" data-view_switch="作成日時" data-view_default="0"><?= $this->Paginator->sort('UserAccounts.created', '作成日時', $sort) ?></th>
-                            <th style="width: 190px;" data-view_switch="更新日時" data-view_default="1"><?= $this->Paginator->sort('UserAccounts.modified', '更新日時', $sort) ?></th>
-                            <th style="width: 100px;" data-view_switch="作成者ID" data-view_default="0"><?= $this->Paginator->sort('UserAccounts.created_account_id', '作成者ID', $sort) ?></th>
-                            <th style="width: 100px;" data-view_switch="更新者ID" data-view_default="0"><?= $this->Paginator->sort('UserAccounts.modified_account_id', '更新者ID', $sort) ?></th>
-                            <th style="width: 190px;" data-view_switch="作成者IP" data-view_default="0"><?= $this->Paginator->sort('UserAccounts.created_ip', '作成者IP', $sort) ?></th>
-                            <th style="width: 190px;" data-view_switch="更新者IP" data-view_default="0"><?= $this->Paginator->sort('UserAccounts.modified_ip', '更新者IP', $sort) ?></th>
-                            <th style="width: 380px;" class="actions "><?= __('Actions') ?></th>
+                            <th style="width: 85px;" data-is_show="1"><?= $this->Paginator->sort('UserAccounts.id', 'ID', $sort) ?></th>
+                            <th style="width: 140px;" data-is_show="1"><?= $this->Paginator->sort('UserAccounts.name', 'ユーザ名', $sort) ?></th>
+                            <th style="width: 140px;" data-is_show="1"><?= $this->Paginator->sort('UserAccounts.username', 'アカウント名', $sort) ?></th>
+                            <th style="width: 160px;" data-is_show="1"><?= $this->Paginator->sort('UserAccounts.email', 'メールアドレス', $sort) ?></th>
+                            <th style="width: 140px;" data-is_show="0"><?= $this->Paginator->sort('UserAccounts.tel', '電話番号', $sort) ?></th>
+                            <th style="width: 95px;" data-is_show="1"><?= $this->Paginator->sort('UserAccounts.is_active', 'ログイン', $sort) ?></th>
+                            <th style="width: 190px;" data-is_show="0"><?= $this->Paginator->sort('UserAccounts.expiration_datetime', 'PW有効期限', $sort) ?></th>
+                            <th style="width: 95px;" data-is_show="0"><?= $this->Paginator->sort('UserAccounts.is_tmp_password', 'PW種別', $sort) ?></th>
+                            <th style="width: 300px;" data-is_show="0"><?= $this->Paginator->sort('UserAccounts.remarks', '備考', $sort) ?></th>
+                            <th style="width: 190px;" data-is_show="0"><?= $this->Paginator->sort('UserAccounts.created', '作成日時', $sort) ?></th>
+                            <th style="width: 190px;" data-is_show="1"><?= $this->Paginator->sort('UserAccounts.modified', '更新日時', $sort) ?></th>
+                            <th style="width: 100px;" data-is_show="0"><?= $this->Paginator->sort('UserAccounts.created_account_id', '作成者ID', $sort) ?></th>
+                            <th style="width: 100px;" data-is_show="0"><?= $this->Paginator->sort('UserAccounts.modified_account_id', '更新者ID', $sort) ?></th>
+                            <th style="width: 190px;" data-is_show="0"><?= $this->Paginator->sort('UserAccounts.created_ip', '作成者IP', $sort) ?></th>
+                            <th style="width: 190px;" data-is_show="0"><?= $this->Paginator->sort('UserAccounts.modified_ip', '更新者IP', $sort) ?></th>
+                            <th style="width: 380px;" data-is_show="1" class="actions "><?= __('Actions') ?></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -443,7 +347,7 @@
                                 <?= $row['is_active'] ? '有効' : '<span style="color: red">無効</span>' ?>
                             </td>
                             <td class="datetime" data-view_target="PW有効期限">
-                                <?= h($row['expiration_datetime']?->format('Y-m-d H:i:s') ?? '') ?>
+                                <?= h($row['expiration_datetime']?->format('Y/m/d H:i:s') ?? '----/--/-- --:--:--') ?>
                             </td>
                             <td class="status" data-view_target="PW種別">
                                 <?= $row['is_tmp_password'] ? '正' : '<span style="color: red">仮</span>' ?>
@@ -452,10 +356,10 @@
                                 <input type="text" value="<?= h($this->Text->truncate(preg_replace('/\s+/', ' ', $row['remarks']), 100)) ?>" readonly>
                             </td>
                             <td class="datetime" data-view_target="作成日時">
-                                <?= h($row['created']?->format('Y-m-d H:i:s') ?? '') ?>
+                                <?= h($row['created']?->format('Y/m/d H:i:s') ?? '----/--/-- --:--:--') ?>
                             </td>
                             <td class="datetime" data-view_target="更新日時">
-                                <?= h($row['modified']?->format('Y-m-d H:i:s') ?? '') ?>
+                                <?= h($row['modified']?->format('Y/m/d H:i:s') ?? '----/--/-- --:--:--') ?>
                             </td>
                             <td class="primary_id" data-view_target="作成者ID">
                                 <?= h($row['created_account_id']) ?>
