@@ -127,21 +127,15 @@
                 }
             </style>`);
         
+            // 対象テーブルから制御用の設定を作成
             $(targetTable).find('tr:first').find('th').each(function(i, e) {
                 
                 var col_label = $(e).text();
-                // $(e).data('col_label', col_label).data('is_show', $(e).data('is_show') === 0 ? 0 : 1);
                 $(e).attr('data-col_label', col_label).attr('data-is_show', $(e).attr('data-is_show') === '0' ? 0 : 1);
-                
-                // alert($(e).data('col_label') + ':::' + $(e).data('is_show'));
                 
                 $(targetTable).find('tr:not(:first)').each(function() {
                     
-                    // $(this).find('td').eq(i).data('col_label', col_label);
-                    
                     $(this).find('td').eq(i).attr('data-col_label', col_label);
-                    
-                    // alert($(this).find('td').eq(i).data('col_label'));
                 });
             });
             
@@ -179,7 +173,7 @@
         });
 
         var settingReflection = function() {
-
+            // 表示制御
             $(targetTable).find('[data-col_label]').hide();
             var listShowColmuns = $('#' + modalId).find('.multiple_checkbox .view_colmun:checked').map(function() {
 
@@ -192,25 +186,25 @@
         };
 
         $('body').on('click', '.show_colmun_setting', function() {
-
+            // モーダル表示
             $('.modal-container.colmun_setting').addClass('active');
             return false;
         }).on('click', '.colmun_setting .modal-close', function() {
-
+            // モーダル非表示
             $('.modal-container.colmun_setting').removeClass('active');
             return false;
         }).on('click', '.view_colmun.all_check', function() {
-
+            // 「全て」チェック
             $('.view_colmun:not(.all_check)').prop('checked', $(this).prop('checked'));
 
             settingReflection();
         }).on('click', '.view_colmun:not(.all_check)', function() {
-
+            // 対象の表示項目チェック
             $('.view_colmun.all_check').prop('checked', $('.view_colmun:not(.all_check)').length === $('.view_colmun:not(.all_check)').filter(':checked').length);
 
             settingReflection();
         }).on('click', '.view_colmun_reset', function() {
-
+            // 表示項目初期化
             $('.view_colmun').prop('checked', false);
             $('[data-is_show="1"]').each(function() {
 
