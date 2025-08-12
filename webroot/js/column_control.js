@@ -1,3 +1,23 @@
+/**
+ * 検索画面用、検索結果表示制御ライブラリ
+ * 
+ * 実装例：
+ * <a href="#" class="show_colmun_setting">表示項目設定</a>
+ * <table>
+ *     <thead>
+ *         <tr>
+ *             <th data-is_show="1">表示列</th>
+ *             <th data-is_show="0">非表示列</th>
+ *         </tr>
+ *     </thead>
+ *     <tbody>
+ *         ・・・
+ *     </tbody>
+ * </table>                          
+ * <script>(function($) {
+ *     $('.show_colmun_setting').columnControl('table', 'user_accounts');
+ * })(jQuery);</script>
+ */
 (function($) {
     
     $.fn.columnControl = function(targetTable, storageKey) {
@@ -202,10 +222,5 @@
 
             return false;
         });
-        
-        
-        
-        
-        
     };
 })(jQuery);
