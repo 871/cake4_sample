@@ -39,6 +39,7 @@ class CreateUserTabels extends AbstractMigration
                 modified_account_id BIGINT DEFAULT NULL  COMMENT '更新アカウントID',
                 created_ip VARCHAR(100) DEFAULT NULL COMMENT '作成IP',
                 modified_ip VARCHAR(100) DEFAULT NULL COMMENT '更新IP',
+                system_log TEXT COMMENT 'システムログ',
                 UNIQUE KEY user_accounts_idx01 (username),
                 UNIQUE KEY user_accounts_idx02 (email)
             ) COMMENT='ユーザーアカウント';
@@ -61,7 +62,8 @@ class CreateUserTabels extends AbstractMigration
                 created_account_id,
                 modified_account_id,
                 created_ip,
-                modified_ip
+                modified_ip,
+                system_log
             ) VALUES (
                 1000000000,
                 'ダミーデータ',
@@ -75,6 +77,7 @@ class CreateUserTabels extends AbstractMigration
                 'ユーザアカウントIDの開始値を明示的に制御するためのダミーデータ',
                 '1970-01-01 00:00:00',
                 '1970-01-01 00:00:00',
+                NULL,
                 NULL,
                 NULL,
                 NULL,
@@ -99,6 +102,7 @@ class CreateUserTabels extends AbstractMigration
                 created DATETIME DEFAULT NULL  COMMENT '作成日時',
                 created_account_id BIGINT DEFAULT NULL  COMMENT '作成アカウントID',
                 created_ip VARCHAR(100) DEFAULT NULL COMMENT '作成IP',
+                system_log TEXT COMMENT 'システムログ',
                 INDEX user_account_histories_idx01(user_account_id, created)
             ) COMMENT='ユーザーアカウント履歴';
      

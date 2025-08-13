@@ -38,6 +38,7 @@ class CreateAdminTabels extends AbstractMigration
                 modified_account_id BIGINT DEFAULT NULL  COMMENT '更新アカウントID',
                 created_ip VARCHAR(100) DEFAULT NULL COMMENT '作成IP',
                 modified_ip VARCHAR(100) DEFAULT NULL COMMENT '更新IP',
+                system_log TEXT COMMENT 'システムログ',
                 UNIQUE KEY user_accounts_idx01 (username),
                 UNIQUE KEY user_accounts_idx02 (email)
             ) COMMENT='管理者アカウント';
@@ -59,7 +60,8 @@ class CreateAdminTabels extends AbstractMigration
                 created_account_id,
                 modified_account_id,
                 created_ip,
-                modified_ip
+                modified_ip,
+                system_log
             ) VALUES (
                 900000000,
                 'ダミーデータ',
@@ -75,9 +77,46 @@ class CreateAdminTabels extends AbstractMigration
                 NULL,
                 NULL,
                 NULL,
+                NULL,
                 NULL
             );
-            
+                
+            INSERT INTO admin_accounts (
+                id,
+                name,
+                username,
+                password,
+                email,
+                tel,
+                is_active,
+                expiration_datetime,
+                remarks,
+                created,
+                modified,
+                created_account_id,
+                modified_account_id,
+                created_ip,
+                modified_ip,
+                system_log
+            ) VALUES (
+                900000001,
+                'システム管理者',
+                'admin',
+                '\$2y\$10\$V4SOyeZiUHPuWb4Vy/3f/OVbiPugDyx7MZPYMDlXEyYJ7iX1y1JN.',
+                'aaa@aa.aa',
+                NULL,
+                1,
+                '2999-12-31 23:59:59',
+                NULL,
+                '1970-01-01 00:00:00',
+                '1970-01-01 00:00:00',
+                NULL,
+                NULL,
+                NULL,
+                NULL,
+                NULL
+            );
+                
             DROP TABLE IF EXISTS admin_account_histories;
             
             CREATE TABLE admin_account_histories (
@@ -95,6 +134,7 @@ class CreateAdminTabels extends AbstractMigration
                 created DATETIME DEFAULT NULL  COMMENT '作成日時',
                 created_account_id BIGINT DEFAULT NULL  COMMENT '作成アカウントID',
                 created_ip VARCHAR(100) DEFAULT NULL COMMENT '作成IP',
+                system_log TEXT COMMENT 'システムログ',
                 INDEX user_account_histories_idx01(admin_account_id, created)
             ) COMMENT='管理者アカウント履歴';
      

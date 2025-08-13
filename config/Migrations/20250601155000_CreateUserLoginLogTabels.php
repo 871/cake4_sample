@@ -29,6 +29,7 @@ class CreateUserLoginLogTabels extends AbstractMigration
                 created DATETIME DEFAULT NULL COMMENT '作成日時',
                 created_account_id BIGINT DEFAULT NULL  COMMENT '作成アカウントID',
                 created_ip VARCHAR(100) DEFAULT NULL COMMENT '作成IP',
+                system_log TEXT COMMENT 'システムログ',
                 INDEX login_user_success_logs_idx01(username, login_datetime)
             ) COMMENT='ユーザログイン成功履歴';
 
@@ -44,6 +45,7 @@ class CreateUserLoginLogTabels extends AbstractMigration
                 created DATETIME DEFAULT NULL COMMENT '作成日時',
                 created_account_id BIGINT DEFAULT NULL  COMMENT '作成アカウントID',
                 created_ip VARCHAR(100) DEFAULT NULL COMMENT '作成IP',
+                system_log TEXT COMMENT 'システムログ',
                 INDEX login_user_failures_logs_idx01(username, login_datetime)
             ) COMMENT='ユーザログイン失敗履歴';
      

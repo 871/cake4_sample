@@ -29,6 +29,7 @@ class CreateAdminLoginLogTabels extends AbstractMigration
                 created DATETIME DEFAULT NULL COMMENT '作成日時',
                 created_account_id BIGINT DEFAULT NULL  COMMENT '作成アカウントID',
                 created_ip VARCHAR(100) DEFAULT NULL COMMENT '作成IP',
+                system_log TEXT COMMENT 'システムログ',
                 INDEX login_admin_success_logs_idx01(username, login_datetime)
             ) COMMENT='管理者ログイン成功履歴';
 
@@ -44,6 +45,7 @@ class CreateAdminLoginLogTabels extends AbstractMigration
                 created DATETIME DEFAULT NULL COMMENT '作成日時',
                 created_account_id BIGINT DEFAULT NULL  COMMENT '作成アカウントID',
                 created_ip VARCHAR(100) DEFAULT NULL COMMENT '作成IP',
+                system_log TEXT COMMENT 'システムログ',
                 INDEX login_admin_failures_logs_idx01(username, login_datetime)
             ) COMMENT='管理者ログイン失敗履歴';
      
