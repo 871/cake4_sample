@@ -8,6 +8,10 @@ use Cake\Http\ServerRequest;
 use Cake\Utility\Inflector;
 use Exception;
 
+/**
+ * 管理者向け排他制御用クラス
+ * 
+ */
 class AdminExclusiveControl
 {
     /**

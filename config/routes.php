@@ -53,8 +53,8 @@ return static function (RouteBuilder $routes) {
         $builder->connect('/', ['controller' => 'Pages', 'action' => 'display', 'home']);
     
         // debug($_SERVER['REQUEST_URI']);
-        // debug(preg_replace('/^\/([^\/]+)\/?.*$/', '$1', $_SERVER['REQUEST_URI']));
-        require match (preg_replace('/^\/([^\/]+)\/?.*$/', '$1', $_SERVER['REQUEST_URI'])) {
+        // debug(preg_replace('/^\/([^\/\?]+)\/?.*$/', '$1', $_SERVER['REQUEST_URI']));
+        require match (preg_replace('/^\/([^\/\?]+)\/?.*$/', '$1', $_SERVER['REQUEST_URI'])) {
             
             'us' => CONFIG . 'routes/user.php',
             'ad' => CONFIG . 'routes/admin.php',

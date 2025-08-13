@@ -28,7 +28,7 @@ class UserAccountHistoriesTable extends Table
         $this->setTable('user_account_histories');
         $this->setDisplayField('username');
         $this->setPrimaryKey('id');
-        $this->setEntityClass(AdminAccountHistory::class);
+        $this->setEntityClass(UserAccountHistory::class);
 
         $this->addAssociations([
             'belongsTo' => [

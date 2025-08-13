@@ -57,6 +57,7 @@ $builder->prefix('Admin', ['path' => '/ad'], static function (RouteBuilder $buil
             $builder->get('/detail/:user_account_id', ['controller' => 'Detail', 'action' => 'index']);
             // 作成
             $builder->get('/create', ['controller' => 'Create', 'action' => 'index']);
+            $builder->get('/create/copy/:user_account_id', ['controller' => 'Create', 'action' => 'copy']);
             $builder->get('/create/input/:input_id', ['controller' => 'Create', 'action' => 'input']);
             $builder->post('/create/input/:input_id', ['controller' => 'Create', 'action' => 'inputPost']);
             $builder->get('/create/conf/:input_id', ['controller' => 'Create', 'action' => 'conf']);
